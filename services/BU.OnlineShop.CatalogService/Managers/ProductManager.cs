@@ -22,11 +22,11 @@ namespace BU.OnlineShop.CatalogService.Services
             float price,
             int stockCount)
         {
-            await CheckCategory(categoryId);
+            //await CheckCategory(categoryId);
 
             var existingProduct = await ProductRepository.FindAsync(code);
 
-            if (existingProduct == null)
+            if (existingProduct != null)
             {
                 throw new Exception("Product code already exist.");
             }
