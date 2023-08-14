@@ -2,7 +2,6 @@ using BU.OnlineShop.CatalogService.DbContexts;
 using BU.OnlineShop.CatalogService.Repositories;
 using BU.OnlineShop.CatalogService.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +12,7 @@ builder.Services.AddDbContext<CatalogServiceDbContext>(options =>
 
 //Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 //
 builder.Services.AddTransient<IProductManager, ProductManager>();
