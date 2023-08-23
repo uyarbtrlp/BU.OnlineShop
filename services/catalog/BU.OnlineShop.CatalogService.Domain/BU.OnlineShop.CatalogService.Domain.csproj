@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BU.OnlineShop.CatalogService.Domain.Shared\BU.OnlineShop.CatalogService.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
