@@ -1,9 +1,8 @@
 using BU.OnlineShop.CatalogService.Categories;
 using BU.OnlineShop.CatalogService.Database.EntityFrameworkCore;
-using BU.OnlineShop.CatalogService.Database.Repository;
 using BU.OnlineShop.CatalogService.Domain.Categories;
-using BU.OnlineShop.CatalogService.Domain.Repository;
 using BU.OnlineShop.CatalogService.Products;
+using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

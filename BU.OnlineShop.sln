@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.CatalogServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.CatalogService.Domain.Shared", "services\catalog\BU.OnlineShop.CatalogService.Domain.Shared\BU.OnlineShop.CatalogService.Domain.Shared.csproj", "{E48F6ABC-B6C8-4A02-B174-E79809E686E9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.Shared", "shared\BU.OnlineShop.Shared\BU.OnlineShop.Shared.csproj", "{815CB803-E352-423C-AC2F-3FDA4800098E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{7DF5B478-630D-42D9-8FEB-9F557750D620}"
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

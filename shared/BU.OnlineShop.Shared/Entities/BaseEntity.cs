@@ -1,4 +1,4 @@
-﻿namespace BU.OnlineShop.CatalogService.Domain.Entities
+﻿namespace BU.OnlineShop.Shared.Entities
 {
     public class BaseEntity : IBaseEntity
     {

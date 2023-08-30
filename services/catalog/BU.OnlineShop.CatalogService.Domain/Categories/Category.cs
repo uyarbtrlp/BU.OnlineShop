@@ -1,4 +1,4 @@
-﻿using BU.OnlineShop.CatalogService.Domain.Entities;
+﻿using BU.OnlineShop.Shared.Entities;
 using JetBrains.Annotations;
 
 namespace BU.OnlineShop.CatalogService.Categories

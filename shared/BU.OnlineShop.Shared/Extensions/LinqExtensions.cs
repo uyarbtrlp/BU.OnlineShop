@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System.Linq.Expressions;
 
-namespace BU.OnlineShop.CatalogService.Database.Extensions
+namespace BU.OnlineShop.Shared.Extensions
 {
     public static class LinqExtensions
     {

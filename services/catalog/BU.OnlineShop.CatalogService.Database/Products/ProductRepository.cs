@@ -1,7 +1,6 @@
 ﻿using BU.OnlineShop.CatalogService.Database.EntityFrameworkCore;
-using BU.OnlineShop.CatalogService.Database.Extensions;
-using BU.OnlineShop.CatalogService.Database.Repository;
-using BU.OnlineShop.CatalogService.Domain.Repository;
+using BU.OnlineShop.Shared.Extensions;
+using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BU.OnlineShop.CatalogService.Products

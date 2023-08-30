@@ -1,15 +1,13 @@
-﻿using BU.OnlineShop.CatalogService.Database.EntityFrameworkCore;
-using BU.OnlineShop.CatalogService.Domain.Entities;
-using BU.OnlineShop.CatalogService.Domain.Repository;
+﻿using BU.OnlineShop.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BU.OnlineShop.CatalogService.Database.Repository
+namespace BU.OnlineShop.Shared.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private readonly CatalogServiceDbContext _dbContext;
+        private readonly DbContext _dbContext;
 
-        public Repository(CatalogServiceDbContext dbContext)
+        public Repository(DbContext dbContext)
         {
             _dbContext = dbContext;
         }

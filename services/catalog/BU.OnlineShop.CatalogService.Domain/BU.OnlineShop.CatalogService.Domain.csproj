@@ -13,6 +13,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\shared\BU.OnlineShop.Shared\BU.OnlineShop.Shared.csproj" />
     <ProjectReference Include="..\BU.OnlineShop.CatalogService.Domain.Shared\BU.OnlineShop.CatalogService.Domain.Shared.csproj" />
   </ItemGroup>
 

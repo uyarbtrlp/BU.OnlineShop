@@ -1,4 +1,4 @@
-﻿using BU.OnlineShop.CatalogService.Domain.Repository;
+﻿using BU.OnlineShop.Shared.Repository;
 
 namespace BU.OnlineShop.CatalogService.Products
 {

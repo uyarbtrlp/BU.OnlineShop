@@ -1,6 +1,6 @@
-﻿using BU.OnlineShop.CatalogService.Domain.Entities;
+﻿using BU.OnlineShop.Shared.Entities;
 
-namespace BU.OnlineShop.CatalogService.Domain.Repository
+namespace BU.OnlineShop.Shared.Repository
 {
     public interface IRepository<TEntity> where TEntity : IBaseEntity
     {
