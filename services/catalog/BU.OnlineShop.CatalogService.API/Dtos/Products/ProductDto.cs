@@ -1,8 +1,10 @@
-﻿namespace BU.OnlineShop.CatalogService.API.Products.Dtos
+﻿namespace BU.OnlineShop.CatalogService.API.Dtos.Products
 {
     public class ProductDto
     {
         public Guid Id { get; set; }
+
+        public Guid CategoryId { get; set; }
 
         public string Name { get; set; }
 

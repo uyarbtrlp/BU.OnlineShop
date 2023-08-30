@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BU.OnlineShop.CatalogService.API.Products.Dtos;
+using BU.OnlineShop.CatalogService.API.Dtos.Products;
 using BU.OnlineShop.CatalogService.Products;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +24,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
         public async Task<ProductDto> CreateAsync(CreateProductInput input)
         {
 
-            var product = await _productManager.CreateProductAsync(
+            var product = await _productManager.CreateAsync(
                     categoryId: input.CategoryId,
                     name: input.Name,
                     code: input.Code,
@@ -36,13 +36,21 @@ namespace BU.OnlineShop.CatalogService.Controllers
                   product, true);
 
 
-          return _mapper.Map<ProductDto>(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
         [HttpGet]
-        public async Task<List<ProductDto>> GetListAsync()
+        public async Task<List<ProductDto>> GetListAsync([FromQuery] GetProductsInput input)
         {
-            var products = await _productRepository.GetListAsync();
+            var products = await _productRepository.GetListAsync(
+                    categoryId: input.CategoryId,
+                    name: input.Name,
+                    code: input.Code,
+                    minPrice: input.MinPrice,
+                    maxPrice: input.MaxPrice,
+                    minStockCount: input.MinStockCount,
+                    maxStockCount: input.MaxStockCount
+                );
 
             return _mapper.Map<List<Product>,List<ProductDto>>(products.ToList());
         }
@@ -51,13 +59,17 @@ namespace BU.OnlineShop.CatalogService.Controllers
         [Route("{id}")]
         public async Task<ProductDto> UpdateAsync(Guid id, UpdateProductInput input)
         {
-            var product = await _productRepository.FindAsync(id);
+            var product = await _productRepository.GetAsync(id);
 
-            product.SetName(input.Name);
-            product.SetPrice(input.Price);
-            product.SetPrice(input.StockCount);
+            product = await _productManager.UpdateAsync(
+                product,
+                categoryId: input.CategoryId,
+                name: input.Name,
+                code: input.Code,
+                price: input.Price,
+                stockCount: input.StockCount);
 
-            product = await _productRepository.UpdateAsync(product, true);
+             await _productRepository.UpdateAsync(product, true);
 
             return _mapper.Map<ProductDto>(product);
         }
@@ -66,7 +78,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
         [Route("{id}")]
         public async Task DeleteAsync(Guid id)
         {
-            var product = await _productRepository.FindAsync(id);
+            var product = await _productRepository.GetAsync(id);
 
             await _productRepository.DeleteAsync(product, true);
         }

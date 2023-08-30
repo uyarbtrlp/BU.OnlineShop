@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using BU.OnlineShop.CatalogService.API.Products.Dtos;
+using BU.OnlineShop.CatalogService.API.Dtos.Categories;
+using BU.OnlineShop.CatalogService.API.Dtos.Products;
+using BU.OnlineShop.CatalogService.Categories;
 using BU.OnlineShop.CatalogService.Products;
 
 namespace BU.OnlineShop.CatalogService.Profiles
@@ -9,6 +11,7 @@ namespace BU.OnlineShop.CatalogService.Profiles
         public CatalogServiceProfile()
         {
             CreateMap<Product, ProductDto>();
+            CreateMap<Category, CategoryDto>();
         }
     }
 }

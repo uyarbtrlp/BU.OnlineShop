@@ -1,5 +1,8 @@
 using BU.OnlineShop.CatalogService.Categories;
 using BU.OnlineShop.CatalogService.Database.EntityFrameworkCore;
+using BU.OnlineShop.CatalogService.Database.Repository;
+using BU.OnlineShop.CatalogService.Domain.Categories;
+using BU.OnlineShop.CatalogService.Domain.Repository;
 using BU.OnlineShop.CatalogService.Products;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -13,9 +16,11 @@ builder.Services.AddDbContext<CatalogServiceDbContext>(options =>
 // Repository implementation
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 // Manager implementation
 builder.Services.AddTransient<IProductManager, ProductManager>();
+builder.Services.AddTransient<ICategoryManager, CategoryManager>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();

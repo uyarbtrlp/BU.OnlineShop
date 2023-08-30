@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using BU.OnlineShop.CatalogService.Domain.Entities;
+using JetBrains.Annotations;
 
 namespace BU.OnlineShop.CatalogService.Categories
 {
-    public class Category
+    public class Category : BaseEntity
     {
-        public Guid Id { get; protected set; }
 
         [NotNull]
         public string Name { get; protected set; }

@@ -1,23 +1,28 @@
-﻿namespace BU.OnlineShop.CatalogService.Products
+﻿using BU.OnlineShop.CatalogService.Domain.Repository;
+
+namespace BU.OnlineShop.CatalogService.Products
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
-        Task<IEnumerable<Product>> GetListAsync();
+        Task<IEnumerable<Product>> GetListAsync(
+            Guid? categoryId = null,
+            string name = null,
+            string code = null,
+            float? minPrice = null,
+            float? maxPrice = null,
+            int? minStockCount = null,
+            int? maxStockCount = null);
 
-        Task<long> GetCountAsync();
-
-        Task<Product> GetAsync(Guid id);
-
-        Task<Product> FindAsync(Guid id);
+        Task<long> GetCountAsync(
+            Guid? categoryId = null,
+            string name = null,
+            string code = null,
+            float? minPrice = null,
+            float? maxPrice = null,
+            int? minStockCount = null,
+            int? maxStockCount = null);
 
         Task<Product> FindAsync(string code);
 
-        Task<Product> InsertAsync(Product product, bool autoSave = false);
-
-        Task<Product> UpdateAsync(Product product, bool autoSave = false);
-
-        Task DeleteAsync(Product product, bool autoSave = false);
-
-        Task<bool> SaveChangesAsync();
     }
 }

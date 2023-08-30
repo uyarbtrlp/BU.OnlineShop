@@ -1,80 +1,26 @@
 ﻿using BU.OnlineShop.CatalogService.Database.EntityFrameworkCore;
+using BU.OnlineShop.CatalogService.Database.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BU.OnlineShop.CatalogService.Categories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        private readonly CatalogServiceDbContext _catalogServiceDbContext;
+        private readonly CatalogServiceDbContext _dbContext;
 
-        public CategoryRepository(CatalogServiceDbContext catalogServiceDbContext)
+        public CategoryRepository(CatalogServiceDbContext dbContext) : base(dbContext)
         {
-            _catalogServiceDbContext = catalogServiceDbContext;
-        }
-
-        public async Task<Category> InsertAsync(Category category, bool autoSave = false)
-        {
-            var newCategory = await _catalogServiceDbContext.AddAsync(category);
-
-            if (autoSave)
-            {
-                await SaveChangesAsync();
-            }
-
-            return newCategory.Entity;
+            _dbContext = dbContext;
         }
 
         public async Task<IEnumerable<Category>> GetListAsync()
         {
-            return await _catalogServiceDbContext.Categories.ToListAsync();
+            return await _dbContext.Categories.ToListAsync();
         }
 
         public async Task<long> GetCountAsync()
         {
-            return await _catalogServiceDbContext.Categories.LongCountAsync();
-        }
-        public async Task<Category> GetAsync(Guid id)
-        {
-            var category = await _catalogServiceDbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-
-            return category;
-        }
-        public async Task<Category> FindAsync(Guid id)
-        {
-            return await _catalogServiceDbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
-        }
-        public async Task<Category> UpdateAsync(Category Category, bool autoSave = false)
-        {
-            _catalogServiceDbContext.Attach(Category);
-
-            var updatedCategory = _catalogServiceDbContext.Categories.Update(Category).Entity;
-
-            if (autoSave)
-            {
-                await SaveChangesAsync();
-            }
-
-            return updatedCategory;
-        }
-
-        public async Task DeleteAsync(Category Category, bool autoSave = false)
-        {
-            _catalogServiceDbContext.Categories.Remove(Category);
-
-            if (autoSave)
-            {
-                await SaveChangesAsync();
-            }
-        }
-
-        public async Task<bool> SaveChangesAsync()
-        {
-            return await _catalogServiceDbContext.SaveChangesAsync() > 0;
+            return await _dbContext.Categories.LongCountAsync();
         }
     }
 }

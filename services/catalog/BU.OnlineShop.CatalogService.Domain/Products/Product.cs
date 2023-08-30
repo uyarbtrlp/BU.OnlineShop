@@ -1,11 +1,10 @@
-﻿using JetBrains.Annotations;
+﻿using BU.OnlineShop.CatalogService.Domain.Entities;
+using JetBrains.Annotations;
 
 namespace BU.OnlineShop.CatalogService.Products
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public Guid Id { get; protected set; }
-
         public Guid CategoryId { get; protected set; }
 
         [NotNull]
@@ -42,13 +41,38 @@ namespace BU.OnlineShop.CatalogService.Products
             }
 
             Id = id;
-            CategoryId = categoryId;
-            Code = code;
+            SetCategoryId(categoryId);
+            SetCode(code);
             SetName(name);
             SetPrice(price);
             SetStockCount(stockCount);
         }
 
+
+        public void SetCategoryId(Guid categoryId)
+        {
+            if (categoryId == Guid.Empty)
+            {
+                throw new ArgumentException($"{nameof(categoryId)} can not be empty!");
+            }
+
+            CategoryId = categoryId;
+        }
+
+        public void SetCode([NotNull] string code)
+        {
+            if (string.IsNullOrEmpty(code))
+            {
+                throw new ArgumentException($"{code} can not be null, empty or white space!");
+            }
+
+            if (code.Length >= ProductConsts.MaxCodeLength)
+            {
+                throw new ArgumentException($"Product name can not be longer than {ProductConsts.MaxCodeLength}");
+            }
+
+            Code = code;
+        }
         public void SetName([NotNull] string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -75,7 +99,8 @@ namespace BU.OnlineShop.CatalogService.Products
         }
 
 
-        private void SetStockCount(int stockCount)
+
+        public void SetStockCount(int stockCount)
         {
             if (StockCount < 0)
             {
@@ -84,5 +109,6 @@ namespace BU.OnlineShop.CatalogService.Products
 
             StockCount = stockCount;
         }
+
     }
 }

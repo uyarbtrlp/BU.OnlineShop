@@ -1,8 +1,8 @@
 ﻿using BU.OnlineShop.CatalogService.Categories;
+using JetBrains.Annotations;
 
 namespace BU.OnlineShop.CatalogService.Products
 {
-    //TODO: layerlama ve generic repo, unit of work. daha sonra category ile ilgili endpointler
     public class ProductManager : IProductManager
     {
         protected IProductRepository ProductRepository { get; set; }
@@ -14,7 +14,7 @@ namespace BU.OnlineShop.CatalogService.Products
             ProductRepository = productRepository;
         }
 
-        public async Task<Product> CreateProductAsync(
+        public async Task<Product> CreateAsync(
             Guid categoryId,
             string name,
             string code,
@@ -39,14 +39,53 @@ namespace BU.OnlineShop.CatalogService.Products
                   stockCount);
         }
 
-        public async Task CheckCategory(Guid categoryId)
+        public async Task<Product> UpdateAsync(
+            [NotNull] Product product,
+            Guid categoryId,
+            string name,
+            string code,
+            float price,
+            int stockCount)
+        {
+            if (product.CategoryId != categoryId)
+            {
+                await CheckCategory(categoryId);
+
+            }
+
+            if (product.Code != code)
+            {
+                await CheckCode(code);
+            }
+
+            product.SetCategoryId(categoryId);
+            product.SetName(name);
+            product.SetCode(code);
+            product.SetPrice(price);
+            product.SetStockCount(stockCount);
+
+            return product;
+        }
+
+        private async Task CheckCode(string code)
+        {
+            var existingProduct = await ProductRepository.FindAsync(code);
+
+            if (existingProduct != null)
+            {
+                throw new Exception("Product code already exist.");
+            }
+        }
+
+        private async Task CheckCategory(Guid categoryId)
         {
             var category = await CategoryRepository.FindAsync(categoryId);
 
             if (category == null)
             {
-                throw new Exception("Category can not be null.");
+                throw new Exception("Category could not be found.");
             }
         }
+
     }
 }

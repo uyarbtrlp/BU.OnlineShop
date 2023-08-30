@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{66DF9191-0F5A-4968-91EB-0171395F883A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "category", "category", "{F09A661A-8E53-48C8-9AD6-91116B73A7DF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "catalog", "catalog", "{F09A661A-8E53-48C8-9AD6-91116B73A7DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.CatalogService.API", "services\catalog\BU.OnlineShop.CatalogService.API\BU.OnlineShop.CatalogService.API.csproj", "{670D91E5-2F9B-40A4-8D00-6A2DD28CFD68}"
 EndProject

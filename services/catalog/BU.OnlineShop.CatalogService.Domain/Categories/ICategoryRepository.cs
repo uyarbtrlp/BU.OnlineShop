@@ -1,21 +1,11 @@
-﻿namespace BU.OnlineShop.CatalogService.Categories
+﻿using BU.OnlineShop.CatalogService.Domain.Repository;
+
+namespace BU.OnlineShop.CatalogService.Categories
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepository<Category>
     {
         Task<IEnumerable<Category>> GetListAsync();
 
         Task<long> GetCountAsync();
-
-        Task<Category> GetAsync(Guid id);
-
-        Task<Category> FindAsync(Guid id);
-
-        Task<Category> InsertAsync(Category Category, bool autoSave = false);
-
-        Task<Category> UpdateAsync(Category Category, bool autoSave = false);
-
-        Task DeleteAsync(Category Category, bool autoSave = false);
-
-        Task<bool> SaveChangesAsync();
     }
 }
