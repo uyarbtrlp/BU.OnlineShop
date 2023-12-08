@@ -41,24 +41,17 @@ namespace BU.OnlineShop.CatalogService.Products
 
         public async Task<Product> UpdateAsync(
             [NotNull] Product product,
-            Guid categoryId,
             string name,
             string code,
             float price,
             int stockCount)
         {
-            if (product.CategoryId != categoryId)
-            {
-                await CheckCategory(categoryId);
-
-            }
 
             if (product.Code != code)
             {
                 await CheckCode(code);
             }
 
-            product.SetCategoryId(categoryId);
             product.SetName(name);
             product.SetCode(code);
             product.SetPrice(price);

@@ -41,23 +41,14 @@ namespace BU.OnlineShop.CatalogService.Products
             }
 
             Id = id;
-            SetCategoryId(categoryId);
+            CategoryId = categoryId;
+
             SetCode(code);
             SetName(name);
             SetPrice(price);
             SetStockCount(stockCount);
         }
 
-
-        public void SetCategoryId(Guid categoryId)
-        {
-            if (categoryId == Guid.Empty)
-            {
-                throw new ArgumentException($"{nameof(categoryId)} can not be empty!");
-            }
-
-            CategoryId = categoryId;
-        }
 
         public void SetCode([NotNull] string code)
         {

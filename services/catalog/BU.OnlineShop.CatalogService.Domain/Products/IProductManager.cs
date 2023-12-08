@@ -13,7 +13,6 @@ namespace BU.OnlineShop.CatalogService.Products
             );
          Task<Product> UpdateAsync(
             [NotNull] Product product,
-            Guid categoryId,
             string name,
             string code,
             float price,

@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BU.OnlineShop.CatalogService.Database\BU.OnlineShop.CatalogService.Database.csproj" />
+	  <ProjectReference Include="..\BU.OnlineShop.BasketService.Database\BU.OnlineShop.BasketService.Database.csproj" />
 	</ItemGroup>
 
 </Project>

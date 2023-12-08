@@ -2,7 +2,6 @@
 using BU.OnlineShop.CatalogService.API.Dtos.Categories;
 using BU.OnlineShop.CatalogService.Categories;
 using BU.OnlineShop.CatalogService.Domain.Categories;
-using BU.OnlineShop.CatalogService.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BU.OnlineShop.CatalogService.API.Controllers

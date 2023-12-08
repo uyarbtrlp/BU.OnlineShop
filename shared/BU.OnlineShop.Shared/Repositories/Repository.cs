@@ -13,7 +13,7 @@ namespace BU.OnlineShop.Shared.Repository
         }
 
 
-        public async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false)
+        public virtual async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false)
         {
             var newEntity = await _dbContext.Set<TEntity>().AddAsync(entity);
 
@@ -25,7 +25,7 @@ namespace BU.OnlineShop.Shared.Repository
             return newEntity.Entity;
         }
 
-        public async Task<TEntity> GetAsync(Guid id)
+        public virtual async Task<TEntity> GetAsync(Guid id)
         {
             var entity = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
 
@@ -37,12 +37,12 @@ namespace BU.OnlineShop.Shared.Repository
             return entity;
         }
 
-        public async Task<TEntity> FindAsync(Guid id)
+        public virtual async Task<TEntity> FindAsync(Guid id)
         {
             return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = false)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = false)
         {
             _dbContext.Attach(entity);
 
@@ -56,7 +56,7 @@ namespace BU.OnlineShop.Shared.Repository
             return updatedEntity;
         }
 
-        public async Task DeleteAsync(TEntity entity, bool autoSave = false)
+        public virtual async Task DeleteAsync(TEntity entity, bool autoSave = false)
         {
             _dbContext.Set<TEntity>().Remove(entity);
 
