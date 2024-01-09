@@ -30,15 +30,6 @@ namespace BU.OnlineShop.CatalogService.Products
             float price = 0.0f,
             int stockCount = 0)
         {
-            if (string.IsNullOrEmpty(code))
-            {
-                throw new ArgumentException($"{code} can not be null, empty or white space!");
-            }
-
-            if (code.Length >= ProductConsts.MaxCodeLength)
-            {
-                throw new ArgumentException($"Product code can not be longer than {ProductConsts.MaxCodeLength}");
-            }
 
             Id = id;
             CategoryId = categoryId;
@@ -59,7 +50,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
             if (code.Length >= ProductConsts.MaxCodeLength)
             {
-                throw new ArgumentException($"Product name can not be longer than {ProductConsts.MaxCodeLength}");
+                throw new ArgumentException($"Product code can not be longer than {ProductConsts.MaxCodeLength}");
             }
 
             Code = code;
@@ -93,7 +84,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
         public void SetStockCount(int stockCount)
         {
-            if (StockCount < 0)
+            if (stockCount < 0)
             {
                 throw new ArgumentException($"{nameof(stockCount)} can not be less than 0!");
             }

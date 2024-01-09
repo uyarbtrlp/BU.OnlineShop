@@ -1,7 +1,7 @@
-﻿using BU.OnlineShop.BasketService.Domain.Baskets;
+﻿using BU.OnlineShop.BasketService.Baskets;
 using Microsoft.EntityFrameworkCore;
 
-namespace BU.OnlineShop.BasketService.Database.EntityFrameworkCore
+namespace BU.OnlineShop.BasketService.EntityFrameworkCore
 {
     public class BasketServiceDbContext : DbContext
     {

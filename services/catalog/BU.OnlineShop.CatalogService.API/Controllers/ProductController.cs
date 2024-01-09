@@ -49,7 +49,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
         }
 
         [HttpGet]
-        public async Task<List<ProductDto>> GetListAsync(GetProductsInput input)
+        public async Task<List<ProductDto>> GetListAsync([FromQuery] GetProductsInput input)
         {
             var products = await _productRepository.GetListAsync(
                     categoryId: input.CategoryId,

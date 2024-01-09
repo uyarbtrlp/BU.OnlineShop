@@ -1,6 +1,6 @@
 ﻿using BU.OnlineShop.Shared.Repository;
 
-namespace BU.OnlineShop.BasketService.Domain.Baskets
+namespace BU.OnlineShop.BasketService.Baskets
 {
     public interface IBasketRepository : IRepository<Basket>
     {

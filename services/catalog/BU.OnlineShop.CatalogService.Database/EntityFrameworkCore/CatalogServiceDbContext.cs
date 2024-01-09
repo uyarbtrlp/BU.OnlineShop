@@ -2,7 +2,7 @@
 using BU.OnlineShop.CatalogService.Products;
 using Microsoft.EntityFrameworkCore;
 
-namespace BU.OnlineShop.CatalogService.Database.EntityFrameworkCore
+namespace BU.OnlineShop.CatalogService.EntityFrameworkCore
 {
     public class CatalogServiceDbContext : DbContext
     {

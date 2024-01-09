@@ -1,9 +1,8 @@
-﻿using BU.OnlineShop.BasketService.Database.EntityFrameworkCore;
-using BU.OnlineShop.BasketService.Domain.Baskets;
+﻿using BU.OnlineShop.BasketService.EntityFrameworkCore;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace BU.OnlineShop.BasketService.Database.Baskets
+namespace BU.OnlineShop.BasketService.Baskets
 {
     public class BasketRepository : Repository<Basket>, IBasketRepository
     {

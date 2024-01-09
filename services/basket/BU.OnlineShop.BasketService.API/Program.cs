@@ -1,7 +1,6 @@
 using BU.OnlineShop.BasketService.API.Services;
-using BU.OnlineShop.BasketService.Database.Baskets;
-using BU.OnlineShop.BasketService.Database.EntityFrameworkCore;
-using BU.OnlineShop.BasketService.Domain.Baskets;
+using BU.OnlineShop.BasketService.Baskets;
+using BU.OnlineShop.BasketService.EntityFrameworkCore;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 

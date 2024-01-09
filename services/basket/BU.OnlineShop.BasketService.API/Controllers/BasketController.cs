@@ -2,7 +2,7 @@
 using BU.OnlineShop.BasketService.API.Dtos.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.CatalogService;
 using BU.OnlineShop.BasketService.API.Services;
-using BU.OnlineShop.BasketService.Domain.Baskets;
+using BU.OnlineShop.BasketService.Baskets;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BU.OnlineShop.BasketService.API.Controllers

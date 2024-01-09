@@ -1,4 +1,4 @@
-﻿namespace BU.OnlineShop.BasketService.Domain.Baskets
+﻿namespace BU.OnlineShop.BasketService.Baskets
 {
     public class BasketManager : IBasketManager
     {

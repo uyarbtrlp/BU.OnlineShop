@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BU.OnlineShop.OrderingService.Domain\BU.OnlineShop.OrderingService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
