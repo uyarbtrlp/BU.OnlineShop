@@ -2,7 +2,7 @@
 {
     public class OrderManager : IOrderManager
     {
-        public async Task<Order> CreateAsync(Guid userId, List<(Guid ProductId, string ProductName, string ProductCode, double ProductPrice, int ProductCount)> orderItems)
+        public async Task<Order> CreateAsync(Guid userId, List<OrderItem> orderItems)
         {
             Order order = new Order(
                 id: new Guid(),

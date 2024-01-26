@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    container_name: buonlineshop-rabbitmq
+    image: bitnami/rabbitmq:latest
+    ports:
+      - '5551:5551'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS=true
+    volumes:
+      - 'rabbitmq_data:/bitnami/rabbitmq/mnesia'
+    healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 30s
+        timeout: 30s
+        retries: 3
+    networks:
+      - buonlineshop-network
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '5'
+          memory: 4096M
+        reservations:
+          cpus: '1'
+          memory: 2048M        
+
+volumes:
+  rabbitmq_data:
+    name: buonlineshop_rabbitmqdata
+    driver: local
+    
+networks:
+  buonlineshop-network:
+    name: single-buonlineshop-network
+    driver: bridge
+#   external: true 

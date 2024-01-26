@@ -1,6 +1,7 @@
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.BasketService.EntityFrameworkCore;
+using BU.OnlineShop.Integration.MessageBus;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,9 @@ builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
 
 builder.Services.AddHttpClient<IPaymentService, PaymentService>(c =>
     c.BaseAddress = new Uri(builder.Configuration["RemoteServices:PaymentService:Uri"]));
+
+// Message Bus
+builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();

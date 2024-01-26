@@ -1,3 +1,5 @@
+using BU.OnlineShop.Integration.MessageBus;
+using BU.OnlineShop.OrderingService.API.MessageBus;
 using BU.OnlineShop.OrderingService.EntityFrameworkCore;
 using BU.OnlineShop.OrderingService.Orders;
 using BU.OnlineShop.Shared.Repository;
@@ -17,6 +19,13 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 // Manager implementation
 builder.Services.AddTransient<IOrderManager, OrderManager>();
+
+
+// Message Bus
+builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddHostedService<MessageBusSubscriber>();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Bu.OnlineShop.OrderingService.Abstractions;
 using BU.OnlineShop.BasketService.API.Dtos.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.CatalogService;
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
+using BU.OnlineShop.Integration.MessageBus;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace BU.OnlineShop.BasketService.API.Controllers
 {
@@ -16,13 +19,17 @@ namespace BU.OnlineShop.BasketService.API.Controllers
         private readonly ICatalogService _catalogService;
         private readonly IPaymentService _paymentService;
         private readonly IMapper _mapper;
-        public BasketController(IBasketRepository basketRepository, IBasketManager basketManager, ICatalogService catalogService, IPaymentService paymentService, IMapper mapper)
+        private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
+        public BasketController(IBasketRepository basketRepository, IBasketManager basketManager, ICatalogService catalogService, IPaymentService paymentService, IMapper mapper, IMessageBus messageBus, IConfiguration configuration)
         {
             _basketRepository = basketRepository;
             _basketManager = basketManager;
             _catalogService = catalogService;
             _paymentService = paymentService;
             _mapper = mapper;
+            _messageBus = messageBus;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -100,6 +107,11 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
             var basketDto = await GetBasketDtoAsync(basket);
 
+            if(!basketDto.Items.Any()) {
+
+                throw new Exception("There is no items in the basket!");
+            }
+
             // Payment service sync call from fake external service
 
             var isSuccessful = await _paymentService.CompleteAsync(input.CardNumber, input.CardName, input.CardExpiration, basketDto.TotalPrice);
@@ -107,7 +119,13 @@ namespace BU.OnlineShop.BasketService.API.Controllers
             if (isSuccessful)
             {
                 // Send order async call
-                // Create ETO
+                await _messageBus.PublishMessageAsync(new OrderEto()
+                {
+                    UserId = input.UserId,
+                    CreationTime = DateTime.Now,
+                    Total = basketDto.TotalPrice,
+                    Items = _mapper.Map<List<OrderItemEto>>(basketDto.Items),
+                }, OrderingServiceEventBusConsts.QueueName, OrderingServiceEventBusConsts.SendOrderRoutingKey);
 
             }
             else

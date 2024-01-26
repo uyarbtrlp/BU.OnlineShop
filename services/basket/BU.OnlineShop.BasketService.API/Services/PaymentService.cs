@@ -13,7 +13,7 @@ namespace BU.OnlineShop.BasketService.API.Services
 
         public async Task<bool> CompleteAsync(string cardNumber, string cardName, string cardExpiration, float totalPrice)
         {
-            var response = await _httpClient.PostAsJsonAsync($"/api/payment-service", new { cardNumber, cardName, cardExpiration, totalPrice });
+            var response = await _httpClient.PostAsJsonAsync($"/api/payment-service/complete", new { cardNumber, cardName, cardExpiration, totalPrice });
             return await response.ReadContentAs<bool>();
         }
     }
