@@ -71,7 +71,9 @@ namespace BU.OnlineShop.BasketService.API.Controllers
             var basket = await _basketRepository.GetByUserIdAsync(input.UserId);
             var product = await _catalogService.GetAsync(input.ProductId);
 
-            if (basket.GetProductCount(product.Id) >= product.StockCount)
+            var basketProductCount = basket.GetProductCount(product.Id);
+
+            if (basketProductCount + input.Count > product.StockCount)
             {
                 throw new Exception("Not enough porducts!");
             }
