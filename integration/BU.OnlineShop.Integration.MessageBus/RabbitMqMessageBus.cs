@@ -28,8 +28,7 @@ namespace BU.OnlineShop.Integration.MessageBus
             {
                _connection = factory.CreateConnection();
                _channel = _connection.CreateModel();
-               _channel.ExchangeDeclare(exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], type: ExchangeType.Topic);
-               _channel.QueueDeclare(_configuration["RabbitMQ:EventBus:QueueName"], true, false, false, null);
+               _channel.ExchangeDeclare(exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], type: ExchangeType.Fanout);
                _connection.ConnectionShutdown += RabbitMqConnectionShutDown;
             }
 
@@ -41,12 +40,11 @@ namespace BU.OnlineShop.Integration.MessageBus
         }
 
 
-        public async Task PublishMessageAsync(BaseEto message, string queue, string routingKey)
+        public async Task PublishMessageAsync(BaseEto message,string routingKey)
         {
 
             if (_connection.IsOpen)
             {
-                _channel.QueueBind(queue: queue, exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], routingKey: routingKey);
                 //Serialize the message
                 var json = JsonSerializer.Serialize<object>(message);
                 var body = Encoding.UTF8.GetBytes(json);

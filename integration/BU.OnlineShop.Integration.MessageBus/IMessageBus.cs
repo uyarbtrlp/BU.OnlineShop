@@ -4,6 +4,6 @@ namespace BU.OnlineShop.Integration.MessageBus
 {
     public interface IMessageBus
     {
-        Task PublishMessageAsync(BaseEto message, string queue, string routingKey);
+        Task PublishMessageAsync(BaseEto message, string routingKey);
     }
 }

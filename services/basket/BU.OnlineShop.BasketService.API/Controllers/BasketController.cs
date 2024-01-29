@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Bu.OnlineShop.OrderingService.Abstractions;
+using Bu.OnlineShop.BasketService.Abstractions;
 using BU.OnlineShop.BasketService.API.Dtos.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.CatalogService;
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.Integration.MessageBus;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace BU.OnlineShop.BasketService.API.Controllers
 {
@@ -120,14 +119,14 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
             if (isSuccessful)
             {
-                // Send order async call
-                await _messageBus.PublishMessageAsync(new OrderEto()
+                // Publish the message for whoever interest
+                await _messageBus.PublishMessageAsync(new BasketEto()
                 {
                     UserId = input.UserId,
                     CreationTime = DateTime.Now,
                     Total = basketDto.TotalPrice,
-                    Items = _mapper.Map<List<OrderItemEto>>(basketDto.Items),
-                }, OrderingServiceEventBusConsts.QueueName, OrderingServiceEventBusConsts.SendOrderRoutingKey);
+                    Items = _mapper.Map<List<BasketItemEto>>(basketDto.Items),
+                }, BasketServiceEventBusConsts.CheckoutRoutingKey);
 
             }
             else

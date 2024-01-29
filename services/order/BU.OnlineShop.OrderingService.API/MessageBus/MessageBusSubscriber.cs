@@ -1,5 +1,4 @@
-﻿using Bu.OnlineShop.OrderingService.Abstractions;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -11,7 +10,7 @@ namespace BU.OnlineShop.OrderingService.API.MessageBus
         private readonly IEventProcessor _eventProcessor;
         private IConnection _connection;
         private IModel _channel;
-        private string _queueName;
+        private string _queue;
 
         public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor)
         {
@@ -34,9 +33,9 @@ namespace BU.OnlineShop.OrderingService.API.MessageBus
             _connection = factory.CreateConnection();
 
             _channel = _connection.CreateModel();
-            _channel.ExchangeDeclare(exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], ExchangeType.Topic);
-            _queueName = _channel.QueueDeclare(_configuration["RabbitMQ:EventBus:QueueName"], true, false, false, null).QueueName;
-            _channel.QueueBind(queue: _queueName, exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], routingKey: OrderingServiceEventBusConsts.SendOrderRoutingKey );
+            _channel.ExchangeDeclare(exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], ExchangeType.Fanout);
+            _queue = _channel.QueueDeclare(_configuration["RabbitMQ:EventBus:QueueName"], true, false, false, null).QueueName;
+            _channel.QueueBind(queue: _queue, exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], routingKey: "");
             _connection.ConnectionShutdown += RabbitMqConnectionShutDown;
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -54,7 +53,7 @@ namespace BU.OnlineShop.OrderingService.API.MessageBus
                 _eventProcessor.ProcessEventAsync(message, ea.RoutingKey);
             };
 
-            _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
+            _channel.BasicConsume(queue: _queue, autoAck: true, consumer: consumer);
             return Task.CompletedTask;
         }
 

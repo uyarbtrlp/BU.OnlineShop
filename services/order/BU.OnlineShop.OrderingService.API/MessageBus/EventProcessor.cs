@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bu.OnlineShop.BasketService.Abstractions;
 using Bu.OnlineShop.OrderingService.Abstractions;
 using BU.OnlineShop.OrderingService.Orders;
 using System.Text.Json;
@@ -19,7 +20,7 @@ namespace BU.OnlineShop.OrderingService.API.MessageBus
         public async Task ProcessEventAsync(string message, string routingKey)
         {
             // Add the order to db
-            if(routingKey == OrderingServiceEventBusConsts.SendOrderRoutingKey)
+            if(routingKey == BasketServiceEventBusConsts.CheckoutRoutingKey)
             {
                 using(var scope = _serviceScopeFactory.CreateScope())
                 {
