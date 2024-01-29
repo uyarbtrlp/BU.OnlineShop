@@ -1,4 +1,5 @@
 ﻿using BU.OnlineShop.OrderingService.EntityFrameworkCore;
+using BU.OnlineShop.Shared.Extensions;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,39 @@ namespace BU.OnlineShop.OrderingService.Orders
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Order>> GetListByUserId(Guid userId)
+        public async Task<IEnumerable<Order>> GetListAsync(
+            Guid? userId = null,
+            OrderStatus? orderStatus = null
+         )
         {
-            return await _dbContext.Orders.Include(x => x.OrderItems).Where(x => x.UserId == userId).ToListAsync();
+            var query = await GetListQueryAsync(
+                userId,
+                orderStatus);
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<long> GetCountAsync(
+            Guid? userId = null,
+            OrderStatus? orderStatus = null)
+        {
+            var query = await GetListQueryAsync(
+                userId,
+                orderStatus);
+
+            return await query.LongCountAsync();
+        }
+
+        private async Task<IQueryable<Order>> GetListQueryAsync(
+            Guid? userId = null,
+            OrderStatus? orderStatus = null)
+        {
+            var query = _dbContext.Set<Order>().Include(x => x.OrderItems)
+                .AsNoTracking()
+                .WhereIf(userId.HasValue, e => e.UserId == userId)
+                .WhereIf(orderStatus.HasValue, e => e.OrderStatus == orderStatus);
+
+            return query;
         }
     }
 }

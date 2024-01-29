@@ -13,35 +13,22 @@ namespace BU.OnlineShop.OrderingService.API.Controllers
 
         protected IMapper Mapper { get; }
 
-        public OrderController(IOrderRepository orderRepository)
+        public OrderController(IOrderRepository orderRepository, IMapper mapper)
         {
             OrderRepository = orderRepository;
+            Mapper = mapper;
         }
 
         [HttpGet]
-        [Route("{userId}")]
-        public async Task<List<OrderDto>> GetListByUserId(Guid userId)
+        public async Task<List<OrderDto>> GetlListAsync([FromQuery] GetOrdersInput input)
         {
-            var orders = await OrderRepository.GetListByUserId(userId);
+            var orders = await OrderRepository.GetListAsync(
+                userId: input.UserId,
+                orderStatus: input.OrderStatus);
 
-            return GetOrderDtoMapping(orders.ToList());
+            return Mapper.Map<List<Order>, List<OrderDto>>(orders.ToList());
         }
 
-        private List<OrderDto> GetOrderDtoMapping(List<Order> orders)
-        {
-            List<OrderDto> dtoList = new List<OrderDto>();
-
-            foreach (var order in orders) {
-
-                dtoList.Add(new OrderDto()
-                {
-                    UserId = order.UserId,
-                    OrderStatus = order.OrderStatus,
-                    OrderItems = Mapper.Map<List<OrderItem>, List<OrderItemDto>>(order.OrderItems)
-                });
-            }
-
-            return dtoList;
-        }
+        //TODO: look the product stock update
     }
 }
