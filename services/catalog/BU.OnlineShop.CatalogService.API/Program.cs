@@ -1,6 +1,8 @@
+using BU.OnlineShop.CatalogService.API.MessageBus;
 using BU.OnlineShop.CatalogService.Categories;
 using BU.OnlineShop.CatalogService.EntityFrameworkCore;
 using BU.OnlineShop.CatalogService.Products;
+using BU.OnlineShop.Integration.MessageBus;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -19,6 +21,12 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 // Manager implementation
 builder.Services.AddTransient<IProductManager, ProductManager>();
 builder.Services.AddTransient<ICategoryManager, CategoryManager>();
+
+// Message Bus
+// Message Bus
+builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddHostedService<MessageBusSubscriber>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();

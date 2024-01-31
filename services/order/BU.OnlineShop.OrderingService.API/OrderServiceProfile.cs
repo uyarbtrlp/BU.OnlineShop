@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bu.OnlineShop.BasketService.Abstractions;
 using Bu.OnlineShop.OrderingService.Abstractions;
 using BU.OnlineShop.OrderingService.API.Dtos.Orders;
 using BU.OnlineShop.OrderingService.Orders;
@@ -11,7 +12,7 @@ namespace BU.OnlineShop.OrderingService.API
         {
             CreateMap<Order, OrderDto>();
             CreateMap<OrderItem, OrderItemDto>();
-            CreateMap<OrderItemEto, OrderItem>()
+            CreateMap<BasketItemEto, OrderItem>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
                 .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.Code))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name))

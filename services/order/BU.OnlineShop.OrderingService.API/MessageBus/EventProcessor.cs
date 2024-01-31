@@ -27,8 +27,8 @@ namespace BU.OnlineShop.OrderingService.API.MessageBus
                     var orderManager = scope.ServiceProvider.GetService<IOrderManager>();
                     var orderRepository = scope.ServiceProvider.GetService<IOrderRepository>();
 
-                    var orderEto = JsonSerializer.Deserialize<OrderEto>(message);
-                    var order = await orderManager.CreateAsync(orderEto.UserId, _mapper.Map<List<OrderItemEto>, List<OrderItem>>(orderEto.Items));
+                    var basketEto = JsonSerializer.Deserialize<BasketEto>(message);
+                    var order = await orderManager.CreateAsync(basketEto.UserId, _mapper.Map<List<BasketItemEto>, List<OrderItem>>(basketEto.Items));
                     await orderRepository.InsertAsync(order, true);
                 }
             }

@@ -17,6 +17,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\integration\BU.OnlineShop.Integration.MessageBus\BU.OnlineShop.Integration.MessageBus.csproj" />
+		<ProjectReference Include="..\..\basket\BU.OnlineShop.BasketService.Abstractions\BU.OnlineShop.BasketService.Abstractions.csproj" />
 		<ProjectReference Include="..\BU.OnlineShop.CatalogService.Database\BU.OnlineShop.CatalogService.Database.csproj" />
 	</ItemGroup>
 
