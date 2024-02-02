@@ -1,9 +1,12 @@
+using BU.OnlineShop.CatalogService.API;
 using BU.OnlineShop.CatalogService.API.MessageBus;
 using BU.OnlineShop.CatalogService.Categories;
 using BU.OnlineShop.CatalogService.EntityFrameworkCore;
 using BU.OnlineShop.CatalogService.Products;
 using BU.OnlineShop.Integration.MessageBus;
+using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -47,8 +50,13 @@ builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 builder.Services.AddHostedService<MessageBusSubscriber>();
 
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = ctx => new ValidationResponseHandler();
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -66,6 +74,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.AddErrorHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

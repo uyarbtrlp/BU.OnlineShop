@@ -1,4 +1,6 @@
 ﻿using BU.OnlineShop.CatalogService.Categories;
+using BU.OnlineShop.CatalogService.Domain.Shared.Categories;
+using BU.OnlineShop.CatalogService.Domain.Shared.Products;
 using JetBrains.Annotations;
 
 namespace BU.OnlineShop.CatalogService.Products
@@ -27,7 +29,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
             if (existingProduct != null)
             {
-                throw new Exception("Product code already exist.");
+                throw new ProductCodeExistException("Product code already exists.");
             }
 
             return new Product(
@@ -66,7 +68,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
             if (existingProduct != null)
             {
-                throw new Exception("Product code already exist.");
+                throw new ProductCodeExistException("Product code already exists.");
             }
         }
 
@@ -76,7 +78,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
             if (category == null)
             {
-                throw new Exception("Category could not be found.");
+                throw new CategoryNotFoundException("Category could not be found.");
             }
         }
 

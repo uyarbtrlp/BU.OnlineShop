@@ -1,4 +1,6 @@
-﻿namespace BU.OnlineShop.BasketService.Baskets
+﻿using Bu.OnlineShop.BasketService.Domain.Shared.Baskets;
+
+namespace BU.OnlineShop.BasketService.Baskets
 {
     public class BasketManager : IBasketManager
     {
@@ -12,9 +14,9 @@
         {
             var basket = await _basketRepository.FindByUserIdAsync(userId: userId);
 
-            if(basket != null)
+            if (basket != null)
             {
-                throw new Exception("This user already has the basket");
+                throw new UserAlreadyHasBasketException("This user already has the basket");
             }
 
             return new Basket(userId);

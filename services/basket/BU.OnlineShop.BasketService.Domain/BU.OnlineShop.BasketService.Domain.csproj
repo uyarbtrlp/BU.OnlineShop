@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\shared\BU.OnlineShop.Shared\BU.OnlineShop.Shared.csproj" />
+    <ProjectReference Include="..\Bu.OnlineShop.BasketService.Domain.Shared\Bu.OnlineShop.BasketService.Domain.Shared.csproj" />
   </ItemGroup>
+
+
 
 </Project>

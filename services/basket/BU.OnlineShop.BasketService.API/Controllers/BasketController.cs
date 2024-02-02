@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Bu.OnlineShop.BasketService.Abstractions;
+using Bu.OnlineShop.BasketService.Domain.Shared.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.CatalogService;
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
+using BU.OnlineShop.BasketService.Domain.Shared.Baskets;
 using BU.OnlineShop.Integration.MessageBus;
 using Microsoft.AspNetCore.Mvc;
 
@@ -74,7 +76,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
             if (basketProductCount + input.Count > product.StockCount)
             {
-                throw new Exception("Not enough porducts!");
+                throw new NotEnoughProductsException("Not enough porducts!");
             }
 
             basket.AddProduct(product.Id, input.Count);
@@ -110,7 +112,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
             if(!basketDto.Items.Any()) {
 
-                throw new Exception("There is no items in the basket!");
+                throw new BasketItemDoesNotExistException("There is no item in the basket!");
             }
 
             // Payment service sync call from fake external service
@@ -131,7 +133,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
             }
             else
             {
-                throw new Exception("Payment is not successfull. Please try again!");
+                throw new PaymentNotSuccessfulException("Payment is not successfull. Please try again!");
             }
 
             basket.DeleteAllProducts();

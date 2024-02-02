@@ -1,4 +1,5 @@
 ﻿using BU.OnlineShop.Shared.Entities;
+using BU.OnlineShop.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BU.OnlineShop.Shared.Repository
@@ -31,7 +32,7 @@ namespace BU.OnlineShop.Shared.Repository
 
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity));
+                throw new EntityNotFoundException(id, nameof(entity));
             }
 
             return entity;

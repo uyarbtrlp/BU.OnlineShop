@@ -11,11 +11,13 @@ namespace BU.OnlineShop.CatalogService.API.MessageBus
         private IConnection _connection;
         private IModel _channel;
         private string _queue;
+        private readonly ILogger<MessageBusSubscriber> _logger;
 
-        public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor)
+        public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor, ILogger<MessageBusSubscriber> logger)
         {
             _configuration = configuration;
             _eventProcessor = eventProcessor;
+            _logger = logger;
 
             InitializeRabbitMQ();
         }
@@ -59,8 +61,7 @@ namespace BU.OnlineShop.CatalogService.API.MessageBus
 
         private void RabbitMqConnectionShutDown(object? sender, ShutdownEventArgs e)
         {
-            //TODO: Logging
-            Console.WriteLine($"Connection lost : {e.Exception}");
+            _logger.LogError($"Connection failed : {e.Exception.Message}");
         }
 
         public override void Dispose()

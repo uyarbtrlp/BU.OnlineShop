@@ -28,7 +28,5 @@ namespace BU.OnlineShop.OrderingService.API.Controllers
 
             return Mapper.Map<List<Order>, List<OrderDto>>(orders.ToList());
         }
-
-        //TODO: look the product stock update
     }
 }

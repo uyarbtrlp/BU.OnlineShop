@@ -9,35 +9,45 @@ namespace BU.OnlineShop.CatalogService.API.MessageBus
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IMapper _mapper;
+        private readonly ILogger<EventProcessor> _logger;
 
-        public EventProcessor(IServiceScopeFactory serviceScopeFactory, IMapper mapper)
+        public EventProcessor(IServiceScopeFactory serviceScopeFactory, IMapper mapper, ILogger<EventProcessor> logger)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task ProcessEventAsync(string message, string routingKey)
         {
-            // Add the order to db
-            if (routingKey == BasketServiceEventBusConsts.CheckoutRoutingKey)
+            try
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                // Update the product
+                if (routingKey == BasketServiceEventBusConsts.CheckoutRoutingKey)
                 {
-                    var productManager = scope.ServiceProvider.GetService<IProductManager>();
-                    var productRepository = scope.ServiceProvider.GetService<IProductRepository>();
-
-                    var basketEto = JsonSerializer.Deserialize<BasketEto>(message);
-
-                    foreach (var basketItem in basketEto.Items)
+                    using (var scope = _serviceScopeFactory.CreateScope())
                     {
-                        var product = await productRepository.GetAsync(basketItem.ProductId);
+                        var productManager = scope.ServiceProvider.GetService<IProductManager>();
+                        var productRepository = scope.ServiceProvider.GetService<IProductRepository>();
 
-                        product.SetStockCount(product.StockCount - basketItem.Count);
+                        var basketEto = JsonSerializer.Deserialize<BasketEto>(message);
 
-                        await productRepository.UpdateAsync(product, true);
+                        foreach (var basketItem in basketEto.Items)
+                        {
+                            var product = await productRepository.GetAsync(basketItem.ProductId);
+
+                            product.SetStockCount(product.StockCount - basketItem.Count);
+
+                            await productRepository.UpdateAsync(product, true);
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error has been occurred while processing the event : ${ex.Message}");
+            }
+
         }
     }
 }

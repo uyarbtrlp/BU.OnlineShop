@@ -1,5 +1,6 @@
 ﻿using BU.OnlineShop.Integration.Messages;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
@@ -12,10 +13,12 @@ namespace BU.OnlineShop.Integration.MessageBus
 
         private readonly IConnection _connection;
         private readonly IModel _channel;
+        private readonly ILogger<RabbitMqMessageBus> _logger;
 
-        public RabbitMqMessageBus(IConfiguration configuration)
+        public RabbitMqMessageBus(IConfiguration configuration, ILogger<RabbitMqMessageBus> logger)
         {
             _configuration = configuration;
+            _logger = logger;
 
             var factory = new ConnectionFactory
             {
@@ -26,16 +29,15 @@ namespace BU.OnlineShop.Integration.MessageBus
 
             try
             {
-               _connection = factory.CreateConnection();
-               _channel = _connection.CreateModel();
-               _channel.ExchangeDeclare(exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], type: ExchangeType.Fanout);
-               _connection.ConnectionShutdown += RabbitMqConnectionShutDown;
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+                _channel.ExchangeDeclare(exchange: _configuration["RabbitMQ:EventBus:ExchangeName"], type: ExchangeType.Fanout);
+                _connection.ConnectionShutdown += RabbitMqConnectionShutDown;
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                //TODO: Logging
-                Console.WriteLine($"Connection failed : {ex.Message}");
+                _logger.LogError($"Connection failed : {ex.Message}");
             }
         }
 
@@ -67,8 +69,7 @@ namespace BU.OnlineShop.Integration.MessageBus
 
         private void RabbitMqConnectionShutDown(object? sender, ShutdownEventArgs e)
         {
-            //TODO: Logging
-            Console.WriteLine($"Connection lost : {e.Exception}");
+            _logger.LogError($"Connection failed : {e.Exception.Message}");
         }
     }
 }

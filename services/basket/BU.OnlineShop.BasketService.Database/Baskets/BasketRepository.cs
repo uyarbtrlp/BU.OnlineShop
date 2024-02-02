@@ -1,4 +1,5 @@
 ﻿using BU.OnlineShop.BasketService.EntityFrameworkCore;
+using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ namespace BU.OnlineShop.BasketService.Baskets
 
             if (basket == null)
             {
-                throw new ArgumentNullException(nameof(basket));
+                throw new EntityNotFoundException(userIid, nameof(Basket));
             }
 
             return basket;
