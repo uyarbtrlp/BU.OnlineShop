@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using BU.OnlineShop.CatalogService.API.Dtos.Products;
 using BU.OnlineShop.CatalogService.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BU.OnlineShop.CatalogService.Controllers
 {
     [Route("api/catalog-service/products")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;

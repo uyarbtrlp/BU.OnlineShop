@@ -53,6 +53,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.BasketService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bu.OnlineShop.BasketService.Domain.Shared", "services\basket\Bu.OnlineShop.BasketService.Domain.Shared\Bu.OnlineShop.BasketService.Domain.Shared.csproj", "{3D23B004-EAB2-4BD1-82FE-2A8200717337}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity", "identity", "{FD8B2E67-13A5-4540-95E7-C4E393AD4829}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.Identity", "services\identity\BU.OnlineShop.Identity\BU.OnlineShop.Identity.csproj", "{BE1D397F-1E9A-4C91-8E93-07BFE33A768A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +135,10 @@ Global
 		{3D23B004-EAB2-4BD1-82FE-2A8200717337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D23B004-EAB2-4BD1-82FE-2A8200717337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D23B004-EAB2-4BD1-82FE-2A8200717337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE1D397F-1E9A-4C91-8E93-07BFE33A768A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE1D397F-1E9A-4C91-8E93-07BFE33A768A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE1D397F-1E9A-4C91-8E93-07BFE33A768A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE1D397F-1E9A-4C91-8E93-07BFE33A768A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +166,8 @@ Global
 		{ABBB7CE2-5C51-41FD-93A9-D6FA1E646257} = {61DE1BBF-F9E2-44AA-913C-932617F84EB2}
 		{CCDBC86E-A4F6-4C8D-94AB-E8BA17489DE2} = {16C2FACA-393C-4236-B887-793185D237C5}
 		{3D23B004-EAB2-4BD1-82FE-2A8200717337} = {16C2FACA-393C-4236-B887-793185D237C5}
+		{FD8B2E67-13A5-4540-95E7-C4E393AD4829} = {66DF9191-0F5A-4968-91EB-0171395F883A}
+		{BE1D397F-1E9A-4C91-8E93-07BFE33A768A} = {FD8B2E67-13A5-4540-95E7-C4E393AD4829}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9DF004C8-838B-4D3C-9EFB-1A0B0ABE3243}

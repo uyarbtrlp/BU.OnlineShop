@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using BU.OnlineShop.CatalogService.API.Dtos.Categories;
 using BU.OnlineShop.CatalogService.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BU.OnlineShop.CatalogService.API.Controllers
 {
     [Route("api/catalog-service/categories")]
     [ApiController]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;

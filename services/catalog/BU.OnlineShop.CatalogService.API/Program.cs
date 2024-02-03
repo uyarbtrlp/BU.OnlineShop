@@ -6,7 +6,10 @@ using BU.OnlineShop.CatalogService.Products;
 using BU.OnlineShop.Integration.MessageBus;
 using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -50,9 +53,21 @@ builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 builder.Services.AddHostedService<MessageBusSubscriber>();
 
+var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://localhost:5001";
+        options.Audience = "catalogservice";
+    });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddControllers()
+builder.Services.AddControllers(configure =>
+{
+    configure.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy));
+})
     .ConfigureApiBehaviorOptions(options =>
     {
         options.InvalidModelStateResponseFactory = ctx => new ValidationResponseHandler();
@@ -78,6 +93,7 @@ if (app.Environment.IsDevelopment())
 app.AddErrorHandler();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
