@@ -1,0 +1,24 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7235"
+  },
+  "Routes": [
+    {
+      "ServiceKey": "CatalogService",
+      "DownstreamPathTemplate": "/api/catalog-service/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7008
+        }
+      ],
+      "UpstreamPathTemplate": "/api/catalog-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "catalogservice.fullaccess" ]
+      }
+    }
+  ]
+}
