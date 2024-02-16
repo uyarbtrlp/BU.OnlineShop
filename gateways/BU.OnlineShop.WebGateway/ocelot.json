@@ -16,8 +16,25 @@
       "UpstreamPathTemplate": "/api/catalog-service/{everything}",
       "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
         "AllowedScopes": [ "catalogservice.fullaccess" ]
+      }
+    },
+    {
+      "ServiceKey": "BasketService",
+      "DownstreamPathTemplate": "/api/basket-service/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7202
+        }
+      ],
+      "UpstreamPathTemplate": "/api/basket-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "basketservice.fullaccess" ]
       }
     }
   ]

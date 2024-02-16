@@ -21,21 +21,29 @@ namespace BU.OnlineShop.Identity
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("test",new List<string>()
+                {
+                    "test"
+                })
             };
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
                 new ApiResource("catalogservice", "Catalog Service APIs")
                 {
-                    Scopes = { "catalogservice.fullaccess" }
+                    Scopes = { "catalogservice.fullaccess" },
+                    UserClaims = new[]
+                    {
+                        "email",
+                        "email_verified",
+                        "name",
+                        "test"
+                    }
+
                 },
                 new ApiResource("basketservice", "Basket Service APIs")
                 {
                     Scopes = { "basketservice.fullaccess" }
-                },
-                    new ApiResource("onlineshopwebgateway", "OnlineShop Web Gateway")
-                {
-                    Scopes = { "onlineshopwebgateway.fullaccess" }
                 }
             };
 
@@ -43,8 +51,7 @@ namespace BU.OnlineShop.Identity
             new ApiScope[]
             {
                 new ApiScope("catalogservice.fullaccess"),
-                new ApiScope("basketservice.fullaccess"),
-                new ApiScope("onlineshopwebgateway.fullaccess")
+                new ApiScope("basketservice.fullaccess")
             };
 
         public static IEnumerable<Client> Clients =>
@@ -65,7 +72,7 @@ namespace BU.OnlineShop.Identity
                         Configuration["IdentityServer:Resources:CatalogService:BaseUrl"],
                         Configuration["IdentityServer:Resources:BasketService:BaseUrl"],
                     },
-                    AllowedScopes = { "catalogservice.fullaccess", "basketservice.fullaccess", "onlineshopwebgateway.fullaccess" },
+                    AllowedScopes = { "openid", "profile", "email", "catalogservice.fullaccess", "basketservice.fullaccess"},
                     RequireConsent = false,
                     RequireClientSecret = false
                 },

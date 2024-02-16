@@ -18,14 +18,14 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
 builder.Services.AddControllers();
 builder.Services.AddOcelot();
 
-var authenticationScheme = "OnlineShopWebGatewayAuthenticationScheme";
+//var authenticationScheme = "OnlineShopWebGatewayAuthenticationScheme";
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(authenticationScheme,options =>
-    {
-        options.Authority = authServerUrl;
-        options.Audience = "onlineshopwebgateway";
-    });
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(authenticationScheme,options =>
+//    {
+//        options.Authority = authServerUrl;
+//        options.Audience = "OnlineShop_Swagger";
+//    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -44,7 +44,8 @@ builder.Services.AddSwaggerGen(options =>
                 Scopes = new
                 Dictionary<string, string> /* Requested scopes for authorization code request and descriptions for swagger UI only */
                 {
-                    {"catalogservice.fullaccess", "Catalog Service API"}
+                    {"catalogservice.fullaccess", "Catalog Service API"},
+                    {"basketservice.fullaccess", "Basket Service API"}
                 },
                 TokenUrl = tokenUrl
             }
@@ -65,10 +66,6 @@ builder.Services.AddSwaggerGen(options =>
                      Array.Empty<string>()
                  }
          });
-
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Web Gateway API", Version = "v1" });
-    options.DocInclusionPredicate((docName, description) => true);
-    options.CustomSchemaIds(type => type.FullName);
 });
 
 builder.Services.AddCors(options =>
