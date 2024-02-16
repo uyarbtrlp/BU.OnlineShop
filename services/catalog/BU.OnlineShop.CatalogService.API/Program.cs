@@ -54,10 +54,6 @@ builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 builder.Services.AddHostedService<MessageBusSubscriber>();
 
-var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
-    .RequireAuthenticatedUser()
-    .Build();
-
 var authServerUrl = configuration["AuthServer:Authority"];
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -69,7 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers(configure =>
 {
-    configure.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy));
+    
 })
     .ConfigureApiBehaviorOptions(options =>
     {
@@ -121,8 +117,6 @@ builder.Services.AddSwaggerGen(options =>
     options.DocInclusionPredicate((docName, description) => true);
     options.CustomSchemaIds(type => type.FullName);
 });
-
-var test = configuration["CorsOrigins"];
 
 builder.Services.AddCors(options =>
 {

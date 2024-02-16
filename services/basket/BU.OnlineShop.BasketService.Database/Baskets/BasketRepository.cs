@@ -16,7 +16,9 @@ namespace BU.OnlineShop.BasketService.Baskets
 
         public async Task<Basket> GetByUserIdAsync(Guid userIid)
         {
-            var basket = await _dbContext.Baskets.Include(x=>x.BasketLines).FirstOrDefaultAsync(x => x.UserId == userIid);
+            var basket = await _dbContext.Baskets
+                .Include(x=>x.BasketLines)
+                .FirstOrDefaultAsync(x => x.UserId == userIid);
 
             if (basket == null)
             {
@@ -33,7 +35,7 @@ namespace BU.OnlineShop.BasketService.Baskets
 
         public async Task<bool> ExistAsync(Guid id)
         {
-           return await _dbContext.Baskets.AnyAsync(x => x.UserId == id);
+           return await _dbContext.Baskets.AnyAsync(x => x.UserId == id || x.Id == id);
         }
     }
 }

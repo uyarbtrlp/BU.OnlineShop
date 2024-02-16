@@ -45,6 +45,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
         [Route("{id}")]
         public async Task<ProductDto> GetAsync(Guid id)
         {
+            var test = HttpContext.User.Claims;
             var product = await _productRepository.GetAsync(id);
 
             return _mapper.Map<Product, ProductDto>(product);
@@ -53,8 +54,6 @@ namespace BU.OnlineShop.CatalogService.Controllers
         [HttpGet]
         public async Task<List<ProductDto>> GetListAsync([FromQuery] GetProductsInput input)
         {
-            //var test2 = HttpContext.Request.Headers["CurrentUser"][0];
-            var test = HttpContext.User.Claims;
             var products = await _productRepository.GetListAsync(
                     categoryId: input.CategoryId,
                     name: input.Name,

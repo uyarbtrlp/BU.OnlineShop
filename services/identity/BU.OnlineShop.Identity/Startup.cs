@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using BU.OnlineShop.Identity.Services;
 using IdentityServer4;
 using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +53,8 @@ namespace BU.OnlineShop.Identity
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+            builder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
 
             //TODO: Bütün her şeyi configurable yap.
             builder.Services.AddCors(options =>

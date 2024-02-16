@@ -8,7 +8,7 @@ namespace BU.OnlineShop.Shared.Exceptions
         {
             Code = null;
             Message = $"There is no entity with {id} in {entityName} type.";
-            StatusCode = HttpStatusCode.Forbidden;
+            StatusCode = HttpStatusCode.NotFound;
         }
     }
 }

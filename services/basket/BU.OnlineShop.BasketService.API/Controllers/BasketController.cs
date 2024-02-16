@@ -7,12 +7,15 @@ using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.BasketService.Domain.Shared.Baskets;
 using BU.OnlineShop.Integration.MessageBus;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BU.OnlineShop.BasketService.API.Controllers
 {
-    [Route("api/basket-service/baskets")]
+    [Route("api/basket-service/basket")]
     [ApiController]
+    [Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -33,22 +36,12 @@ namespace BU.OnlineShop.BasketService.API.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost]
-        public async Task<BasketDto> CreateAsync(CreateInput input)
-        {
-            var basket = await _basketManager.CreateAsync(input.UserId);
-
-            await _basketRepository.InsertAsync(basket, true);
-
-            return _mapper.Map<BasketDto>(basket);
-
-        }
-
 
         [HttpGet]
-        [Route("{userId}")]
-        public async Task<BasketDto> GetByUserIdAsync(Guid userId)
+        public async Task<BasketDto> GetByUserIdAsync()
         {
+            var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             var basket = await _basketRepository.GetByUserIdAsync(userId);
 
             return await GetBasketDtoAsync(basket);
@@ -56,9 +49,11 @@ namespace BU.OnlineShop.BasketService.API.Controllers
         }
 
         [HttpGet]
-        [Route("exists/{userId}")]
-        public async Task<bool> ExistAsync(Guid userId)
+        [Route("exist")]
+        public async Task<bool> ExistAsync()
         {
+            var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             var exist = await _basketRepository.ExistAsync(userId);
 
             return exist;
@@ -69,7 +64,16 @@ namespace BU.OnlineShop.BasketService.API.Controllers
         [Route("add-product")]
         public async Task<BasketDto> AddProductAsync(AddProductInput input)
         {
-            var basket = await _basketRepository.GetByUserIdAsync(input.UserId);
+            var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var basket = await _basketRepository.FindByUserIdAsync(userId);
+
+            if (basket == null)
+            {
+                basket = await _basketManager.CreateAsync(userId);
+
+                await _basketRepository.InsertAsync(basket, true);
+            }
             var product = await _catalogService.GetAsync(input.ProductId);
 
             var basketProductCount = basket.GetProductCount(product.Id);
@@ -91,7 +95,9 @@ namespace BU.OnlineShop.BasketService.API.Controllers
         [Route("remove-product")]
         public async Task<BasketDto> RemoveProductAsync(RemoveProductInput input)
         {
-            var basket = await _basketRepository.GetByUserIdAsync(input.UserId);
+            var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var basket = await _basketRepository.GetByUserIdAsync(userId);
 
             var product = await _catalogService.GetAsync(input.ProductId);
 
@@ -106,11 +112,14 @@ namespace BU.OnlineShop.BasketService.API.Controllers
         [Route("checkout")]
         public async Task CheckoutAsync(CheckoutInput input)
         {
-            var basket = await _basketRepository.GetByUserIdAsync(input.UserId);
+            var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var basket = await _basketRepository.GetByUserIdAsync(userId);
 
             var basketDto = await GetBasketDtoAsync(basket);
 
-            if(!basketDto.Items.Any()) {
+            if (!basketDto.Items.Any())
+            {
 
                 throw new BasketItemDoesNotExistException("There is no item in the basket!");
             }
@@ -124,7 +133,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
                 // Publish the message for whoever interest
                 await _messageBus.PublishMessageAsync(new BasketEto()
                 {
-                    UserId = input.UserId,
+                    UserId = userId,
                     CreationTime = DateTime.Now,
                     Total = basketDto.TotalPrice,
                     Items = _mapper.Map<List<BasketItemEto>>(basketDto.Items),

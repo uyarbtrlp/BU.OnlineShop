@@ -58,15 +58,26 @@ namespace BU.OnlineShop.Identity
                     RedirectUris = {
                         $"{Configuration["IdentityServer:Clients:OnlineShopSwagger:BaseUrl"]}/swagger/oauth2-redirect.html",
                         $"{Configuration["IdentityServer:Resources:CatalogService:BaseUrl"]}/swagger/oauth2-redirect.html",
+                        $"{Configuration["IdentityServer:Resources:BasketService:BaseUrl"]}/swagger/oauth2-redirect.html",
                     },
                     AllowedCorsOrigins = {
                         Configuration["IdentityServer:Clients:OnlineShopSwagger:BaseUrl"],
                         Configuration["IdentityServer:Resources:CatalogService:BaseUrl"],
+                        Configuration["IdentityServer:Resources:BasketService:BaseUrl"],
                     },
-                    AllowedScopes = { "catalogservice.fullaccess", "onlineshopwebgateway.fullaccess" },
+                    AllowedScopes = { "catalogservice.fullaccess", "basketservice.fullaccess", "onlineshopwebgateway.fullaccess" },
                     RequireConsent = false,
                     RequireClientSecret = false
-                }
+                },
+                new Client
+                {
+                    ClientId = "BasketServiceTokenExchangeClient",
+                    ClientName = "Basket Service Token Exchange Client",
+                    AllowedGrantTypes = new[] { "urn:ietf:params:oauth:grant-type:token-exchange" },
+                    ClientSecrets = { new Secret("1q2w3e*".Sha256()) },
+                    AllowedScopes = {
+                         "openid", "profile", "catalogservice.fullaccess" }
+                },
             };
     }
 }
