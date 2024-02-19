@@ -8,7 +8,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
 {
     [Route("api/catalog-service/products")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -43,6 +43,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [AllowAnonymous]
         public async Task<ProductDto> GetAsync(Guid id)
         {
             var test = HttpContext.User.Claims;
@@ -52,6 +53,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<List<ProductDto>> GetListAsync([FromQuery] GetProductsInput input)
         {
             var products = await _productRepository.GetListAsync(

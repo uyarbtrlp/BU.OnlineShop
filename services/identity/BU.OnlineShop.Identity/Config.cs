@@ -32,7 +32,8 @@ namespace BU.OnlineShop.Identity
                     {
                         "email",
                         "email_verified",
-                        "name"
+                        "name",
+                        "role"
                     }
 
                 },
@@ -43,7 +44,8 @@ namespace BU.OnlineShop.Identity
                     {
                         "email",
                         "email_verified",
-                        "name"
+                        "name",
+                        "role"
                     }
                 },
                 new ApiResource("orderingservice", "Order Service APIs")
@@ -53,7 +55,8 @@ namespace BU.OnlineShop.Identity
                     {
                         "email",
                         "email_verified",
-                        "name"
+                        "name",
+                        "role"
                     }
                 }
             };

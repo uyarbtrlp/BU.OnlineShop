@@ -8,7 +8,7 @@ namespace BU.OnlineShop.CatalogService.API.Controllers
 {
     [Route("api/catalog-service/categories")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -37,6 +37,7 @@ namespace BU.OnlineShop.CatalogService.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<List<CategoryDto>> GetListAsync()
         {
             var categories = await _categoryRepository.GetListAsync();

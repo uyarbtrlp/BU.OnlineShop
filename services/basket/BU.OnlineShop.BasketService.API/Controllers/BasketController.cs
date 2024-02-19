@@ -15,7 +15,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 {
     [Route("api/basket-service/basket")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -38,6 +38,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "User")]
         public async Task<BasketDto> GetByUserIdAsync()
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -48,20 +49,21 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         }
 
-        [HttpGet]
-        [Route("exist")]
-        public async Task<bool> ExistAsync()
-        {
-            var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        //[HttpGet]
+        //[Route("exist")]
+        //public async Task<bool> ExistAsync()
+        //{
+        //    var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            var exist = await _basketRepository.ExistAsync(userId);
+        //    var exist = await _basketRepository.ExistAsync(userId);
 
-            return exist;
+        //    return exist;
 
-        }
+        //}
 
         [HttpPost]
         [Route("add-product")]
+        [Authorize(Roles = "User")]
         public async Task<BasketDto> AddProductAsync(AddProductInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -93,6 +95,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("remove-product")]
+        [Authorize(Roles = "User")]
         public async Task<BasketDto> RemoveProductAsync(RemoveProductInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -110,6 +113,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("checkout")]
+        [Authorize(Roles = "User")]
         public async Task CheckoutAsync(CheckoutInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
