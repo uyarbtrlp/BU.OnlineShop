@@ -44,7 +44,7 @@ app.MapControllers();
 
 try
 {
-    Log.Information("Starting BU.OnlineShop.OrderService.API");
+    Log.Information("Starting BU.OnlineShop.PaymentService.API");
     app.Run();
 }
 catch (Exception ex)

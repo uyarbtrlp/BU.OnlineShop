@@ -6,9 +6,9 @@ using BU.OnlineShop.OrderingService.Orders;
 
 namespace BU.OnlineShop.OrderingService.API
 {
-    public class OrderServiceProfile : Profile
+    public class OrderingServiceProfile : Profile
     {
-        public OrderServiceProfile()
+        public OrderingServiceProfile()
         {
             CreateMap<Order, OrderDto>();
             CreateMap<OrderItem, OrderItemDto>();

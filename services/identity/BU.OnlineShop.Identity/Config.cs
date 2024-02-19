@@ -20,11 +20,7 @@ namespace BU.OnlineShop.Identity
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResource("test",new List<string>()
-                {
-                    "test"
-                })
+                new IdentityResources.Profile()
             };
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
@@ -36,14 +32,29 @@ namespace BU.OnlineShop.Identity
                     {
                         "email",
                         "email_verified",
-                        "name",
-                        "test"
+                        "name"
                     }
 
                 },
                 new ApiResource("basketservice", "Basket Service APIs")
                 {
-                    Scopes = { "basketservice.fullaccess" }
+                    Scopes = { "basketservice.fullaccess" },
+                    UserClaims = new[]
+                    {
+                        "email",
+                        "email_verified",
+                        "name"
+                    }
+                },
+                new ApiResource("orderingservice", "Order Service APIs")
+                {
+                    Scopes = { "orderingservice.fullaccess" },
+                    UserClaims = new[]
+                    {
+                        "email",
+                        "email_verified",
+                        "name"
+                    }
                 }
             };
 
@@ -51,7 +62,8 @@ namespace BU.OnlineShop.Identity
             new ApiScope[]
             {
                 new ApiScope("catalogservice.fullaccess"),
-                new ApiScope("basketservice.fullaccess")
+                new ApiScope("basketservice.fullaccess"),
+                new ApiScope("orderingservice.fullaccess"),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -66,13 +78,20 @@ namespace BU.OnlineShop.Identity
                         $"{Configuration["IdentityServer:Clients:OnlineShopSwagger:BaseUrl"]}/swagger/oauth2-redirect.html",
                         $"{Configuration["IdentityServer:Resources:CatalogService:BaseUrl"]}/swagger/oauth2-redirect.html",
                         $"{Configuration["IdentityServer:Resources:BasketService:BaseUrl"]}/swagger/oauth2-redirect.html",
+                        $"{Configuration["IdentityServer:Resources:OrderingService:BaseUrl"]}/swagger/oauth2-redirect.html",
                     },
                     AllowedCorsOrigins = {
                         Configuration["IdentityServer:Clients:OnlineShopSwagger:BaseUrl"],
                         Configuration["IdentityServer:Resources:CatalogService:BaseUrl"],
                         Configuration["IdentityServer:Resources:BasketService:BaseUrl"],
+                        Configuration["IdentityServer:Resources:OrderingService:BaseUrl"],
                     },
-                    AllowedScopes = { "openid", "profile", "email", "catalogservice.fullaccess", "basketservice.fullaccess"},
+                    AllowedScopes = { 
+                        "openid", 
+                        "profile",
+                        "catalogservice.fullaccess", 
+                        "basketservice.fullaccess", 
+                        "orderingservice.fullaccess"},
                     RequireConsent = false,
                     RequireClientSecret = false
                 },
@@ -83,7 +102,9 @@ namespace BU.OnlineShop.Identity
                     AllowedGrantTypes = new[] { "urn:ietf:params:oauth:grant-type:token-exchange" },
                     ClientSecrets = { new Secret("1q2w3e*".Sha256()) },
                     AllowedScopes = {
-                         "openid", "profile", "catalogservice.fullaccess" }
+                        "openid", 
+                        "profile", 
+                        "catalogservice.fullaccess" }
                 },
             };
     }
