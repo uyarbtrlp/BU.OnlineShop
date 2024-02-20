@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Bu.OnlineShop.BasketService.Abstractions;
 using BU.OnlineShop.OrderingService.Orders;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
 namespace BU.OnlineShop.OrderingService.API.MessageBus

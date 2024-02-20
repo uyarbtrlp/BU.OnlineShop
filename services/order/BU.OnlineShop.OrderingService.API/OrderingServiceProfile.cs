@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Bu.OnlineShop.BasketService.Abstractions;
-using Bu.OnlineShop.OrderingService.Abstractions;
 using BU.OnlineShop.OrderingService.API.Dtos.Orders;
 using BU.OnlineShop.OrderingService.Orders;
 

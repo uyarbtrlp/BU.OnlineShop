@@ -30,6 +30,11 @@ namespace BU.OnlineShop.OrderingService.Orders
 
         public void SetOrderStatus(OrderStatus orderStatus)
         {
+            if(!Enum.IsDefined(typeof(OrderStatus), orderStatus))
+            {
+                throw new ArgumentException();
+            }
+
             OrderStatus = orderStatus;
         }
 

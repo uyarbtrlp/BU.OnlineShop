@@ -5,8 +5,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	</ItemGroup>
+
   <ItemGroup>
+    <ProjectReference Include="..\..\..\integration\BU.OnlineShop.Integration.MessageBus\BU.OnlineShop.Integration.MessageBus.csproj" />
     <ProjectReference Include="..\..\..\shared\BU.OnlineShop.Shared\BU.OnlineShop.Shared.csproj" />
+    <ProjectReference Include="..\..\basket\BU.OnlineShop.BasketService.Abstractions\BU.OnlineShop.BasketService.Abstractions.csproj" />
     <ProjectReference Include="..\BU.OnlineShop.OrderingService.Domain.Shared\BU.OnlineShop.OrderingService.Domain.Shared.csproj" />
   </ItemGroup>
 

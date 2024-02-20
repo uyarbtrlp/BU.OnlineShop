@@ -15,7 +15,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 {
     [Route("api/basket-service/basket")]
     [ApiController]
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "User")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -38,8 +38,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "User")]
-        public async Task<BasketDto> GetByUserIdAsync()
+        public async Task<BasketDto> GetAsync()
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -63,7 +62,6 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("add-product")]
-        [Authorize(Roles = "User")]
         public async Task<BasketDto> AddProductAsync(AddProductInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -95,7 +93,6 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("remove-product")]
-        [Authorize(Roles = "User")]
         public async Task<BasketDto> RemoveProductAsync(RemoveProductInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -113,7 +110,6 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("checkout")]
-        [Authorize(Roles = "User")]
         public async Task CheckoutAsync(CheckoutInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);

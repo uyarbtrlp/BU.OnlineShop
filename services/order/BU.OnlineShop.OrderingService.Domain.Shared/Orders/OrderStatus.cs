@@ -1,6 +1,6 @@
 ﻿namespace BU.OnlineShop.OrderingService.Orders
 {
-    public enum OrderStatus
+    public enum OrderStatus : int
     {
         Placed,
         Shipped,

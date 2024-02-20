@@ -5,6 +5,8 @@ namespace BU.OnlineShop.OrderingService.API.Dtos.Orders
 
     public class OrderDto
     {
+        public Guid Id { get; set; }
+
         public Guid UserId { get; set; }
 
         public OrderStatus OrderStatus { get; set; }

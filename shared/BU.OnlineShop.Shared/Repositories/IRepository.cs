@@ -1,10 +1,11 @@
 ﻿using BU.OnlineShop.Shared.Entities;
+using System.Linq.Expressions;
 
 namespace BU.OnlineShop.Shared.Repository
 {
     public interface IRepository<TEntity> where TEntity : IBaseEntity
     {
-        Task<TEntity> GetAsync(Guid id);
+        Task<TEntity> GetAsync(Guid id, params Expression<Func<TEntity, object>>[] including);
 
         Task<TEntity> FindAsync(Guid id);
 

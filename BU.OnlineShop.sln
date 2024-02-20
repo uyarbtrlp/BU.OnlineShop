@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.Identity", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{EBC8050E-34FC-466E-BF03-9EE52C497D46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BU.OnlineShop.WebGateway", "gateways\BU.OnlineShop.WebGateway\BU.OnlineShop.WebGateway.csproj", "{4913BFA9-DB52-47AA-A8AD-6539D2BE32AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BU.OnlineShop.WebGateway", "gateways\BU.OnlineShop.WebGateway\BU.OnlineShop.WebGateway.csproj", "{4913BFA9-DB52-47AA-A8AD-6539D2BE32AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

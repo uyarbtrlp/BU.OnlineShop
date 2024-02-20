@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace BU.OnlineShop.Shared.Extensions
@@ -53,6 +54,18 @@ namespace BU.OnlineShop.Shared.Extensions
             return condition
                 ? (TQueryable)query.Where(predicate)
                 : query;
+        }
+
+        public static IQueryable<T> IncludeMultiple<T>(this IQueryable<T> query, params Expression<Func<T, object>>[] includes)
+            where T : class
+        {
+            if (includes != null)
+            {
+                query = includes.Aggregate(query,
+                          (current, include) => current.Include(include));
+            }
+
+            return query;
         }
 
     }

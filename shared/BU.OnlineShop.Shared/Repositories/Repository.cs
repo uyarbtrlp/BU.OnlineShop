@@ -1,6 +1,8 @@
 ﻿using BU.OnlineShop.Shared.Entities;
 using BU.OnlineShop.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BU.OnlineShop.Shared.Repository
 {
@@ -26,9 +28,17 @@ namespace BU.OnlineShop.Shared.Repository
             return newEntity.Entity;
         }
 
-        public virtual async Task<TEntity> GetAsync(Guid id)
+        public virtual async Task<TEntity> GetAsync(Guid id, params Expression<Func<TEntity, object>>[] including)
         {
-            var entity = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
+            var query =  _dbContext.Set<TEntity>().AsQueryable();
+
+            if (including != null)
+                including.ToList().ForEach(include =>
+                {
+                    if (include != null)
+                        query = query.Include(include);
+                });
+            var entity = await query.FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity == null)
             {

@@ -16,11 +16,13 @@ namespace BU.OnlineShop.OrderingService.Orders
         }
 
         public async Task<IEnumerable<Order>> GetListAsync(
+            Guid? id = null,
             Guid? userId = null,
             OrderStatus? orderStatus = null
          )
         {
             var query = await GetListQueryAsync(
+                id,
                 userId,
                 orderStatus);
 
@@ -28,10 +30,12 @@ namespace BU.OnlineShop.OrderingService.Orders
         }
 
         public async Task<long> GetCountAsync(
+            Guid? id = null,
             Guid? userId = null,
             OrderStatus? orderStatus = null)
         {
             var query = await GetListQueryAsync(
+                id,
                 userId,
                 orderStatus);
 
@@ -39,11 +43,13 @@ namespace BU.OnlineShop.OrderingService.Orders
         }
 
         private async Task<IQueryable<Order>> GetListQueryAsync(
+            Guid? id = null,
             Guid? userId = null,
             OrderStatus? orderStatus = null)
         {
             var query = _dbContext.Set<Order>().Include(x => x.OrderItems)
                 .AsNoTracking()
+                .WhereIf(id.HasValue, e => e.Id == id)
                 .WhereIf(userId.HasValue, e => e.UserId == userId)
                 .WhereIf(orderStatus.HasValue, e => e.OrderStatus == orderStatus);
 
