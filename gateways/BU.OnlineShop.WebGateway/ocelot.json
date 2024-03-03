@@ -35,23 +35,24 @@
       "AuthenticationOptions": {
         //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
         "AllowedScopes": [ "basketservice.fullaccess" ]
-      },
-      {
-        "ServiceKey": "OrderingService",
-        "DownstreamPathTemplate": "/api/ordering-service/{everything}",
-        "DownstreamScheme": "https",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "localhost",
-            "Port": 7290
-          }
-        ],
-        "UpstreamPathTemplate": "/api/ordering-service/{everything}",
-        "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
-        "AuthenticationOptions": {
-          //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
-          "AllowedScopes": [ "orderingservice.fullaccess" ]
-        }
       }
+    },
+    {
+      "ServiceKey": "OrderingService",
+      "DownstreamPathTemplate": "/api/ordering-service/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7290
+        }
+      ],
+      "UpstreamPathTemplate": "/api/ordering-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "orderingservice.fullaccess" ]
+      }
+    }
   ]
 }

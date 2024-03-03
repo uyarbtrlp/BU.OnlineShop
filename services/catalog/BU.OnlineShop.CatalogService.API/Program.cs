@@ -151,7 +151,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.AddErrorHandler();
+app.UseErrorHandler();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

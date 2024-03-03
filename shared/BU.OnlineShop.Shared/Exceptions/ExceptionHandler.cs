@@ -7,7 +7,7 @@ namespace BU.OnlineShop.Shared.Exceptions
 {
     public static class ExceptionHandler
     {
-        public static void AddErrorHandler(this IApplicationBuilder app)
+        public static void UseErrorHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>
             {
