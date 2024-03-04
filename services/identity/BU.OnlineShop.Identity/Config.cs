@@ -58,6 +58,17 @@ namespace BU.OnlineShop.Identity
                         "name",
                         "role"
                     }
+                },
+                new ApiResource("fileservice", "File Service APIs")
+                {
+                    Scopes = { "fileservice.fullaccess" },
+                    UserClaims = new[]
+                    {
+                        "email",
+                        "email_verified",
+                        "name",
+                        "role"
+                    }
                 }
             };
 
@@ -67,6 +78,7 @@ namespace BU.OnlineShop.Identity
                 new ApiScope("catalogservice.fullaccess"),
                 new ApiScope("basketservice.fullaccess"),
                 new ApiScope("orderingservice.fullaccess"),
+                new ApiScope("fileservice.fullaccess"),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -82,19 +94,23 @@ namespace BU.OnlineShop.Identity
                         $"{Configuration["IdentityServer:Resources:CatalogService:BaseUrl"]}/swagger/oauth2-redirect.html",
                         $"{Configuration["IdentityServer:Resources:BasketService:BaseUrl"]}/swagger/oauth2-redirect.html",
                         $"{Configuration["IdentityServer:Resources:OrderingService:BaseUrl"]}/swagger/oauth2-redirect.html",
+                        $"{Configuration["IdentityServer:Resources:FileService:BaseUrl"]}/swagger/oauth2-redirect.html",
                     },
                     AllowedCorsOrigins = {
                         Configuration["IdentityServer:Clients:OnlineShopSwagger:BaseUrl"],
                         Configuration["IdentityServer:Resources:CatalogService:BaseUrl"],
                         Configuration["IdentityServer:Resources:BasketService:BaseUrl"],
                         Configuration["IdentityServer:Resources:OrderingService:BaseUrl"],
+                        Configuration["IdentityServer:Resources:FileService:BaseUrl"],
                     },
                     AllowedScopes = { 
                         "openid", 
                         "profile",
                         "catalogservice.fullaccess", 
                         "basketservice.fullaccess", 
-                        "orderingservice.fullaccess"},
+                        "orderingservice.fullaccess",
+                        "fileservice.fullaccess"
+                    },
                     RequireConsent = false,
                     RequireClientSecret = false
                 },

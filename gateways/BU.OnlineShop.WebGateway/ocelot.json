@@ -53,6 +53,23 @@
         //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
         "AllowedScopes": [ "orderingservice.fullaccess" ]
       }
+    },
+    {
+      "ServiceKey": "FileService",
+      "DownstreamPathTemplate": "/api/file-service/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7092
+        }
+      ],
+      "UpstreamPathTemplate": "/api/file-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "fileservice.fullaccess" ]
+      }
     }
   ]
 }

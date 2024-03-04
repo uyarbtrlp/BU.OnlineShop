@@ -9,7 +9,7 @@ namespace BU.OnlineShop.FileService.API.Controllers
 {
     [Route("api/file-service/file-informations")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class FileInformationController : ControllerBase
     {
         private readonly IFileInformationRepository _fileInformationRepository;
