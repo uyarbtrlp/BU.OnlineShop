@@ -6,6 +6,7 @@ namespace BU.OnlineShop.CatalogService.Products
     {
         Task<Product> CreateAsync(
              Guid categoryId,
+             Guid imageId,
              string name,
              string code,
              float price,

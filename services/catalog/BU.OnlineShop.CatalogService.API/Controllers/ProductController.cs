@@ -28,6 +28,7 @@ namespace BU.OnlineShop.CatalogService.Controllers
 
             var product = await _productManager.CreateAsync(
                     categoryId: input.CategoryId,
+                    imageId: input.ImageId,
                     name: input.Name,
                     code: input.Code,
                     price: input.Price,

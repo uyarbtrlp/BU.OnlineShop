@@ -8,6 +8,9 @@ namespace BU.OnlineShop.CatalogService.API.Dtos.Products
         public Guid CategoryId { get; set; }
 
         [Required]
+        public Guid ImageId { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         [Required]

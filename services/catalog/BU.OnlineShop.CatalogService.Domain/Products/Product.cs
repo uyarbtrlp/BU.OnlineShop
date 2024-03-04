@@ -7,6 +7,8 @@ namespace BU.OnlineShop.CatalogService.Products
     {
         public Guid CategoryId { get; protected set; }
 
+        public Guid ImageId { get; protected set; }
+
         [NotNull]
         public string Name { get; protected set; }
 
@@ -17,6 +19,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
         public int StockCount { get; protected set; }
 
+
         protected Product()
         {
             // Default constructor is needed for ORMs.
@@ -25,6 +28,7 @@ namespace BU.OnlineShop.CatalogService.Products
         internal Product(
             Guid id,
             Guid categoryId,
+            Guid imageId,
             [NotNull] string code,
             [NotNull] string name,
             float price = 0.0f,
@@ -33,6 +37,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
             Id = id;
             CategoryId = categoryId;
+            ImageId = imageId;
 
             SetCode(code);
             SetName(name);

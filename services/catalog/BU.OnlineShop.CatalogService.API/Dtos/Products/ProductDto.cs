@@ -6,6 +6,8 @@
 
         public Guid CategoryId { get; set; }
 
+        public Guid ImageId { get; set; }
+
         public string Name { get; set; }
 
         public string Code { get; set; }

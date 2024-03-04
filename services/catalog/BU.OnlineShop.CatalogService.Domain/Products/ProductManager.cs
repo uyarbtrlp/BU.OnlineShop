@@ -18,6 +18,7 @@ namespace BU.OnlineShop.CatalogService.Products
 
         public async Task<Product> CreateAsync(
             Guid categoryId,
+            Guid imageId,
             string name,
             string code,
             float price,
@@ -35,6 +36,7 @@ namespace BU.OnlineShop.CatalogService.Products
             return new Product(
                   Guid.NewGuid(),
                   categoryId,
+                  imageId,
                   code,
                   name,
                   price,

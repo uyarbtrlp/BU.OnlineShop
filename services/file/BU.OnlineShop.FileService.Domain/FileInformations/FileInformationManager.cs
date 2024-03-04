@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using BU.OnlineShop.FileService.Domain.Shared.FileInformations;
+using JetBrains.Annotations;
+using System.Xml.Linq;
 
 namespace BU.OnlineShop.FileService.Domain.FileInformations
 {
@@ -17,7 +19,7 @@ namespace BU.OnlineShop.FileService.Domain.FileInformations
 
             if (file != null)
             {
-                throw new Exception(); //TODO
+                throw new FileAlreadyExists($"The file named as {name} already exists!");
             }
 
             return new FileInformation(new Guid(), name, mimeType, size, content);
@@ -31,7 +33,7 @@ namespace BU.OnlineShop.FileService.Domain.FileInformations
 
             if (file != null)
             {
-                throw new Exception(); //TODO
+                throw new FileAlreadyExists($"The file named as {newName} already exists!");
             }
 
             fileInformation.SetName(newName);
