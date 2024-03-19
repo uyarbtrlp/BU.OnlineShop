@@ -28,13 +28,15 @@ namespace BU.OnlineShop.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
+
             services.AddControllersWithViews();
 
             Config.SetConfiguration(Configuration);
 
             var builder = services.AddIdentityServer(options =>
             {
-
+                options.IssuerUri = Configuration["AuthServer:Authority"];
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;

@@ -12,4 +12,10 @@ services:
     environment:
       - RABBITMQ_SECURE_PASSWORD=yes
       - RABBITMQ_LOGS=-
-      - RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS=true      
+      - RABBITMQ_MANAGEMENT_ALLOW_WEB_ACCESS=true   
+  sqlserver:
+    ports:
+      - "1434:1433"
+    environment:
+      - SA_PASSWORD=myPassw0rd
+      - ACCEPT_EULA=Y       

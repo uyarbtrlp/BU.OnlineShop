@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  identityservice:
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
+      - CorsOrigins=https://localhost:7235,https://localhost:7008,https://localhost:7202,https://localhost:7290,https://localhost:7092
+      - IdentityServer__Clients__OnlineShopSwagger__BaseUrl=https://localhost:7235
+      - IdentityServer__Resources__CatalogService__BaseUrl=https://localhost:7008
+      - IdentityServer__Resources__BasketService__BaseUrl=https://localhost:7202
+      - IdentityServer__Resources__OrderingService__BaseUrl=https://localhost:7290
+      - IdentityServer__Resources__FileService__BaseUrl=https://localhost:7092
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+    ports:
+      - "5001:443"     
+  basketservice:
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
+      - Swagger__Authority=https://localhost:5001
+      - Swagger__ClientId=OnlineShop_Swagger
+      - CorsOrigins=https://localhost:7235
+      - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+      - RemoteServices__CatalogService__Uri=http://onlineshop-catalogservice # Api calls must be against to internal docker network
+      - RemoteServices__CatalogService__Uri=http://onlineshop-paymentservices # Api calls must be against to internal docker network
+      - RabbitMQ__Connections__Default__HostName=onlineshop-rabbitmq
+      - RabbitMQ__Connections__Default__Port=5672  
+      - RabbitMQ__Connections__Default__UserName=user  
+      - RabbitMQ__Connections__Default__Password=bitnami
+      - RabbitMQ__Connections__Default__Uri=amqps://onlineshop-rabbitmq:5671
+      - RabbitMQ__EventBus__QueueName=BasketService
+      - RabbitMQ__EventBus__ExchangeName=OnlineShop
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+    ports:
+      - "7202:443"
+    
+  

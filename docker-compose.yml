@@ -1,0 +1,38 @@
+version: '3.8'
+ 
+services:
+  identityservice:
+    image: onlineshop.identityservice:latest
+    container_name: onlineshop-identityservice
+    hostname: onlineshop-identityservice # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: services/basket/BU.OnlineShop.Identity/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+  basketservice:
+    image: onlineshop.basketservice:latest
+    container_name: onlineshop-basketservice
+    hostname: onlineshop-basketservice # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: services/basket/BU.OnlineShop.BasketService.API/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+
+networks:
+  onlineshop-network:
+    name: onlineshop-network
+    driver: bridge
+#   external: true 
+  

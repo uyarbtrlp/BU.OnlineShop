@@ -15,7 +15,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 {
     [Route("api/basket-service/basket")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;

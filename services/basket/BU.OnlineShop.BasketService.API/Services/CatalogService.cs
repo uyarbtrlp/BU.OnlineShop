@@ -22,12 +22,19 @@ namespace BU.OnlineShop.BasketService.API.Services
 
         private async Task<string> GetToken()
         {
-            if(!string.IsNullOrEmpty(_accessToken))
+            if (!string.IsNullOrEmpty(_accessToken))
             {
                 return _accessToken;
             }
 
-            var discoveryDocumentResponse = await _httpClient.GetDiscoveryDocumentAsync(_configuration["AuthServer:Authority"]);
+            var discoveryDocumentResponse = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _configuration["AuthServer:Authority"],
+                Policy =
+                {
+                    RequireHttps = Convert.ToBoolean(_configuration["AuthServer:RequireHttpsMetadata"]),
+                }
+            });
             if (discoveryDocumentResponse.IsError)
             {
                 throw new Exception(discoveryDocumentResponse.Error);
