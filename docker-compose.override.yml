@@ -26,7 +26,7 @@ services:
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RemoteServices__CatalogService__Uri=http://onlineshop-catalogservice # Api calls must be against to internal docker network
-      - RemoteServices__CatalogService__Uri=http://onlineshop-paymentservices # Api calls must be against to internal docker network
+      - RemoteServices__PaymentService__Uri=http://onlineshop-paymentservice # Api calls must be against to internal docker network
       - RabbitMQ__Connections__Default__HostName=onlineshop-rabbitmq
       - RabbitMQ__Connections__Default__Port=5672  
       - RabbitMQ__Connections__Default__UserName=user  
@@ -38,5 +38,70 @@ services:
       - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
     ports:
       - "7202:443"
+  catalogservice:
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
+      - Swagger__Authority=https://localhost:5001
+      - Swagger__ClientId=OnlineShop_Swagger
+      - CorsOrigins=https://localhost:7235
+      - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=CatalogServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+      - RabbitMQ__Connections__Default__HostName=onlineshop-rabbitmq
+      - RabbitMQ__Connections__Default__Port=5672  
+      - RabbitMQ__Connections__Default__UserName=user  
+      - RabbitMQ__Connections__Default__Password=bitnami
+      - RabbitMQ__Connections__Default__Uri=amqps://onlineshop-rabbitmq:5671
+      - RabbitMQ__EventBus__QueueName=CatalogService
+      - RabbitMQ__EventBus__ExchangeName=OnlineShop
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+    ports:
+      - "7008:443"
+  fileservice:
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
+      - Swagger__Authority=https://localhost:5001
+      - Swagger__ClientId=OnlineShop_Swagger
+      - CorsOrigins=https://localhost:7235
+      - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=FileServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+    ports:
+      - "7092:443"
+  orderservice:
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
+      - Swagger__Authority=https://localhost:5001
+      - Swagger__ClientId=OnlineShop_Swagger
+      - CorsOrigins=https://localhost:7235
+      - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=OrderServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+      - RabbitMQ__Connections__Default__HostName=onlineshop-rabbitmq
+      - RabbitMQ__Connections__Default__Port=5672  
+      - RabbitMQ__Connections__Default__UserName=user  
+      - RabbitMQ__Connections__Default__Password=bitnami
+      - RabbitMQ__Connections__Default__Uri=amqps://onlineshop-rabbitmq:5671
+      - RabbitMQ__EventBus__QueueName=OrderingService
+      - RabbitMQ__EventBus__ExchangeName=OnlineShop
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+    ports:
+      - "7290:443"
+
+  paymentservice:
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+    ports:
+      - "7121:443"       
+   
     
   

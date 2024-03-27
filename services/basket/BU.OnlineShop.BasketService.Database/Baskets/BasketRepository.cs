@@ -30,7 +30,7 @@ namespace BU.OnlineShop.BasketService.Baskets
 
         public async Task<Basket> FindByUserIdAsync(Guid userId)
         {
-            return await _dbContext.Baskets.FirstOrDefaultAsync(x => x.UserId == userId);
+            return await _dbContext.Baskets.Include(x=> x.BasketLines).FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
         public async Task<bool> ExistAsync(Guid id)

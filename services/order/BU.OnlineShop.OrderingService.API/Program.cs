@@ -6,6 +6,7 @@ using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
@@ -32,6 +33,8 @@ builder.Host.UseSerilog();
 
 var configuration = builder.Configuration;
 
+Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
+
 // Add services to the container.
 
 // Db setting
@@ -51,12 +54,24 @@ builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 builder.Services.AddHostedService<MessageBusSubscriber>();
 
-var authServerUrl = configuration["AuthServer:Authority"];
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = authServerUrl;
+        options.Authority = configuration["AuthServer:Authority"];
+        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+        options.MetadataAddress = configuration["AuthServer:MetadataAddress"] + "/" + ".well-known/openid-configuration";
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateAudience = true,
+            ValidateIssuer = true,
+        };
+
+        options.TokenValidationParameters.ValidIssuers = new[]
+        {
+            configuration["AuthServer:Authority"] + "/",
+            configuration["AuthServer:MetadataAddress"] + "/",
+            };
         options.Audience = "orderingservice";
     });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -70,8 +85,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    var authorizationUrl = new Uri($"{authServerUrl}/connect/authorize");
-    var tokenUrl = new Uri($"{authServerUrl}/connect/token");
+    var authorizationUrl = new Uri($"{configuration["Swagger:Authority"]}/connect/authorize");
+    var tokenUrl = new Uri($"{configuration["Swagger:Authority"]}/connect/token");
 
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
@@ -136,19 +151,16 @@ var app = builder.Build();
 app.UseCors();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering Service API");
-        options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-        options.OAuthUsePkce();
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering Service API");
+    options.OAuthClientId(configuration["Swagger:ClientId"]);
+    options.OAuthUsePkce();
+});
 
 app.UseErrorHandler();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
@@ -156,6 +168,19 @@ app.MapControllers();
 try
 {
     Log.Information("Starting BU.OnlineShop.OrderingService.API");
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+
+        var context = services.GetRequiredService<OrderingServiceDbContext>();
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            Log.Information("Executing database migrations...");
+            context.Database.Migrate();
+            Log.Information("Database migrations has been completed.");
+
+        }
+    }
     app.Run();
 }
 catch (Exception ex)

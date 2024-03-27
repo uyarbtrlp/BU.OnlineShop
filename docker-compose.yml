@@ -15,6 +15,7 @@ services:
     depends_on:
       sqlserver:
          condition: service_healthy
+         
   basketservice:
     image: onlineshop.basketservice:latest
     container_name: onlineshop-basketservice
@@ -22,6 +23,65 @@ services:
     build:
       context: ./
       dockerfile: services/basket/BU.OnlineShop.BasketService.API/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+         
+  catalogservice:
+    image: onlineshop.catalogservice:latest
+    container_name: onlineshop-catalogservice
+    hostname: onlineshop-catalogservice # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: services/basket/BU.OnlineShop.CatalogService.API/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+         
+  fileservice:
+    image: onlineshop.fileservice:latest
+    container_name: onlineshop-fileservice
+    hostname: onlineshop-fileservice # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: services/basket/BU.OnlineShop.FileService.API/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+  orderservice:
+    image: onlineshop.orderservice:latest
+    container_name: onlineshop-orderservice
+    hostname: onlineshop-orderservice # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: services/basket/BU.OnlineShop.OrderingService.API/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+         
+  paymentservice:
+    image: onlineshop.paymentservice:latest
+    container_name: onlineshop-paymentservice
+    hostname: onlineshop-paymentservice # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: services/basket/BU.OnlineShop.PaymentService.API/Dockerfile.Local
     volumes:
       - ./etc/certs:/root/certificate
     networks:

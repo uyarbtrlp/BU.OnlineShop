@@ -159,7 +159,7 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseErrorHandler();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
@@ -182,7 +182,7 @@ try
     }
     app.Run();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Log.Fatal(ex, "Host terminated unexpectedly!");
 }

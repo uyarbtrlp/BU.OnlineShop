@@ -45,17 +45,41 @@ foreach($imageId in $imageIds ) {
 # Build docker images locally
 $version = 'latest'
 
+$webFolder = Join-Path $slnFolder "services/identity/BU.OnlineShop.Identity"
+Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
+Set-Location $webFolder
+dotnet publish -c Release
+docker build -f Dockerfile.Local -t onlineshop.identityservice:$version .
+
 $webFolder = Join-Path $slnFolder "services/basket/BU.OnlineShop.BasketService.API"
 Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
 Set-Location $webFolder
 dotnet publish -c Release
 docker build -f Dockerfile.Local -t onlineshop.basketservice:$version .
 
-$webFolder = Join-Path $slnFolder "services/identity/BU.OnlineShop.Identity"
+$webFolder = Join-Path $slnFolder "services/catalog/BU.OnlineShop.CatalogService.API"
 Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
 Set-Location $webFolder
 dotnet publish -c Release
-docker build -f Dockerfile.Local -t onlineshop.identityservice:$version .
+docker build -f Dockerfile.Local -t onlineshop.catalogservice:$version .
+
+$webFolder = Join-Path $slnFolder "services/file/BU.OnlineShop.FileService.API"
+Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
+Set-Location $webFolder
+dotnet publish -c Release
+docker build -f Dockerfile.Local -t onlineshop.fileservice:$version .
+
+$webFolder = Join-Path $slnFolder "services/order/BU.OnlineShop.OrderingService.API"
+Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
+Set-Location $webFolder
+dotnet publish -c Release
+docker build -f Dockerfile.Local -t onlineshop.orderservice:$version .
+
+$webFolder = Join-Path $slnFolder "services/payment/BU.OnlineShop.PaymentService.API"
+Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
+Set-Location $webFolder
+dotnet publish -c Release
+docker build -f Dockerfile.Local -t onlineshop.paymentservice:$version .
 
 
 Set-Location $slnFolder

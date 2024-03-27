@@ -9,7 +9,7 @@ namespace BU.OnlineShop.OrderingService.API.Controllers
 {
     [Route("api/ordering-service/orders")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public class OrderController : ControllerBase
     {
         protected IOrderRepository OrderRepository { get; }
