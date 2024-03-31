@@ -81,6 +81,12 @@ Set-Location $webFolder
 dotnet publish -c Release
 docker build -f Dockerfile.Local -t onlineshop.paymentservice:$version .
 
+$webFolder = Join-Path $slnFolder "gateways/BU.OnlineShop.WebGateway"
+Write-Host "********* BUILDING Web Application *********" -ForegroundColor Green
+Set-Location $webFolder
+dotnet publish -c Release
+docker build -f Dockerfile.Local -t onlineshop.webgateway:$version .
+
 
 Set-Location $slnFolder
 Write-Host "********* Composing Docker *********" -ForegroundColor Green

@@ -1,0 +1,79 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7235"
+  },
+  "Routes": [
+    {
+      "ServiceKey": "CatalogService",
+      "SwaggerUrl": "https://localhost:7008",
+      "DownstreamPathTemplate": "/api/catalog-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "onlineshop-catalogservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/catalog-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "catalogservice.fullaccess" ]
+      }
+    },
+    {
+      "ServiceKey": "BasketService",
+      "SwaggerUrl": "https://localhost:7202",
+      "DownstreamPathTemplate": "/api/basket-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "onlineshop-basketservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/basket-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "basketservice.fullaccess" ]
+      }
+    },
+    {
+      "ServiceKey": "OrderingService",
+      "SwaggerUrl": "https://localhost:7290",
+      "DownstreamPathTemplate": "/api/ordering-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "onlineshop-orderingservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/ordering-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "orderingservice.fullaccess" ]
+      }
+    },
+    {
+      "ServiceKey": "FileService",
+      "SwaggerUrl": "https://localhost:7092",
+      "DownstreamPathTemplate": "/api/file-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "onlineshop-fileservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/file-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "fileservice.fullaccess" ]
+      }
+    }
+  ]
+}

@@ -3,6 +3,7 @@
     public class OcelotConfiguration
     {
         public string? ServiceKey { get; set; }
+        public string? SwaggerUrl { get; set; }
         public string? ServiceDns { get; set; }
         public string? DownstreamPathTemplate { get; set; }
         public string? DownstreamScheme { get; set; }

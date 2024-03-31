@@ -30,6 +30,8 @@ services:
     depends_on:
       sqlserver:
          condition: service_healthy
+      rabbitmq:
+         condition: service_healthy
          
   catalogservice:
     image: onlineshop.catalogservice:latest
@@ -74,6 +76,8 @@ services:
     depends_on:
       sqlserver:
          condition: service_healthy
+      rabbitmq:
+         condition: service_healthy
          
   paymentservice:
     image: onlineshop.paymentservice:latest
@@ -88,6 +92,22 @@ services:
       - onlineshop-network
     depends_on:
       sqlserver:
+         condition: service_healthy
+  webgateway:
+    image: onlineshop.webgateway:latest
+    container_name: onlineshop-webgateway
+    hostname: onlineshop-webgateway # creates entry at etc/host
+    build:
+      context: ./
+      dockerfile: gateways/BU.OnlineShop.WebGateway/Dockerfile.Local
+    volumes:
+      - ./etc/certs:/root/certificate
+    networks:
+      - onlineshop-network
+    depends_on:
+      sqlserver:
+         condition: service_healthy
+      rabbitmq:
          condition: service_healthy
 
 networks:
