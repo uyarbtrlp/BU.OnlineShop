@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basketservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basketservice
+  template:
+    metadata: 
+      labels:
+        app: basketservice
+    spec:
+      containers:
+        - name: basketservice
+          image: btrlpuyr/basketservice:latest
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80; # Be sure about http port exposure
+            - name: ConnectionStrings__DefaultConnection
+              value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: basketservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector: 
+    app: basketservice
+  ports:
+    - name: basketservice
+      protocol: TCP
+      port: 80
+      targetPort: 80
