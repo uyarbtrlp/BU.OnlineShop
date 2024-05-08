@@ -20,6 +20,16 @@ spec:
               value: http://+:80; # Be sure about http port exposure
             - name: ConnectionStrings__DefaultConnection
               value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+            - name: AuthServer__Authority
+              value: http://identityservice-clusterip-srv
+            - name: AuthServer__RequireHttpsMetadata
+              value: "false"
+            - name: AuthServer__MetadataAddress
+              value: http://identityservice-clusterip-srv
+            - name: Swagger__Authority
+              value: http://localhost:32151
+            - name: CorsOrigins
+              value: http://localhost:31414
 ---
 apiVersion: v1
 kind: Service

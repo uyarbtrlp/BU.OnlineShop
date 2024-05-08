@@ -1,19 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-srv
+  name: identityservice-ingress-srv
   annotations:
-    spec.ingressClassName: nginx
+    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/user-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
 spec:
   rules:
-    - host: acme.com
+    - host: identity.com
       http:
         paths: 
-          - path: /api/basket-service
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: basketservice-clusterip-srv
+                name: identityservice-clusterip-srv
                 port:
                   number: 80

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identityservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identityservice
+  template:
+    metadata: 
+      labels:
+        app: identityservice
+    spec:
+      containers:
+        - name: identityservice
+          image: btrlpuyr/identityservice:latest
+          env:
+            - name: AuthServer__Authority
+              value: http://identityservice-clusterip-srv; # Change sql server DNS name according to module name
+            - name: IdentityServer__Clients__OnlineShopSwagger__BaseUrl
+              value: http://localhost:32151
+            - name: CorsOrigins
+              value: http://localhost:32151,http://basketservice.com
+            - name: IdentityServer__Resources__BasketService__BaseUrl
+              value: http://basketservice.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identityservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector: 
+    app: identityservice
+  ports:
+    - name: identityservice
+      protocol: TCP
+      port: 80
+      targetPort: 80
