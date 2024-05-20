@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: basketservice-ingress-srv
+  name: catalogservice-ingress-srv
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/user-regex: 'true'
 spec:
   rules:
-    - host: basketservice.com
+    - host: catalogservice.com
       http:
         paths: 
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: basketservice-clusterip-srv
+                name: catalogservice-clusterip-srv
                 port:
                   number: 80

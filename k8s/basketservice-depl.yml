@@ -27,9 +27,9 @@ spec:
             - name: AuthServer__MetadataAddress
               value: http://identityservice-clusterip-srv
             - name: Swagger__Authority
-              value: http://localhost:32151
+              value: http://localhost:30578
             - name: CorsOrigins
-              value: http://localhost:31414
+              value: http://basketservice.com
 ---
 apiVersion: v1
 kind: Service
