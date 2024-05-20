@@ -21,11 +21,13 @@ spec:
             - name: IdentityServer__Clients__OnlineShopSwagger__BaseUrl
               value: http://localhost:32151
             - name: CorsOrigins
-              value: http://localhost:32151,http://basketservice.com,http://catalogservice.com
+              value: http://localhost:32151,http://basketservice.com,http://catalogservice.com,http://fileservice.com
             - name: IdentityServer__Resources__BasketService__BaseUrl
               value: http://basketservice.com
             - name: IdentityServer__Resources__CatalogService__BaseUrl
               value: http://catalogservice.com
+            - name: IdentityServer__Resources__FileService__BaseUrl
+              value: http://fileservice.com
 ---
 apiVersion: v1
 kind: Service

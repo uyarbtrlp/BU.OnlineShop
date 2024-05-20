@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fileservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fileservice
+  template:
+    metadata: 
+      labels:
+        app: fileservice
+    spec:
+      containers:
+        - name: fileservice
+          image: btrlpuyr/fileservice:latest
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80; # Be sure about http port exposure
+            - name: ConnectionStrings__DefaultConnection
+              value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=FileServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+            - name: AuthServer__Authority
+              value: http://identityservice-clusterip-srv
+            - name: AuthServer__RequireHttpsMetadata
+              value: "false"
+            - name: AuthServer__MetadataAddress
+              value: http://identityservice-clusterip-srv
+            - name: Swagger__Authority
+              value: http://localhost:30578
+            - name: CorsOrigins
+              value: http://fileservice.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fileservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector: 
+    app: fileservice
+  ports:
+    - name: fileservice
+      protocol: TCP
+      port: 80
+      targetPort: 80
