@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paymentservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paymentservice
+  template:
+    metadata: 
+      labels:
+        app: paymentservice
+    spec:
+      containers:
+        - name: paymentservice
+          image: btrlpuyr/paymentservice:latest
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80; # Be sure about http port exposure
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector: 
+    app: paymentservice
+  ports:
+    - name: paymentservice
+      protocol: TCP
+      port: 80
+      targetPort: 80

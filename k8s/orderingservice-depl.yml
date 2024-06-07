@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalogservice-depl
+  name: orderingservice-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: catalogservice
+      app: orderingservice
   template:
     metadata: 
       labels:
-        app: catalogservice
+        app: orderingservice
     spec:
       containers:
-        - name: catalogservice
-          image: btrlpuyr/catalogservice:latest
+        - name: orderingservice
+          image: btrlpuyr/orderingservice:latest
           env:
             - name: ASPNETCORE_URLS
               value: http://+:80; # Be sure about http port exposure
             - name: ConnectionStrings__DefaultConnection
-              value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=CatalogServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
+              value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=OrderingServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
             - name: AuthServer__Authority
               value: http://identityservice-clusterip-srv
             - name: AuthServer__RequireHttpsMetadata
@@ -29,7 +29,7 @@ spec:
             - name: Swagger__Authority
               value: http://localhost:30578
             - name: CorsOrigins
-              value: http://catalogservice.com
+              value: http://orderingservice.com
             - name: RabbitMQ__Connections__Default__HostName
               value: rabbitmq-clusterip-srv
             - name: RabbitMQ__Connections__Default__Port
@@ -41,20 +41,20 @@ spec:
             - name: RabbitMQ__Connections__Default__Uri
               value: amqps://rabbitmq-clusterip-srv:5671    
             - name: RabbitMQ__EventBus__QueueName
-              value: CatalogService
+              value: OrderingService
             - name: RabbitMQ__EventBus__ExchangeName
               value: OnlineShop
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalogservice-clusterip-srv
+  name: orderingservice-clusterip-srv
 spec:
   type: ClusterIP
   selector: 
-    app: catalogservice
+    app: orderingservice
   ports:
-    - name: catalogservice
+    - name: orderingservice
       protocol: TCP
       port: 80
       targetPort: 80

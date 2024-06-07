@@ -30,6 +30,24 @@ spec:
               value: http://localhost:30578
             - name: CorsOrigins
               value: http://basketservice.com
+            - name: RemoteServices__CatalogService__Uri
+              value: http://catalogservice-clusterip-srv
+            - name: RemoteServices__PaymentService__Uri
+              value: http://paymentservice-clusterip-srv
+            - name: RabbitMQ__Connections__Default__HostName
+              value: rabbitmq-clusterip-srv
+            - name: RabbitMQ__Connections__Default__Port
+              value: "5672"
+            - name: RabbitMQ__Connections__Default__UserName
+              value: user  
+            - name: RabbitMQ__Connections__Default__Password
+              value: bitnami
+            - name: RabbitMQ__Connections__Default__Uri
+              value: amqps://rabbitmq-clusterip-srv:5671    
+            - name: RabbitMQ__EventBus__QueueName
+              value: BasketService
+            - name: RabbitMQ__EventBus__ExchangeName
+              value: OnlineShop
 ---
 apiVersion: v1
 kind: Service

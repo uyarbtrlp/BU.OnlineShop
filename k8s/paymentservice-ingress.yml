@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: paymentservice-ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/user-regex: 'true'
+spec:
+  rules:
+    - host: paymentservice.com
+      http:
+        paths: 
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: paymentservice-clusterip-srv
+                port:
+                  number: 80
