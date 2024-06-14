@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webgateway-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webgateway
+  template:
+    metadata: 
+      labels:
+        app: webgateway
+    spec:
+      containers:
+        - name: webgateway
+          image: btrlpuyr/webgateway:latest
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80; # Be sure about http port exposure
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Kubernetes
+            - name: AuthServer__Authority
+              value: http://identityservice-clusterip-srv
+            - name: Swagger__Authority
+              value: http://localhost:30578
+            - name: CorsOrigins
+              value: http://webgateway.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webgateway-clusterip-srv
+spec:
+  type: ClusterIP
+  selector: 
+    app: webgateway
+  ports:
+    - name: webgateway
+      protocol: TCP
+      port: 80
+      targetPort: 80

@@ -19,9 +19,9 @@ spec:
             - name: AuthServer__Authority
               value: http://identityservice-clusterip-srv; # Change sql server DNS name according to module name
             - name: IdentityServer__Clients__OnlineShopSwagger__BaseUrl
-              value: http://localhost:30578
+              value: http://webgateway.com
             - name: CorsOrigins
-              value: http://localhost:30578,http://basketservice.com,http://catalogservice.com,http://fileservice.com,http://orderingservice.com
+              value: http://localhost:30578,http://basketservice.com,http://catalogservice.com,http://fileservice.com,http://orderingservice.com,http://webgateway.com
             - name: IdentityServer__Resources__BasketService__BaseUrl
               value: http://basketservice.com
             - name: IdentityServer__Resources__CatalogService__BaseUrl

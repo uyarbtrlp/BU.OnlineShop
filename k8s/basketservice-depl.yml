@@ -29,7 +29,7 @@ spec:
             - name: Swagger__Authority
               value: http://localhost:30578
             - name: CorsOrigins
-              value: http://basketservice.com
+              value: http://webgateway.com
             - name: RemoteServices__CatalogService__Uri
               value: http://catalogservice-clusterip-srv
             - name: RemoteServices__PaymentService__Uri
