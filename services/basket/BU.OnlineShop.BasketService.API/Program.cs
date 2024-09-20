@@ -1,9 +1,9 @@
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.BasketService.EntityFrameworkCore;
-using BU.OnlineShop.Integration.MessageBus;
 using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -54,7 +54,24 @@ builder.Services.AddHttpClient<IPaymentService, PaymentService>(c =>
     c.BaseAddress = new Uri(builder.Configuration["RemoteServices:PaymentService:Uri"]));
 
 // Message Bus
-builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
+//builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
+builder.Services.AddMassTransit(busConfigurator =>
+{
+    busConfigurator.SetKebabCaseEndpointNameFormatter();
+    busConfigurator.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Host"],"/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"]);
+            h.Password(builder.Configuration["RabbitMQ:Password"]);
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+
+
+    
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

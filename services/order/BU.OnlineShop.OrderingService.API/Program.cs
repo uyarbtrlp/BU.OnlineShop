@@ -1,9 +1,9 @@
-using BU.OnlineShop.Integration.MessageBus;
-using BU.OnlineShop.OrderingService.API.MessageBus;
+using BU.OnlineShop.OrderingService.Domain.Orders;
 using BU.OnlineShop.OrderingService.EntityFrameworkCore;
 using BU.OnlineShop.OrderingService.Orders;
 using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -50,9 +50,30 @@ builder.Services.AddTransient<IOrderManager, OrderManager>();
 
 
 // Message Bus
-builder.Services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
-builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
-builder.Services.AddHostedService<MessageBusSubscriber>();
+builder.Services.AddMassTransit(busConfigurator =>
+{
+    busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+
+    busConfigurator.AddConsumer<BasketEtoConsumer>();
+
+    busConfigurator.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ReceiveEndpoint(e =>
+        {
+            e.ConfigureConsumer<BasketEtoConsumer>(context);
+        });
+
+        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"]);
+            h.Password(builder.Configuration["RabbitMQ:Password"]);
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+
+});
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

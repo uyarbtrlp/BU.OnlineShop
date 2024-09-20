@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\integration\BU.OnlineShop.Integration.Messages\BU.OnlineShop.Integration.Messages.csproj" />
-  </ItemGroup>
-
 </Project>

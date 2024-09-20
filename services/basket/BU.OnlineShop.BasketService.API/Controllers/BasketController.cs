@@ -6,7 +6,8 @@ using BU.OnlineShop.BasketService.API.Dtos.CatalogService;
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.BasketService.Domain.Shared.Baskets;
-using BU.OnlineShop.Integration.MessageBus;
+using MassTransit;
+using MassTransit.Testing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -23,9 +24,9 @@ namespace BU.OnlineShop.BasketService.API.Controllers
         private readonly ICatalogService _catalogService;
         private readonly IPaymentService _paymentService;
         private readonly IMapper _mapper;
-        private readonly IMessageBus _messageBus;
+        private readonly IPublishEndpoint _messageBus;
         private readonly IConfiguration _configuration;
-        public BasketController(IBasketRepository basketRepository, IBasketManager basketManager, ICatalogService catalogService, IPaymentService paymentService, IMapper mapper, IMessageBus messageBus, IConfiguration configuration)
+        public BasketController(IBasketRepository basketRepository, IBasketManager basketManager, ICatalogService catalogService, IPaymentService paymentService, IMapper mapper, IPublishEndpoint messageBus, IConfiguration configuration)
         {
             _basketRepository = basketRepository;
             _basketManager = basketManager;
@@ -131,13 +132,13 @@ namespace BU.OnlineShop.BasketService.API.Controllers
             if (isSuccessful)
             {
                 // Publish the message for whoever interest
-                await _messageBus.PublishMessageAsync(new BasketEto()
+                await _messageBus.Publish(new BasketEto()
                 {
                     UserId = userId,
-                    CreationTime = DateTime.Now,
+                    //CreationTime = DateTime.Now,
                     Total = basketDto.TotalPrice,
                     Items = _mapper.Map<List<BasketItemEto>>(basketDto.Items),
-                }, BasketServiceEventBusConsts.CheckoutRoutingKey);
+                });
 
             }
             else

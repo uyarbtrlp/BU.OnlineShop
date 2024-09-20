@@ -1,8 +1,6 @@
-﻿using BU.OnlineShop.Integration.Messages;
-
-namespace Bu.OnlineShop.BasketService.Abstractions
+﻿namespace Bu.OnlineShop.BasketService.Abstractions
 {
-    public class BasketEto : BaseEto
+    public class BasketEto
     {
         public Guid UserId { get; set; }
 

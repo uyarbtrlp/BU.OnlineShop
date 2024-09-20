@@ -1,8 +1,6 @@
-﻿using BU.OnlineShop.Integration.Messages;
-
-namespace Bu.OnlineShop.OrderingService.Abstractions
+﻿namespace Bu.OnlineShop.OrderingService.Abstractions
 {
-    public class OrderEto : BaseEto
+    public class OrderEto
     {
         public Guid UserId { get; set; }
 
