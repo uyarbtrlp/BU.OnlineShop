@@ -33,7 +33,7 @@ namespace BU.OnlineShop.BasketService.API.Services
                 Policy =
                 {
                     RequireHttps = Convert.ToBoolean(_configuration["AuthServer:RequireHttpsMetadata"]),
-                    ValidateIssuerName = false
+                    //ValidateIssuerName = false
                 }
             });
             if (discoveryDocumentResponse.IsError)
