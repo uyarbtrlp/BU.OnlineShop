@@ -3,6 +3,8 @@ using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.BasketService.EntityFrameworkCore;
 using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Repository;
+using Keycloak.AuthServices.Authentication;
+using Keycloak.AuthServices.Authorization;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -73,28 +75,14 @@ builder.Services.AddMassTransit(busConfigurator =>
     
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.Authority = configuration["AuthServer:Authority"];
-        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-        options.MetadataAddress = configuration["AuthServer:MetadataAddress"] + "/" + ".well-known/openid-configuration";
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateAudience = true,
-            ValidateIssuer = true,
-        };
-
-        options.TokenValidationParameters.ValidIssuers = new[]
-        {
-            configuration["AuthServer:Authority"] + "/",
-            configuration["AuthServer:MetadataAddress"] + "/",
-            };
-        options.Audience = "basketservice";
-    });
+builder.Services
+    .AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services
+    .AddKeycloakAuthorization()
+    .AddAuthorizationServer(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+builder.Services.AddControllers(options => options.AddProtectedResources()).ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = ctx => new ValidationResponseHandler();
 }); ;
@@ -102,8 +90,10 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    var authorizationUrl = new Uri($"{configuration["Swagger:Authority"]}/connect/authorize");
-    var tokenUrl = new Uri($"{configuration["Swagger:Authority"]}/connect/token");
+    //var authorizationUrl = new Uri($"{configuration["Swagger:Authority"]}/connect/authorize");
+    //var tokenUrl = new Uri($"{configuration["Swagger:Authority"]}/connect/token");
+    var authorizationUrl = new Uri($"{configuration["Swagger:Authority"]}/openid-connect/auth");
+    var tokenUrl = new Uri($"{configuration["Swagger:Authority"]}/openid-connect/token");
 
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
@@ -116,7 +106,7 @@ builder.Services.AddSwaggerGen(options =>
                 Scopes = new
                 Dictionary<string, string> /* Requested scopes for authorization code request and descriptions for swagger UI only */
                 {
-                    {"basketservice.fullaccess", "Basket Service API"}
+                    {"BasketService", "Basket Service API"}
                 },
                 TokenUrl = tokenUrl
             }
@@ -172,6 +162,7 @@ app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket Service API");
     options.OAuthClientId(configuration["Swagger:ClientId"]);
+    options.OAuthClientSecret(configuration["Swagger:ClientSecret"]);
     options.OAuthUsePkce();
 });
 
@@ -179,7 +170,7 @@ app.UseErrorHandler();
 //app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 try
 {

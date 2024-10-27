@@ -1,6 +1,27 @@
 version: '3.8'
 
 services:
+  keycloak:
+    container_name: onlineshop-keycloak
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    volumes:
+      - 'keycloak_data:/opt/keycloak/data/'
+    networks:
+      - onlineshop-network
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '5'
+          memory: 4096M
+        reservations:
+          cpus: '1'
+          memory: 2048M
   rabbitmq:
     container_name: onlineshop-rabbitmq
     image: bitnami/rabbitmq:latest
@@ -54,6 +75,9 @@ services:
           memory: 8192M          
 
 volumes:
+  keycloak_data:
+    name: onlineshop_keycloakdata
+    driver: local
   rabbitmq_data:
     name: onlineshop_rabbitmqdata
     driver: local

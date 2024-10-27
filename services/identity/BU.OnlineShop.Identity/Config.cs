@@ -88,7 +88,7 @@ namespace BU.OnlineShop.Identity
                 {
                     ClientName = "OnlineShop Swagger Client",
                     ClientId = "OnlineShop_Swagger",
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = new List<string>() { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword},
                     RedirectUris = {
                         $"{Configuration["IdentityServer:Clients:OnlineShopSwagger:BaseUrl"]}/swagger/oauth2-redirect.html",
                         $"{Configuration["IdentityServer:Resources:CatalogService:BaseUrl"]}/swagger/oauth2-redirect.html",

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BU.OnlineShop.OrderingService.API.Dtos.Orders;
+using BU.OnlineShop.OrderingService.API.Permissions;
 using BU.OnlineShop.OrderingService.Orders;
-using Microsoft.AspNetCore.Authorization;
+using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -9,7 +10,7 @@ namespace BU.OnlineShop.OrderingService.API.Controllers
 {
     [Route("api/ordering-service/orders")]
     [ApiController]
-    [Authorize(Roles = "User,Admin")]
+    [ProtectedResource(OrderingServicePermissions.GroupName, OrderingServicePermissions.OrderManagement.Permission)]
     public class OrderController : ControllerBase
     {
         protected IOrderRepository OrderRepository { get; }

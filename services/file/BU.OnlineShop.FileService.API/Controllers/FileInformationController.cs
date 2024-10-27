@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BU.OnlineShop.FileService.API.Dtos;
+using BU.OnlineShop.FileService.API.Permissions;
 using BU.OnlineShop.FileService.Domain.FileInformations;
 using BU.OnlineShop.Shared.Extensions;
+using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +11,7 @@ namespace BU.OnlineShop.FileService.API.Controllers
 {
     [Route("api/file-service/file-informations")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [ProtectedResource(FileServicePermissions.GroupName, FileServicePermissions.FileInformationManagement.Permission)]
     public class FileInformationController : ControllerBase
     {
         private readonly IFileInformationRepository _fileInformationRepository;
@@ -24,6 +26,7 @@ namespace BU.OnlineShop.FileService.API.Controllers
         }
 
         [HttpPost]
+        [ProtectedResource(FileServicePermissions.GroupName, FileServicePermissions.FileInformationManagement.Create)]
         public async Task<FileInformationDto> CreateAsync([FromForm]CreateFileInformationInput input)
         {
             var content = await input.File.GetBytes();
@@ -75,6 +78,7 @@ namespace BU.OnlineShop.FileService.API.Controllers
 
         [HttpPut]
         [Route("{id}/change-name")]
+        [ProtectedResource(FileServicePermissions.GroupName, FileServicePermissions.FileInformationManagement.Update)]
         public async Task<FileInformationDto> ChangeNameAsync(Guid id, ChangeNameInput input)
         {
 
@@ -91,6 +95,7 @@ namespace BU.OnlineShop.FileService.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [ProtectedResource(FileServicePermissions.GroupName, FileServicePermissions.FileInformationManagement.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             var product = await _fileInformationRepository.GetAsync(id);

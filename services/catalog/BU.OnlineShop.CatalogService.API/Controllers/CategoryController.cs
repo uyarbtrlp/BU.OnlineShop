@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using BU.OnlineShop.CatalogService.API.Dtos.Categories;
+using BU.OnlineShop.CatalogService.API.Permissions;
 using BU.OnlineShop.CatalogService.Categories;
-using Microsoft.AspNetCore.Authorization;
+using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BU.OnlineShop.CatalogService.API.Controllers
 {
     [Route("api/catalog-service/categories")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [ProtectedResource(CatalogServicePermissions.GroupName, CatalogServicePermissions.CategoryMaagement.Permission)]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -23,6 +24,7 @@ namespace BU.OnlineShop.CatalogService.API.Controllers
         }
 
         [HttpPost]
+        [ProtectedResource(CatalogServicePermissions.GroupName, CatalogServicePermissions.CategoryMaagement.Create)]
         public async Task<CategoryDto> CreateAsync(CreateCategoryInput input)
         {
 
@@ -37,7 +39,6 @@ namespace BU.OnlineShop.CatalogService.API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<List<CategoryDto>> GetListAsync()
         {
             var categories = await _categoryRepository.GetListAsync();
@@ -47,6 +48,7 @@ namespace BU.OnlineShop.CatalogService.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [ProtectedResource(CatalogServicePermissions.GroupName, CatalogServicePermissions.CategoryMaagement.Update)]
         public async Task<CategoryDto> UpdateAsync(Guid id, UpdateCategoryInput input)
         {
             var category = await _categoryRepository.GetAsync(id);
@@ -61,6 +63,7 @@ namespace BU.OnlineShop.CatalogService.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [ProtectedResource(CatalogServicePermissions.GroupName, CatalogServicePermissions.CategoryMaagement.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             var category = await _categoryRepository.GetAsync(id);

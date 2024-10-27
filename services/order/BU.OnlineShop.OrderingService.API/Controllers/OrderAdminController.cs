@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BU.OnlineShop.OrderingService.API.Dtos.Orders;
 using BU.OnlineShop.OrderingService.API.Dtos.Orders.Admin;
+using BU.OnlineShop.OrderingService.API.Permissions;
 using BU.OnlineShop.OrderingService.Orders;
+using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +11,7 @@ namespace BU.OnlineShop.OrderingService.API.Controllers
 {
     [Route("api/ordering-service/admin/orders")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [ProtectedResource(OrderingServicePermissions.GroupName, OrderingServicePermissions.OrderManagementAdmin.Permission)]
     public class OrderAdminController : ControllerBase
     {
         protected IOrderRepository OrderRepository { get; }
@@ -35,6 +37,7 @@ namespace BU.OnlineShop.OrderingService.API.Controllers
 
         [HttpPut]
         [Route("{id}/change-status")]
+        [ProtectedResource(OrderingServicePermissions.GroupName, OrderingServicePermissions.OrderManagementAdmin.Update)]
         public async Task<OrderDto> ChangeStatusAsync(Guid id, ChangeStatusInput input)
         {
             var order = await OrderRepository.GetAsync(

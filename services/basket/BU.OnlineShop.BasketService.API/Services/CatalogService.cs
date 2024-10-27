@@ -2,7 +2,10 @@
 using BU.OnlineShop.Shared.Exceptions;
 using BU.OnlineShop.Shared.Extensions;
 using IdentityModel.Client;
+using Keycloak.AuthServices.Authentication;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
+using System.Net;
 
 namespace BU.OnlineShop.BasketService.API.Services
 {
@@ -29,13 +32,13 @@ namespace BU.OnlineShop.BasketService.API.Services
 
             var discoveryDocumentResponse = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _configuration["AuthServer:Authority"],
+                Address = _configuration["BasketServiceTokenExchange:Authority"],
                 Policy =
                 {
-                    RequireHttps = Convert.ToBoolean(_configuration["AuthServer:RequireHttpsMetadata"]),
-                    //ValidateIssuerName = false
+                    RequireHttps = Convert.ToBoolean(_configuration["BasketServiceTokenExchange:RequireHttpsMetadata"])
                 }
             });
+
             if (discoveryDocumentResponse.IsError)
             {
                 throw new Exception(discoveryDocumentResponse.Error);
@@ -45,9 +48,10 @@ namespace BU.OnlineShop.BasketService.API.Services
 
             var customParams = new Dictionary<string, string>
             {
-                { "subject_token_type","urn:ietf:params:oauth:token-type:access_token"},
+                { "requested_token_type","urn:ietf:params:oauth:token-type:access_token"},
                 { "subject_token",currentToken},
-                { "scope","openid profile catalogservice.fullaccess"}
+                { "audience","BasketServiceTokenExchangeClient"},
+                { "scope","CatalogService" }
             };
 
             var tokenResponse = await _httpClient.RequestTokenAsync(new TokenRequest()
@@ -55,8 +59,8 @@ namespace BU.OnlineShop.BasketService.API.Services
                 Address = discoveryDocumentResponse.TokenEndpoint,
                 GrantType = "urn:ietf:params:oauth:grant-type:token-exchange",
                 Parameters = new Parameters(customParams),
-                ClientId = "BasketServiceTokenExchangeClient",
-                ClientSecret = "1q2w3e*"
+                ClientId = _configuration["Keycloak:Resource"],
+                ClientSecret = _configuration["Keycloak:Credentials:Secret"],
             });
 
             if (tokenResponse.IsError)
@@ -75,6 +79,14 @@ namespace BU.OnlineShop.BasketService.API.Services
         {
             _httpClient.SetBearerToken(await GetToken());
             var response = await _httpClient.GetAsync($"/api/catalog-service/products/{id}");
+
+            if (!response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.NotFound)
+            {
+                // If requested product is not found, carry exception message. Otherwise continue with global exception handling.
+                var errorContent = await response.Content.ReadFromJsonAsync<ExceptionBase>();
+                throw errorContent;
+            }
+
             return await response.ReadContentAs<ProductDto>();
         }
     }

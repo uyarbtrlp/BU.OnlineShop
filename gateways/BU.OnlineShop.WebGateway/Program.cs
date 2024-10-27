@@ -1,9 +1,16 @@
 using BU.OnlineShop.WebGateway;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.IdentityModel.Tokens;
+using Ocelot.Authorization;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
+
+builder.Services.AddSingleton<IScopesAuthorizer, CustomScopesAuthorizer>();
 
 var configuration = builder.Configuration;
 
@@ -12,18 +19,27 @@ var authServerUrl = configuration["AuthServer:Authority"];
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", true, true);
 
+var authenticationScheme = "OnlineShopWebGatewayAuthenticationScheme";
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(authenticationScheme, options =>
+    {
+        options.Authority = authServerUrl;
+        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidAudiences = new[] { 
+                "BasketService",
+                "CatalogService",
+                "OrderingService",
+                "FileService"
+            }
+        };
+    });
+
 
 builder.Services.AddControllers();
 builder.Services.AddOcelot();
-
-//var authenticationScheme = "OnlineShopWebGatewayAuthenticationScheme";
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(authenticationScheme,options =>
-//    {
-//        options.Authority = authServerUrl;
-//        options.Audience = "OnlineShop_Swagger";
-//    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -77,6 +93,7 @@ app.UseSwaggerUI(options =>
         }
 
         options.OAuthClientId(configuration["Swagger:ClientId"]);
+        options.OAuthClientSecret(configuration["Swagger:ClientSecret"]);
         options.OAuthUsePkce();
     }
 });
@@ -87,9 +104,9 @@ app.UseRewriter(new RewriteOptions()
     // Regex for "", "/" and "" (whitespace)
     .AddRedirect("^(|\\|\\s+)$", "/swagger"));
 
-app.UseOcelot().Wait();
-
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseOcelot().Wait();
 
 app.MapControllers();
 

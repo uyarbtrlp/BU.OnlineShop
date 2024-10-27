@@ -3,9 +3,11 @@ using Bu.OnlineShop.BasketService.Abstractions;
 using Bu.OnlineShop.BasketService.Domain.Shared.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.Baskets;
 using BU.OnlineShop.BasketService.API.Dtos.CatalogService;
+using BU.OnlineShop.BasketService.API.Permissions;
 using BU.OnlineShop.BasketService.API.Services;
 using BU.OnlineShop.BasketService.Baskets;
 using BU.OnlineShop.BasketService.Domain.Shared.Baskets;
+using Keycloak.AuthServices.Authorization;
 using MassTransit;
 using MassTransit.Testing;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +18,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 {
     [Route("api/basket-service/basket")]
     [ApiController]
-    [Authorize(Roles = "User,Admin")]
+    [ProtectedResource(BasketServicePermissions.GroupName, BasketServicePermissions.BasketManagement.Permission)]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -63,6 +65,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("add-product")]
+        [ProtectedResource(BasketServicePermissions.GroupName, BasketServicePermissions.BasketManagement.Update)]
         public async Task<BasketDto> AddProductAsync(AddProductInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -94,6 +97,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("remove-product")]
+        [ProtectedResource(BasketServicePermissions.GroupName, BasketServicePermissions.BasketManagement.Update)]
         public async Task<BasketDto> RemoveProductAsync(RemoveProductInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -111,6 +115,7 @@ namespace BU.OnlineShop.BasketService.API.Controllers
 
         [HttpPost]
         [Route("checkout")]
+        [ProtectedResource(BasketServicePermissions.GroupName, BasketServicePermissions.BasketManagement.Checkout)]
         public async Task CheckoutAsync(CheckoutInput input)
         {
             var userId = new Guid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
