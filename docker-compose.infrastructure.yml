@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   keycloak:
-    container_name: onlineshop-keycloak
+    container_name: onlineshop-keycloak.localhost
     image: quay.io/keycloak/keycloak:latest
     command: start-dev
     volumes:

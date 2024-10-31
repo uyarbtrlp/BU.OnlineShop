@@ -1,28 +1,21 @@
 version: '3.4'
 
 services:
-  identityservice:
-    environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
-      - CorsOrigins=https://localhost:7235,https://localhost:7008,https://localhost:7202,https://localhost:7290,https://localhost:7092
-      - IdentityServer__Clients__OnlineShopSwagger__BaseUrl=https://localhost:7235
-      - IdentityServer__Resources__CatalogService__BaseUrl=https://localhost:7008
-      - IdentityServer__Resources__BasketService__BaseUrl=https://localhost:7202
-      - IdentityServer__Resources__OrderingService__BaseUrl=https://localhost:7290
-      - IdentityServer__Resources__FileService__BaseUrl=https://localhost:7092
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
-    ports:
-      - "5001:443"     
   basketservice:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
-      - AuthServer__RequireHttpsMetadata=false
-      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
-      - Swagger__Authority=https://localhost:5001
+      - Keycloak__Realm=onlineshop
+      - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080 # It should be configured as https with dns name in production.
+      - Keycloak__Audience=BasketService
+      - Keycloak__SslRequired=none
+      - Keycloak__Resource=OnlineShop_Swagger
+      - Keycloak__VerifyTokenAudience=true
+      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - BasketServiceTokenExchange__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop  # Use container name with http without "/" at the end
+      - BasketServiceTokenExchange__RequireHttpsMetadata=false
+      - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
+      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RemoteServices__CatalogService__Uri=http://onlineshop-catalogservice # Api calls must be against to internal docker network
@@ -37,11 +30,16 @@ services:
   catalogservice:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
-      - AuthServer__RequireHttpsMetadata=false
-      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
-      - Swagger__Authority=https://localhost:5001
+      - Keycloak__Realm=onlineshop
+      - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080
+      - Keycloak__Audience=CatalogService
+      - Keycloak__SslRequired=none
+      - Keycloak__Resource=OnlineShop_Swagger
+      - Keycloak__VerifyTokenAudience=true
+      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
+      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=CatalogServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RabbitMQ__Host=onlineshop-rabbitmq
@@ -54,11 +52,16 @@ services:
   fileservice:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
-      - AuthServer__RequireHttpsMetadata=false
-      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
-      - Swagger__Authority=https://localhost:5001
+      - Keycloak__Realm=onlineshop
+      - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080
+      - Keycloak__Audience=FileService
+      - Keycloak__SslRequired=none
+      - Keycloak__Resource=OnlineShop_Swagger
+      - Keycloak__VerifyTokenAudience=true
+      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
+      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=FileServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
@@ -68,11 +71,16 @@ services:
   orderservice:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
-      - AuthServer__RequireHttpsMetadata=false
-      - AuthServer__MetadataAddress=http://onlineshop-identityservice # Use container name with http without "/" at the end
-      - Swagger__Authority=https://localhost:5001
+      - Keycloak__Realm=onlineshop
+      - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080
+      - Keycloak__Audience=OrderingService
+      - Keycloak__SslRequired=none
+      - Keycloak__Resource=OnlineShop_Swagger
+      - Keycloak__VerifyTokenAudience=true
+      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
+      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=OrderServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RabbitMQ__Host=onlineshop-rabbitmq

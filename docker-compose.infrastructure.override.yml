@@ -3,13 +3,22 @@ version: '3.8'
 services:
   keycloak:
     ports:
-      - 18080:8080
+      - 8080:8080
     environment:
       - KC_HEALTH_ENABLED=true
       - KC_LOG_LEVEL=DEBUG
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_FEATURES=preview
+      # Enable it when you run the application in the docker environment.
+      # Don't forget to set local dns in the host file.
+      # https://stackoverflow.com/questions/72991550/keycloak-invalid-token-issuer-in-docker
+      # We use 'localhost' naming convention for this issue.
+      # Normally we should configure via TLS on production, but it is for  development.
+      # https://github.com/keycloak/keycloak/issues/24821
+
+      # - KC_HOSTNAME=onlineshop-keycloak.localhost
+
   rabbitmq:
     ports:
       - '4369:4369'
