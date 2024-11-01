@@ -17,8 +17,11 @@
       "UpstreamPathTemplate": "/api/catalog-service/{everything}",
       "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
       "AuthenticationOptions": {
-        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
-        "AllowedScopes": [ "catalogservice.fullaccess" ]
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "CatalogService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "CatalogService"
       }
     },
     {
@@ -35,8 +38,11 @@
       "UpstreamPathTemplate": "/api/basket-service/{everything}",
       "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
       "AuthenticationOptions": {
-        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
-        "AllowedScopes": [ "basketservice.fullaccess" ]
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "BasketService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "BasketService"
       }
     },
     {
@@ -53,8 +59,11 @@
       "UpstreamPathTemplate": "/api/ordering-service/{everything}",
       "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
       "AuthenticationOptions": {
-        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
-        "AllowedScopes": [ "orderingservice.fullaccess" ]
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "OrderingService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "OrderingService"
       }
     },
     {
@@ -71,8 +80,11 @@
       "UpstreamPathTemplate": "/api/file-service/{everything}",
       "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
       "AuthenticationOptions": {
-        //"AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
-        "AllowedScopes": [ "fileservice.fullaccess" ]
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "FileService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "FileService"
       }
     }
   ]

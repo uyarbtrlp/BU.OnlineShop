@@ -101,8 +101,8 @@ services:
   webgateway:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - AuthServer__Authority=http://onlineshop-identityservice  # Use container name with http without "/" at the end
-      - Swagger__Authority=https://localhost:5001
+      - AuthServer__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop  # Use container name with http without "/" at the end
+      - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
       - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
       - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   

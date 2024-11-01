@@ -16,8 +16,7 @@ services:
       # We use 'localhost' naming convention for this issue.
       # Normally we should configure via TLS on production, but it is for  development.
       # https://github.com/keycloak/keycloak/issues/24821
-
-      # - KC_HOSTNAME=onlineshop-keycloak.localhost
+      - KC_HOSTNAME=onlineshop-keycloak.localhost
 
   rabbitmq:
     ports:
