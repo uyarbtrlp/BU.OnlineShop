@@ -10,12 +10,12 @@ services:
       - Keycloak__SslRequired=none
       - Keycloak__Resource=OnlineShop_Swagger
       - Keycloak__VerifyTokenAudience=true
-      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Keycloak__Credentials__Secret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - BasketServiceTokenExchange__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop  # Use container name with http without "/" at the end
       - BasketServiceTokenExchange__RequireHttpsMetadata=false
       - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
-      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__ClientSecret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RemoteServices__CatalogService__Uri=http://onlineshop-catalogservice # Api calls must be against to internal docker network
@@ -36,10 +36,10 @@ services:
       - Keycloak__SslRequired=none
       - Keycloak__Resource=OnlineShop_Swagger
       - Keycloak__VerifyTokenAudience=true
-      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Keycloak__Credentials__Secret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
-      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__ClientSecret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=CatalogServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RabbitMQ__Host=onlineshop-rabbitmq
@@ -58,10 +58,10 @@ services:
       - Keycloak__SslRequired=none
       - Keycloak__Resource=OnlineShop_Swagger
       - Keycloak__VerifyTokenAudience=true
-      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Keycloak__Credentials__Secret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
-      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__ClientSecret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=FileServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
@@ -77,10 +77,10 @@ services:
       - Keycloak__SslRequired=none
       - Keycloak__Resource=OnlineShop_Swagger
       - Keycloak__VerifyTokenAudience=true
-      - Keycloak__Credentials__Secret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Keycloak__Credentials__Secret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
-      - Swagger__ClientSecret=E8virmFFHzFRpHlqqwK4lQj8mDfHc2XA
+      - Swagger__ClientSecret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=OrderServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - RabbitMQ__Host=onlineshop-rabbitmq
