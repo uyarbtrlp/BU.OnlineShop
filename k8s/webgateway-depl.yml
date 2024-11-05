@@ -21,9 +21,13 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               value: Kubernetes
             - name: AuthServer__Authority
-              value: http://identityservice-clusterip-srv
+              value: "https://keycloak.com"
             - name: Swagger__Authority
-              value: http://localhost:30578
+              value: "https://keycloak.com/realms/onlineshop/protocol"
+            - name: Swagger__ClientId
+              value: "OnlineShop_Swagger"
+            - name: Swagger__ClientSecret
+              value: "UEdCHLNuZgVFtsW5VJEHNQqnZigMlhYH"
             - name: CorsOrigins
               value: http://webgateway.com
 ---

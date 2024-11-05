@@ -20,30 +20,34 @@ spec:
               value: http://+:80; # Be sure about http port exposure
             - name: ConnectionStrings__DefaultConnection
               value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=OrderingServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
-            - name: AuthServer__Authority
-              value: http://identityservice-clusterip-srv
-            - name: AuthServer__RequireHttpsMetadata
-              value: "false"
-            - name: AuthServer__MetadataAddress
-              value: http://identityservice-clusterip-srv
+            - name: Keycloak__Realm
+              value: "onlineshop"
+            - name: Keycloak__AuthServerUrl
+              value: "https://keycloak.com"
+            - name: Keycloak__Audience
+              value: "OrderingService"
+            - name: Keycloak__SslRequired
+              value: "none"
+            - name: Keycloak__Resource
+              value: "OnlineShop_Swagger"
+            - name: Keycloak__VerifyTokenAudience
+              value: "true"
+            - name: Keycloak__Credentials__Secret
+              value: "UEdCHLNuZgVFtsW5VJEHNQqnZigMlhYH"
             - name: Swagger__Authority
-              value: http://localhost:30578
+              value: "https://keycloak.com/realms/onlineshop/protocol"
+            - name: Swagger__ClientId
+              value: "OnlineShop_Swagger"
+            - name: Swagger__ClientSecret
+              value: "UEdCHLNuZgVFtsW5VJEHNQqnZigMlhYH"
             - name: CorsOrigins
               value: http://webgateway.com
-            - name: RabbitMQ__Connections__Default__HostName
+            - name: RabbitMQ__Host
               value: rabbitmq-clusterip-srv
-            - name: RabbitMQ__Connections__Default__Port
-              value: "5672"
-            - name: RabbitMQ__Connections__Default__UserName
-              value: user  
-            - name: RabbitMQ__Connections__Default__Password
-              value: bitnami
-            - name: RabbitMQ__Connections__Default__Uri
-              value: amqps://rabbitmq-clusterip-srv:5671    
-            - name: RabbitMQ__EventBus__QueueName
-              value: OrderingService
-            - name: RabbitMQ__EventBus__ExchangeName
-              value: OnlineShop
+            - name: RabbitMQ__Username
+              value: "user"
+            - name: RabbitMQ__Password
+              value: "bitnami"
 ---
 apiVersion: v1
 kind: Service
