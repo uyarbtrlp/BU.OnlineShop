@@ -11,7 +11,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "onlineshop-catalogservice",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/api/catalog-service/{everything}",
@@ -32,7 +32,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "onlineshop-basketservice",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/api/basket-service/{everything}",
@@ -53,7 +53,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "onlineshop-orderingservice",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/api/ordering-service/{everything}",
@@ -74,7 +74,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "onlineshop-fileservice",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/api/file-service/{everything}",

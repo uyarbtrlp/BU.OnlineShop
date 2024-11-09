@@ -3,7 +3,8 @@ version: '3.4'
 services:
   basketservice:
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
+      - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
       - Keycloak__Realm=onlineshop
       - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080 # It should be configured as https with dns name in production.
       - Keycloak__Audience=BasketService
@@ -18,18 +19,19 @@ services:
       - Swagger__ClientSecret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=BasketServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
-      - RemoteServices__CatalogService__Uri=http://onlineshop-catalogservice # Api calls must be against to internal docker network
-      - RemoteServices__PaymentService__Uri=http://onlineshop-paymentservice # Api calls must be against to internal docker network
+      - RemoteServices__CatalogService__Uri=http://onlineshop-catalogservice:8080 # Api calls must be against to internal docker network
+      - RemoteServices__PaymentService__Uri=http://onlineshop-paymentservice:8080 # Api calls must be against to internal docker network
       - RabbitMQ__Host=onlineshop-rabbitmq
       - RabbitMQ__Username=user  
       - RabbitMQ__Password=bitnami
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+      - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
     ports:
-      - "7202:443"
+      - "7202:8081"
   catalogservice:
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
+      - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
       - Keycloak__Realm=onlineshop
       - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080
       - Keycloak__Audience=CatalogService
@@ -45,13 +47,14 @@ services:
       - RabbitMQ__Host=onlineshop-rabbitmq
       - RabbitMQ__Username=user  
       - RabbitMQ__Password=bitnami
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+      - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
     ports:
-      - "7008:443"
+      - "7008:8081"
   fileservice:
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
+      - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
       - Keycloak__Realm=onlineshop
       - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080
       - Keycloak__Audience=FileService
@@ -64,13 +67,14 @@ services:
       - Swagger__ClientSecret=BH9bcl0799zXs3ByGbl6BZ8FZsZDa1II
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=FileServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+      - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
     ports:
-      - "7092:443"
+      - "7092:8081"
   orderservice:
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
+      - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
       - Keycloak__Realm=onlineshop
       - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080
       - Keycloak__Audience=OrderingService
@@ -86,28 +90,30 @@ services:
       - RabbitMQ__Host=onlineshop-rabbitmq
       - RabbitMQ__Username=user  
       - RabbitMQ__Password=bitnami
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+      - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
     ports:
-      - "7290:443"
+      - "7290:8081"
 
   paymentservice:
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+      - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
+      - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
+      - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
     ports:
-      - "7121:443"
+      - "7121:8081"
   webgateway:
     environment:
-      - ASPNETCORE_URLS=https://+:443;http://+:80; # Be sure about http port exposure
+      - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
+      - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
       - AuthServer__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop  # Use container name with http without "/" at the end
       - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
-      - Kestrel__Certificates__Default__Path=/root/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/root/certificate/localhost.key   
+      - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
     ports:
-      - "7235:443"      
+      - "7235:8081"      
    
     
   

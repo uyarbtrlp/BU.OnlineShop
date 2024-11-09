@@ -2,7 +2,6 @@
 using BU.OnlineShop.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BU.OnlineShop.Shared.Repository
 {

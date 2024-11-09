@@ -5,11 +5,12 @@ services:
     image: onlineshop.basketservice:latest
     container_name: onlineshop-basketservice
     hostname: onlineshop-basketservice # creates entry at etc/host
+    user: app
     build:
       context: ./
       dockerfile: services/basket/BU.OnlineShop.BasketService.API/Dockerfile.Local
     volumes:
-      - ./etc/certs:/root/certificate
+      - ./etc/certs:/app/certificate
     networks:
       - onlineshop-network
     depends_on:
@@ -22,11 +23,12 @@ services:
     image: onlineshop.catalogservice:latest
     container_name: onlineshop-catalogservice
     hostname: onlineshop-catalogservice # creates entry at etc/host
+    user: app
     build:
       context: ./
       dockerfile: services/basket/BU.OnlineShop.CatalogService.API/Dockerfile.Local
     volumes:
-      - ./etc/certs:/root/certificate
+      - ./etc/certs:/app/certificate
     networks:
       - onlineshop-network
     depends_on:
@@ -37,11 +39,12 @@ services:
     image: onlineshop.fileservice:latest
     container_name: onlineshop-fileservice
     hostname: onlineshop-fileservice # creates entry at etc/host
+    user: app
     build:
       context: ./
       dockerfile: services/basket/BU.OnlineShop.FileService.API/Dockerfile.Local
     volumes:
-      - ./etc/certs:/root/certificate
+      - ./etc/certs:/app/certificate
     networks:
       - onlineshop-network
     depends_on:
@@ -51,11 +54,12 @@ services:
     image: onlineshop.orderservice:latest
     container_name: onlineshop-orderservice
     hostname: onlineshop-orderservice # creates entry at etc/host
+    user: app
     build:
       context: ./
       dockerfile: services/basket/BU.OnlineShop.OrderingService.API/Dockerfile.Local
     volumes:
-      - ./etc/certs:/root/certificate
+      - ./etc/certs:/app/certificate
     networks:
       - onlineshop-network
     depends_on:
@@ -68,11 +72,12 @@ services:
     image: onlineshop.paymentservice:latest
     container_name: onlineshop-paymentservice
     hostname: onlineshop-paymentservice # creates entry at etc/host
+    user: app
     build:
       context: ./
       dockerfile: services/basket/BU.OnlineShop.PaymentService.API/Dockerfile.Local
     volumes:
-      - ./etc/certs:/root/certificate
+      - ./etc/certs:/app/certificate
     networks:
       - onlineshop-network
     depends_on:
@@ -82,11 +87,12 @@ services:
     image: onlineshop.webgateway:latest
     container_name: onlineshop-webgateway
     hostname: onlineshop-webgateway # creates entry at etc/host
+    user: app
     build:
       context: ./
       dockerfile: gateways/BU.OnlineShop.WebGateway/Dockerfile.Local
     volumes:
-      - ./etc/certs:/root/certificate
+      - ./etc/certs:/app/certificate
     networks:
       - onlineshop-network
     depends_on:

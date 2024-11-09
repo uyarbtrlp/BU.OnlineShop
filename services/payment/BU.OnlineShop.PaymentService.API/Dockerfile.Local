@@ -1,4 +1,9 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-COPY bin/Release/net6.0/publish/ app/
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+EXPOSE 8080
+EXPOSE 8081
+
+COPY bin/Release/net8.0/publish/ app/
 WORKDIR /app
+
+USER $APP_UID
 ENTRYPOINT ["dotnet", "BU.OnlineShop.PaymentService.API.dll"]
