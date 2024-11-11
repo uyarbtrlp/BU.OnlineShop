@@ -25,7 +25,8 @@ services:
       - RabbitMQ__Username=user  
       - RabbitMQ__Password=bitnami
       - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://onlineshop-aspire:18889
     ports:
       - "7202:8081"
   catalogservice:
@@ -48,7 +49,8 @@ services:
       - RabbitMQ__Username=user  
       - RabbitMQ__Password=bitnami
       - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://onlineshop-aspire:18889      
     ports:
       - "7008:8081"
   fileservice:
@@ -68,7 +70,9 @@ services:
       - CorsOrigins=https://localhost:7235
       - ConnectionStrings__DefaultConnection=Server=onlineshop-sql-server;User Id=sa;Password=myPassw0rd;Initial Catalog=FileServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
       - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://onlineshop-aspire:18889      
+      
     ports:
       - "7092:8081"
   orderservice:
@@ -91,7 +95,8 @@ services:
       - RabbitMQ__Username=user  
       - RabbitMQ__Password=bitnami
       - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://onlineshop-aspire:18889      
     ports:
       - "7290:8081"
 
@@ -100,7 +105,8 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
       - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
       - Kestrel__Certificates__Default__Path=/app/certificate/localhost.crt
-      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key   
+      - Kestrel__Certificates__Default__KeyPath=/app/certificate/localhost.key
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://onlineshop-aspire:18889      
     ports:
       - "7121:8081"
   webgateway:

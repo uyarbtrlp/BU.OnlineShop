@@ -73,6 +73,42 @@ services:
         reservations:
           cpus: '2'
           memory: 8192M          
+  # jaeger:
+    # container_name: onlineshop-jaeger
+    # image: jaegertracing/all-in-one:latest
+    # networks:
+      # - onlineshop-network
+    # deploy:
+      # restart_policy:
+        # condition: on-failure
+        # delay: 5s
+        # max_attempts: 3
+        # window: 120s
+      # resources:
+        # limits:
+          # cpus: '10'
+          # memory: 8192M
+        # reservations:
+          # cpus: '2'
+          # memory: 8192M  
+  aspire:
+    container_name: onlineshop-aspire
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:8.2
+    networks:
+      - onlineshop-network
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '10'
+          memory: 8192M
+        reservations:
+          cpus: '2'
+          memory: 8192M  
 
 volumes:
   keycloak_data:

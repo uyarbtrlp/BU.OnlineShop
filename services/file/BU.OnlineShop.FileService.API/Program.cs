@@ -8,6 +8,10 @@ using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
@@ -25,6 +29,13 @@ Log.Logger = new LoggerConfiguration()
         .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
         .Enrich.WithMachineName()
         .Enrich.FromLogContext()
+        .WriteTo.OpenTelemetry(options =>
+        {
+            options.ResourceAttributes = new Dictionary<string, object>
+            {
+                ["service.name"] = "FileService"
+            };
+        })
         .WriteTo.File(path: "Logs/logs.txt", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 31, fileSizeLimitBytes: 536870912)
         .WriteTo.Console()
         .CreateLogger();
@@ -122,6 +133,33 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
+builder.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("FileService"))
+    .WithMetrics(metrics =>
+    {
+        metrics
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation();
+
+        metrics.AddOtlpExporter();
+    })
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddSqlClientInstrumentation(o => o.SetDbStatementForText = true); // For development purpose
+
+        tracing.AddOtlpExporter();
+    });
+
+builder.Logging.AddOpenTelemetry(logging => {
+    logging.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("FileService"));
+    logging.AddOtlpExporter();
+}
+);
 
 var app = builder.Build();
 

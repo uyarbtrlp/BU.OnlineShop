@@ -16,7 +16,7 @@ services:
       # We use 'localhost' naming convention for this issue.
       # Normally we should configure via TLS on production, but it is for  development.
       # https://github.com/keycloak/keycloak/issues/24821
-      - KC_HOSTNAME=onlineshop-keycloak.localhost
+      # - KC_HOSTNAME=onlineshop-keycloak.localhost
 
   rabbitmq:
     ports:
@@ -35,4 +35,13 @@ services:
       - "1434:1433"
     environment:
       - SA_PASSWORD=myPassw0rd
-      - ACCEPT_EULA=Y       
+      - ACCEPT_EULA=Y     
+  # jaeger:
+    # ports:
+      # - "4317:4317"
+      # - "4318:4318"
+      # - "16686:16686"
+  aspire:
+    ports:
+      - "18888:18888"
+      - "4317:18889"
