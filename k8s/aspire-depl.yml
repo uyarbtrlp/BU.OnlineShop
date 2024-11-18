@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspire
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspire
+  template:
+    metadata: 
+      labels:
+        app: aspire
+    spec:
+      containers:
+        - name: aspire
+          image: mcr.microsoft.com/dotnet/aspire-dashboard:9.0
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspire-clusterip-srv
+spec:
+  type: ClusterIP
+  selector: 
+    app: aspire
+  ports:
+    - name: "dashboard"
+      protocol: TCP
+      port: 80
+      targetPort: 18888
+    - name: "otlp"
+      protocol: TCP
+      port: 4317
+      targetPort: 18889

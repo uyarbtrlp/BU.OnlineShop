@@ -18,6 +18,8 @@ spec:
           env:
             - name: ASPNETCORE_HTTP_PORTS
               value: "8080"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://aspire-clusterip-srv:4317"
 ---
 apiVersion: v1
 kind: Service
