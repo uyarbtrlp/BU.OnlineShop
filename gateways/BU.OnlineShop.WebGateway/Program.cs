@@ -1,4 +1,5 @@
 using BU.OnlineShop.WebGateway;
+using Keycloak.AuthServices.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.IdentityModel.Tokens;
@@ -21,21 +22,17 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
 
 var authenticationScheme = "OnlineShopWebGatewayAuthenticationScheme";
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(authenticationScheme, options =>
-    {
-        options.Authority = authServerUrl;
-        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidAudiences = new[] { 
+builder.Services
+    .AddKeycloakWebApiAuthentication(builder.Configuration, 
+        options => {
+            options.TokenValidationParameters.ValidAudiences = new[] {
                 "BasketService",
                 "CatalogService",
                 "OrderingService",
                 "FileService"
-            }
-        };
-    });
+            };
+        }, 
+        configSectionName:"Keycloak", jwtBearerScheme: authenticationScheme);
 
 
 builder.Services.AddControllers();

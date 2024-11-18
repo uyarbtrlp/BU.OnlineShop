@@ -1,0 +1,91 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://webgateway.onlineshop.com"
+  },
+  "Routes": [
+    {
+      "ServiceKey": "CatalogService",
+      "SwaggerUrl": "https://catalogservice.onlineshop.com",
+      "DownstreamPathTemplate": "/api/catalog-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalogservice-clusterip-srv",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/api/catalog-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "CatalogService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "CatalogService"
+      }
+    },
+    {
+      "ServiceKey": "BasketService",
+      "SwaggerUrl": "https://basketservice.onlineshop.com",
+      "DownstreamPathTemplate": "/api/basket-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "basketservice-clusterip-srv",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/api/basket-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "BasketService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "BasketService"
+      }
+    },
+    {
+      "ServiceKey": "OrderingService",
+      "SwaggerUrl": "https://orderingservice.onlineshop.com",
+      "DownstreamPathTemplate": "/api/ordering-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orderingservice-clusterip-srv",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/api/ordering-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "OrderingService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "OrderingService"
+      }
+    },
+    {
+      "ServiceKey": "FileService",
+      "SwaggerUrl": "https://fileservice.onlineshop.com",
+      "DownstreamPathTemplate": "/api/file-service/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "fileservice-clusterip-srv",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/api/file-service/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OnlineShopWebGatewayAuthenticationScheme",
+        "AllowedScopes": [ "FileService" ]
+      },
+      "RouteClaimsRequirement": {
+        "aud": "FileService"
+      }
+    }
+  ]
+}

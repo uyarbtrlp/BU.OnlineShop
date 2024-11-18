@@ -35,7 +35,9 @@ namespace BU.OnlineShop.BasketService.API.Services
                 Address = _configuration["BasketServiceTokenExchange:Authority"],
                 Policy =
                 {
-                    RequireHttps = Convert.ToBoolean(_configuration["BasketServiceTokenExchange:RequireHttpsMetadata"])
+                    RequireHttps = Convert.ToBoolean(_configuration["BasketServiceTokenExchange:RequireHttpsMetadata"]),
+                    ValidateIssuerName = false, //TODO: Keycloak does not have configurable issuer name so I am not able to resolve it from container name. When it is done, this line should be removed to make it more secure or I can use IAuthorityValidationStrategy!!!
+                    ValidateEndpoints = false
                 }
             });
 

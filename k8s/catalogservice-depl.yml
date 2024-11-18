@@ -16,14 +16,14 @@ spec:
         - name: catalogservice
           image: btrlpuyr/catalogservice:latest
           env:
-          - name: ASPNETCORE_URLS
-            value: "http://+:80"
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "8080"
           - name: ConnectionStrings__DefaultConnection
             value: Server=mssql-clusterip-srv,1434;User Id=sa;Password=myPassw0rd;Initial Catalog=CatalogServiceDb;MultipleActiveResultSets=true;TrustServerCertificate=True; # Change sql server DNS name according to module name
           - name: Keycloak__Realm
             value: "onlineshop"
           - name: Keycloak__AuthServerUrl
-            value: "https://keycloak.com"
+            value: "http://keycloak"
           - name: Keycloak__Audience
             value: "CatalogService"
           - name: Keycloak__SslRequired
@@ -33,15 +33,13 @@ spec:
           - name: Keycloak__VerifyTokenAudience
             value: "true"
           - name: Keycloak__Credentials__Secret
-            value: "UEdCHLNuZgVFtsW5VJEHNQqnZigMlhYH"
+            value: "KYMyRvmJeu9Sarv5jhEtFIA6frgAV5to"
           - name: Swagger__Authority
-            value: "https://keycloak.com/realms/onlineshop/protocol"
+            value: "https://keycloak.onlineshop.com/realms/onlineshop/protocol"
           - name: Swagger__ClientId
             value: "OnlineShop_Swagger"
           - name: Swagger__ClientSecret
-            value: "UEdCHLNuZgVFtsW5VJEHNQqnZigMlhYH"
-          - name: CorsOrigins
-            value: http://webgateway.com
+            value: "KYMyRvmJeu9Sarv5jhEtFIA6frgAV5to"
           - name: RabbitMQ__Host
             value: rabbitmq-clusterip-srv
           - name: RabbitMQ__Username
@@ -60,5 +58,5 @@ spec:
   ports:
     - name: catalogservice
       protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080

@@ -16,20 +16,30 @@ spec:
         - name: webgateway
           image: btrlpuyr/webgateway:latest
           env:
-            - name: ASPNETCORE_URLS
-              value: http://+:80; # Be sure about http port exposure
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "8080"
             - name: ASPNETCORE_ENVIRONMENT
               value: Kubernetes
+            - name: Keycloak__Realm
+              value: "onlineshop"
+            - name: Keycloak__AuthServerUrl
+              value: "http://keycloak"
+            - name: Keycloak__SslRequired
+              value: "none"
+            - name: Keycloak__Resource
+              value: "OnlineShop_Swagger"
+            - name: Keycloak__VerifyTokenAudience
+              value: "true"
+            - name: Keycloak__Credentials__Secret
+              value: "KYMyRvmJeu9Sarv5jhEtFIA6frgAV5to"
             - name: AuthServer__Authority
-              value: "https://keycloak.com"
+              value: "http://keycloak"
             - name: Swagger__Authority
               value: "https://keycloak.com/realms/onlineshop/protocol"
             - name: Swagger__ClientId
               value: "OnlineShop_Swagger"
             - name: Swagger__ClientSecret
-              value: "UEdCHLNuZgVFtsW5VJEHNQqnZigMlhYH"
-            - name: CorsOrigins
-              value: http://webgateway.com
+              value: "KYMyRvmJeu9Sarv5jhEtFIA6frgAV5to"
 ---
 apiVersion: v1
 kind: Service
@@ -42,5 +52,5 @@ spec:
   ports:
     - name: webgateway
       protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080

@@ -113,6 +113,13 @@ services:
     environment:
       - ASPNETCORE_HTTP_PORTS=8080 # Be sure about http port exposure      
       - ASPNETCORE_HTTPS_PORTS=8081 # Be sure about https port exposure
+      - Keycloak__Realm=onlineshop
+      - Keycloak__AuthServerUrl=http://onlineshop-keycloak.localhost:8080 # It should be configured as https with dns name in production.
+      - Keycloak__Audience=BasketService
+      - Keycloak__SslRequired=none
+      - Keycloak__Resource=OnlineShop_Swagger
+      - Keycloak__VerifyTokenAudience=true
+      - Keycloak__Credentials__Secret=MfWUyG5jemmQI51Il7GLBNzloLU4Wv4C
       - AuthServer__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop  # Use container name with http without "/" at the end
       - Swagger__Authority=http://onlineshop-keycloak.localhost:8080/realms/onlineshop/protocol
       - Swagger__ClientId=OnlineShop_Swagger
