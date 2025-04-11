@@ -337,6 +337,7 @@
       ],
       "security-admin-console": [],
       "admin-cli": [],
+      "account-console": [],
       "OnlineShop_Swagger": [
         {
           "id": "a7e8ef90-d070-4068-a12b-6802badd52da",
@@ -347,7 +348,6 @@
           "attributes": {}
         }
       ],
-      "account-console": [],
       "broker": [
         {
           "id": "fee74bbe-5cd4-4dbe-8d7d-1f905b4d2943",
@@ -566,6 +566,157 @@
   },
   "clients": [
     {
+      "id": "91c4fa37-31ee-4aed-96de-e9913d5faf28",
+      "clientId": "account",
+      "name": "${client_account}",
+      "rootUrl": "${authBaseUrl}",
+      "baseUrl": "/realms/onlineshop/account/",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "/realms/onlineshop/account/*"
+      ],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": 0,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "40d34c00-9ee0-4c73-8fdc-021f6ce2e9ad",
+      "clientId": "account-console",
+      "name": "${client_account-console}",
+      "description": "",
+      "rootUrl": "${authBaseUrl}",
+      "adminUrl": "",
+      "baseUrl": "/realms/onlineshop/account/",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "/realms/onlineshop/account/*"
+      ],
+      "webOrigins": [
+        "https://keycloak.onlineshop.com"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "post.logout.redirect.uris": "+",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "pkce.code.challenge.method": "S256",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": 0,
+      "protocolMappers": [
+        {
+          "id": "3bbdd628-9fd2-46ff-89fd-7b5743bde8bd",
+          "name": "audience resolve",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-resolve-mapper",
+          "consentRequired": false,
+          "config": {}
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
+      "id": "56190966-5743-461d-adab-c440e41826d2",
+      "clientId": "admin-cli",
+      "name": "${client_admin-cli}",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": 0,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "16e179d8-433d-49c1-b22c-7cae295e955b",
       "clientId": "BasketServiceTokenExchangeClient",
       "name": "",
@@ -599,8 +750,8 @@
         "client.secret.creation.time": "1729897474",
         "backchannel.logout.session.required": "true",
         "post.logout.redirect.uris": "+",
-        "oauth2.device.authorization.grant.enabled": "false",
         "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
         "use.jwks.url": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
       },
@@ -628,6 +779,47 @@
       ]
     },
     {
+      "id": "ab31b055-de1a-4158-87e1-cb11783f11e1",
+      "clientId": "broker",
+      "name": "${client_broker}",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": true,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": 0,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "cb4a36b1-b208-4c8f-af74-f1218802cc18",
       "clientId": "OnlineShop_Swagger",
       "name": "",
@@ -641,27 +833,27 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "https://fileservice.com/*",
         "https://localhost:7008/*",
-        "https://orderingservice.com/*",
+        "https://fileservice.onlineshop.com/*",
         "https://localhost:7092/*",
-        "https://catalogservice.com/*",
         "https://localhost:7290/*",
-        "https://webgateway.com/*",
-        "https://basketservice.com/*",
+        "https://orderingservice.onlineshop.com/*",
+        "https://basketservice.onlineshop.com/*",
+        "https://catalogservice.onlineshop.com/*",
         "https://localhost:7202/*",
-        "https://localhost:7235/*"
+        "https://localhost:7235/*",
+        "https://webgateway.onlineshop.com/*"
       ],
       "webOrigins": [
+        "https://fileservice.onlineshop.com",
         "https://localhost:7092",
         "https://localhost:7290",
-        "https://fileservice.com",
-        "https://catalogservice.com",
+        "https://catalogservice.onlineshop.com",
+        "https://webgateway.onlineshop.com",
+        "https://basketservice.onlineshop.com",
         "https://localhost:7202",
         "https://localhost:7235",
-        "https://basketservice.com",
-        "https://orderingservice.com",
-        "https://webgateway.com",
+        "https://orderingservice.onlineshop.com",
         "https://localhost:7008"
       ],
       "notBefore": 0,
@@ -677,11 +869,11 @@
       "protocol": "openid-connect",
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
-        "client.secret.creation.time": "1728844474",
+        "client.secret.creation.time": "1744371413",
         "backchannel.logout.session.required": "true",
         "post.logout.redirect.uris": "+",
-        "oauth2.device.authorization.grant.enabled": "false",
         "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
       },
       "authenticationFlowBindingOverrides": {},
@@ -760,6 +952,48 @@
         "policyEnforcementMode": "ENFORCING",
         "resources": [
           {
+            "name": "BasketService",
+            "ownerManagedAccess": false,
+            "displayName": "Baseket service resource",
+            "attributes": {},
+            "uris": [
+              "api/basket-service/*"
+            ],
+            "scopes": [
+              {
+                "name": "BasketService.BasketManagement.Checkout"
+              },
+              {
+                "name": "BasketService.BasketManagement.Update"
+              },
+              {
+                "name": "BasketService.BasketManagement"
+              }
+            ],
+            "icon_uri": ""
+          },
+          {
+            "name": "OrderingService",
+            "ownerManagedAccess": false,
+            "displayName": "Ordering service resource",
+            "attributes": {},
+            "uris": [
+              "api/ordering-service/*"
+            ],
+            "scopes": [
+              {
+                "name": "OrderingService.Admin.OrderManagement.Update"
+              },
+              {
+                "name": "OrderingService.OrderManagement"
+              },
+              {
+                "name": "OrderingService.Admin.OrderManagement"
+              }
+            ],
+            "icon_uri": ""
+          },
+          {
             "name": "CatalogService",
             "ownerManagedAccess": false,
             "displayName": "Catalog service resource",
@@ -775,10 +1009,10 @@
                 "name": "CatalogService.CategoryManagement.Update"
               },
               {
-                "name": "CatalogService.ProductManagement.Delete"
+                "name": "CatalogService.ProductManagement"
               },
               {
-                "name": "CatalogService.ProductManagement"
+                "name": "CatalogService.ProductManagement.Delete"
               },
               {
                 "name": "CatalogService.CategoryManagement.Create"
@@ -818,60 +1052,19 @@
               }
             ],
             "icon_uri": ""
-          },
-          {
-            "name": "OrderingService",
-            "ownerManagedAccess": false,
-            "displayName": "Ordering service resource",
-            "attributes": {},
-            "uris": [
-              "api/ordering-service/*"
-            ],
-            "scopes": [
-              {
-                "name": "OrderingService.Admin.OrderManagement.Update"
-              },
-              {
-                "name": "OrderingService.OrderManagement"
-              },
-              {
-                "name": "OrderingService.Admin.OrderManagement"
-              }
-            ],
-            "icon_uri": ""
-          },
-          {
-            "name": "BasketService",
-            "ownerManagedAccess": false,
-            "displayName": "Baseket service resource",
-            "attributes": {},
-            "uris": [
-              "api/basket-service/*"
-            ],
-            "scopes": [
-              {
-                "name": "BasketService.BasketManagement.Checkout"
-              },
-              {
-                "name": "BasketService.BasketManagement.Update"
-              },
-              {
-                "name": "BasketService.BasketManagement"
-              }
-            ],
-            "icon_uri": ""
           }
         ],
         "policies": [
           {
-            "name": "AdminRolePolicy",
-            "description": "Admin role policy",
-            "type": "role",
+            "name": "BasketServiceScopePolicy",
+            "description": "Basket service token exchange policy to run requested services",
+            "type": "regex",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "fetchRoles": "false",
-              "roles": "[{\"id\":\"admin\",\"required\":false}]"
+              "pattern": ".*BasketServiceTokenExchange.*",
+              "targetContextAttributes": "false",
+              "targetClaim": "scope"
             }
           },
           {
@@ -886,115 +1079,14 @@
             }
           },
           {
-            "name": "BasketServiceScopePolicy",
-            "description": "Basket service token exchange policy to run requested services",
-            "type": "regex",
+            "name": "AdminRolePolicy",
+            "description": "Admin role policy",
+            "type": "role",
             "logic": "POSITIVE",
             "decisionStrategy": "UNANIMOUS",
             "config": {
-              "targetContextAttributes": "false",
-              "pattern": ".*BasketServiceTokenExchange.*",
-              "targetClaim": "scope"
-            }
-          },
-          {
-            "name": "CatalogService.CategoryManagement",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "resources": "[\"CatalogService\"]",
-              "scopes": "[\"CatalogService.CategoryManagement\"]",
-              "applyPolicies": "[\"UserRolePolicy\",\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.CategoryManagement.Create",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.CategoryManagement.Create\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.CategoryManagement.Update",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.CategoryManagement.Update\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.CategoryManagement.Delete",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.CategoryManagement.Delete\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.ProductManagement",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.ProductManagement\"]",
-              "applyPolicies": "[\"UserRolePolicy\",\"BasketServiceScopePolicy\",\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.ProductManagement.Create",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.ProductManagement.Create\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.ProductManagement.Update",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.ProductManagement.Update\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "CatalogService.ProductManagement.Delete",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"CatalogService.ProductManagement.Delete\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "FileService.FileInformationManagement",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"FileService.FileInformationManagement\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
+              "fetchRoles": "false",
+              "roles": "[{\"id\":\"admin\",\"required\":false}]"
             }
           },
           {
@@ -1005,17 +1097,6 @@
             "decisionStrategy": "AFFIRMATIVE",
             "config": {
               "scopes": "[\"FileService.FileInformationManagement.Update\"]",
-              "applyPolicies": "[\"AdminRolePolicy\"]"
-            }
-          },
-          {
-            "name": "FileService.FileInformationManagement.Create",
-            "description": "",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "AFFIRMATIVE",
-            "config": {
-              "scopes": "[\"FileService.FileInformationManagement.Create\"]",
               "applyPolicies": "[\"AdminRolePolicy\"]"
             }
           },
@@ -1031,6 +1112,73 @@
             }
           },
           {
+            "name": "CatalogService.ProductManagement",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"CatalogService.ProductManagement\"]",
+              "applyPolicies": "[\"AdminRolePolicy\",\"UserRolePolicy\",\"BasketServiceScopePolicy\"]"
+            }
+          },
+          {
+            "name": "FileService.FileInformationManagement.Create",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"FileService.FileInformationManagement.Create\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
+            }
+          },
+          {
+            "name": "CatalogService.CategoryManagement",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"CatalogService\"]",
+              "scopes": "[\"CatalogService.CategoryManagement\"]",
+              "applyPolicies": "[\"AdminRolePolicy\",\"UserRolePolicy\"]"
+            }
+          },
+          {
+            "name": "CatalogService.CategoryManagement.Create",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"CatalogService.CategoryManagement.Create\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
+            }
+          },
+          {
+            "name": "BasketService.BasketManagement",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"BasketService.BasketManagement\"]",
+              "applyPolicies": "[\"AdminRolePolicy\",\"UserRolePolicy\"]"
+            }
+          },
+          {
+            "name": "CatalogService.CategoryManagement.Delete",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"CatalogService.CategoryManagement.Delete\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
+            }
+          },
+          {
             "name": "OrderingService.OrderManagement",
             "description": "",
             "type": "scope",
@@ -1038,17 +1186,39 @@
             "decisionStrategy": "AFFIRMATIVE",
             "config": {
               "scopes": "[\"OrderingService.OrderManagement\"]",
-              "applyPolicies": "[\"UserRolePolicy\",\"AdminRolePolicy\"]"
+              "applyPolicies": "[\"AdminRolePolicy\",\"UserRolePolicy\"]"
             }
           },
           {
-            "name": "OrderingService.Admin.OrderManagement",
+            "name": "CatalogService.ProductManagement.Delete",
             "description": "",
             "type": "scope",
             "logic": "POSITIVE",
             "decisionStrategy": "AFFIRMATIVE",
             "config": {
-              "scopes": "[\"OrderingService.Admin.OrderManagement\"]",
+              "scopes": "[\"CatalogService.ProductManagement.Delete\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
+            }
+          },
+          {
+            "name": "BasketService.BasketManagement.Update",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"BasketService.BasketManagement.Update\"]",
+              "applyPolicies": "[\"AdminRolePolicy\",\"UserRolePolicy\"]"
+            }
+          },
+          {
+            "name": "CatalogService.ProductManagement.Update",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"CatalogService.ProductManagement.Update\"]",
               "applyPolicies": "[\"AdminRolePolicy\"]"
             }
           },
@@ -1064,25 +1234,25 @@
             }
           },
           {
-            "name": "BasketService.BasketManagement",
+            "name": "CatalogService.CategoryManagement.Update",
             "description": "",
             "type": "scope",
             "logic": "POSITIVE",
             "decisionStrategy": "AFFIRMATIVE",
             "config": {
-              "scopes": "[\"BasketService.BasketManagement\"]",
-              "applyPolicies": "[\"UserRolePolicy\",\"AdminRolePolicy\"]"
+              "scopes": "[\"CatalogService.CategoryManagement.Update\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
             }
           },
           {
-            "name": "BasketService.BasketManagement.Update",
+            "name": "FileService.FileInformationManagement",
             "description": "",
             "type": "scope",
             "logic": "POSITIVE",
             "decisionStrategy": "AFFIRMATIVE",
             "config": {
-              "scopes": "[\"BasketService.BasketManagement.Update\"]",
-              "applyPolicies": "[\"UserRolePolicy\",\"AdminRolePolicy\"]"
+              "scopes": "[\"FileService.FileInformationManagement\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
             }
           },
           {
@@ -1093,13 +1263,35 @@
             "decisionStrategy": "AFFIRMATIVE",
             "config": {
               "scopes": "[\"BasketService.BasketManagement.Checkout\"]",
-              "applyPolicies": "[\"UserRolePolicy\",\"AdminRolePolicy\"]"
+              "applyPolicies": "[\"AdminRolePolicy\",\"UserRolePolicy\"]"
+            }
+          },
+          {
+            "name": "CatalogService.ProductManagement.Create",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"CatalogService.ProductManagement.Create\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
+            }
+          },
+          {
+            "name": "OrderingService.Admin.OrderManagement",
+            "description": "",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"OrderingService.Admin.OrderManagement\"]",
+              "applyPolicies": "[\"AdminRolePolicy\"]"
             }
           }
         ],
         "scopes": [
           {
-            "name": "CatalogService.CategoryManagement",
+            "name": "BasketService.BasketManagement",
             "iconUri": ""
           },
           {
@@ -1107,11 +1299,11 @@
             "iconUri": ""
           },
           {
-            "name": "CatalogService.CategoryManagement.Update",
+            "name": "FileService.FileInformationManagement",
             "iconUri": ""
           },
           {
-            "name": "CatalogService.CategoryManagement.Delete",
+            "name": "CatalogService.CategoryManagement",
             "iconUri": ""
           },
           {
@@ -1119,23 +1311,7 @@
             "iconUri": ""
           },
           {
-            "name": "CatalogService.ProductManagement.Create",
-            "iconUri": ""
-          },
-          {
-            "name": "CatalogService.ProductManagement.Update",
-            "iconUri": ""
-          },
-          {
-            "name": "CatalogService.ProductManagement.Delete",
-            "iconUri": ""
-          },
-          {
-            "name": "FileService.FileInformationManagement",
-            "iconUri": ""
-          },
-          {
-            "name": "FileService.FileInformationManagement.Create",
+            "name": "CatalogService.CategoryManagement.Update",
             "iconUri": ""
           },
           {
@@ -1143,11 +1319,39 @@
             "iconUri": ""
           },
           {
+            "name": "BasketService.BasketManagement.Update",
+            "iconUri": ""
+          },
+          {
+            "name": "CatalogService.ProductManagement.Create",
+            "iconUri": ""
+          },
+          {
             "name": "FileService.FileInformationManagement.Delete",
             "iconUri": ""
           },
           {
+            "name": "FileService.FileInformationManagement.Create",
+            "iconUri": ""
+          },
+          {
+            "name": "CatalogService.ProductManagement.Delete",
+            "iconUri": ""
+          },
+          {
             "name": "OrderingService.OrderManagement",
+            "iconUri": ""
+          },
+          {
+            "name": "CatalogService.CategoryManagement.Delete",
+            "iconUri": ""
+          },
+          {
+            "name": "CatalogService.ProductManagement.Update",
+            "iconUri": ""
+          },
+          {
+            "name": "BasketService.BasketManagement.Checkout",
             "iconUri": ""
           },
           {
@@ -1157,205 +1361,10 @@
           {
             "name": "OrderingService.Admin.OrderManagement.Update",
             "iconUri": ""
-          },
-          {
-            "name": "BasketService.BasketManagement",
-            "iconUri": ""
-          },
-          {
-            "name": "BasketService.BasketManagement.Update",
-            "iconUri": ""
-          },
-          {
-            "name": "BasketService.BasketManagement.Checkout",
-            "iconUri": ""
           }
         ],
         "decisionStrategy": "UNANIMOUS"
       }
-    },
-    {
-      "id": "91c4fa37-31ee-4aed-96de-e9913d5faf28",
-      "clientId": "account",
-      "name": "${client_account}",
-      "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/onlineshop/account/",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "alwaysDisplayInConsole": false,
-      "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/realms/onlineshop/account/*"
-      ],
-      "webOrigins": [],
-      "notBefore": 0,
-      "bearerOnly": false,
-      "consentRequired": false,
-      "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": false,
-      "publicClient": true,
-      "frontchannelLogout": false,
-      "protocol": "openid-connect",
-      "attributes": {
-        "post.logout.redirect.uris": "+"
-      },
-      "authenticationFlowBindingOverrides": {},
-      "fullScopeAllowed": false,
-      "nodeReRegistrationTimeout": 0,
-      "defaultClientScopes": [
-        "web-origins",
-        "acr",
-        "roles",
-        "profile",
-        "basic",
-        "email"
-      ],
-      "optionalClientScopes": [
-        "address",
-        "phone",
-        "offline_access",
-        "microprofile-jwt"
-      ]
-    },
-    {
-      "id": "40d34c00-9ee0-4c73-8fdc-021f6ce2e9ad",
-      "clientId": "account-console",
-      "name": "${client_account-console}",
-      "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/onlineshop/account/",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "alwaysDisplayInConsole": false,
-      "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/realms/onlineshop/account/*"
-      ],
-      "webOrigins": [],
-      "notBefore": 0,
-      "bearerOnly": false,
-      "consentRequired": false,
-      "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": false,
-      "publicClient": true,
-      "frontchannelLogout": false,
-      "protocol": "openid-connect",
-      "attributes": {
-        "post.logout.redirect.uris": "+",
-        "pkce.code.challenge.method": "S256"
-      },
-      "authenticationFlowBindingOverrides": {},
-      "fullScopeAllowed": false,
-      "nodeReRegistrationTimeout": 0,
-      "protocolMappers": [
-        {
-          "id": "3bbdd628-9fd2-46ff-89fd-7b5743bde8bd",
-          "name": "audience resolve",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-audience-resolve-mapper",
-          "consentRequired": false,
-          "config": {}
-        }
-      ],
-      "defaultClientScopes": [
-        "web-origins",
-        "acr",
-        "roles",
-        "profile",
-        "basic",
-        "email"
-      ],
-      "optionalClientScopes": [
-        "address",
-        "phone",
-        "offline_access",
-        "microprofile-jwt"
-      ]
-    },
-    {
-      "id": "56190966-5743-461d-adab-c440e41826d2",
-      "clientId": "admin-cli",
-      "name": "${client_admin-cli}",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "alwaysDisplayInConsole": false,
-      "clientAuthenticatorType": "client-secret",
-      "redirectUris": [],
-      "webOrigins": [],
-      "notBefore": 0,
-      "bearerOnly": false,
-      "consentRequired": false,
-      "standardFlowEnabled": false,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": true,
-      "serviceAccountsEnabled": false,
-      "publicClient": true,
-      "frontchannelLogout": false,
-      "protocol": "openid-connect",
-      "attributes": {
-        "post.logout.redirect.uris": "+"
-      },
-      "authenticationFlowBindingOverrides": {},
-      "fullScopeAllowed": false,
-      "nodeReRegistrationTimeout": 0,
-      "defaultClientScopes": [
-        "web-origins",
-        "acr",
-        "roles",
-        "profile",
-        "basic",
-        "email"
-      ],
-      "optionalClientScopes": [
-        "address",
-        "phone",
-        "offline_access",
-        "microprofile-jwt"
-      ]
-    },
-    {
-      "id": "ab31b055-de1a-4158-87e1-cb11783f11e1",
-      "clientId": "broker",
-      "name": "${client_broker}",
-      "surrogateAuthRequired": false,
-      "enabled": true,
-      "alwaysDisplayInConsole": false,
-      "clientAuthenticatorType": "client-secret",
-      "redirectUris": [],
-      "webOrigins": [],
-      "notBefore": 0,
-      "bearerOnly": true,
-      "consentRequired": false,
-      "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": false,
-      "publicClient": false,
-      "frontchannelLogout": false,
-      "protocol": "openid-connect",
-      "attributes": {
-        "post.logout.redirect.uris": "+"
-      },
-      "authenticationFlowBindingOverrides": {},
-      "fullScopeAllowed": false,
-      "nodeReRegistrationTimeout": 0,
-      "defaultClientScopes": [
-        "web-origins",
-        "acr",
-        "roles",
-        "profile",
-        "basic",
-        "email"
-      ],
-      "optionalClientScopes": [
-        "address",
-        "phone",
-        "offline_access",
-        "microprofile-jwt"
-      ]
     },
     {
       "id": "28d7f352-4281-4ae6-b592-d6644254f105",
@@ -1365,6 +1374,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
+      "secret": "**********",
       "redirectUris": [],
       "webOrigins": [],
       "notBefore": 0,
@@ -1379,6 +1389,7 @@
       "frontchannelLogout": false,
       "protocol": "openid-connect",
       "attributes": {
+        "client.secret.creation.time": "1744371257",
         "post.logout.redirect.uris": "+"
       },
       "authenticationFlowBindingOverrides": {},
@@ -1393,8 +1404,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "clientAddress",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientAddress",
             "jsonType.label": "String"
@@ -1408,8 +1420,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "clientHost",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "clientHost",
             "jsonType.label": "String"
@@ -1423,8 +1436,9 @@
           "consentRequired": false,
           "config": {
             "user.session.note": "client_id",
-            "id.token.claim": "true",
             "introspection.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "client_id",
             "jsonType.label": "String"
@@ -1492,26 +1506,6 @@
             }
           },
           {
-            "name": "manage.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "UNANIMOUS",
-            "config": {
-              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
-              "scopes": "[\"manage\"]"
-            }
-          },
-          {
-            "name": "configure.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "UNANIMOUS",
-            "config": {
-              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
-              "scopes": "[\"configure\"]"
-            }
-          },
-          {
             "name": "view.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
             "type": "scope",
             "logic": "POSITIVE",
@@ -1519,26 +1513,6 @@
             "config": {
               "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
               "scopes": "[\"view\"]"
-            }
-          },
-          {
-            "name": "map-roles.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "UNANIMOUS",
-            "config": {
-              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
-              "scopes": "[\"map-roles\"]"
-            }
-          },
-          {
-            "name": "map-roles-client-scope.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
-            "type": "scope",
-            "logic": "POSITIVE",
-            "decisionStrategy": "UNANIMOUS",
-            "config": {
-              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
-              "scopes": "[\"map-roles-client-scope\"]"
             }
           },
           {
@@ -1552,6 +1526,26 @@
             }
           },
           {
+            "name": "map-roles.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
+              "scopes": "[\"map-roles\"]"
+            }
+          },
+          {
+            "name": "manage.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
+              "scopes": "[\"manage\"]"
+            }
+          },
+          {
             "name": "token-exchange.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
             "description": "",
             "type": "scope",
@@ -1562,29 +1556,49 @@
               "scopes": "[\"token-exchange\"]",
               "applyPolicies": "[\"CatalogServiceTokenExchangePolicy\"]"
             }
+          },
+          {
+            "name": "configure.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
+              "scopes": "[\"configure\"]"
+            }
+          },
+          {
+            "name": "map-roles-client-scope.permission.client.16e179d8-433d-49c1-b22c-7cae295e955b",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"client.resource.16e179d8-433d-49c1-b22c-7cae295e955b\"]",
+              "scopes": "[\"map-roles-client-scope\"]"
+            }
           }
         ],
         "scopes": [
           {
-            "name": "manage"
-          },
-          {
-            "name": "view"
+            "name": "token-exchange"
           },
           {
             "name": "map-roles"
           },
           {
-            "name": "map-roles-client-scope"
+            "name": "map-roles-composite"
           },
           {
-            "name": "map-roles-composite"
+            "name": "view"
+          },
+          {
+            "name": "map-roles-client-scope"
           },
           {
             "name": "configure"
           },
           {
-            "name": "token-exchange"
+            "name": "manage"
           }
         ],
         "decisionStrategy": "UNANIMOUS"
@@ -1691,8 +1705,8 @@
           "protocolMapper": "oidc-sub-mapper",
           "consentRequired": false,
           "config": {
-            "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
           }
         }
       ]
@@ -1828,6 +1842,18 @@
       ]
     },
     {
+      "id": "141fb6a3-a21a-43c2-ab15-a93aa0cd48dd",
+      "name": "BasketServiceTokenExchange",
+      "description": "",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true",
+        "gui.order": "",
+        "consent.screen.text": ""
+      }
+    },
+    {
       "id": "ec208c8f-99fd-4cb4-84cf-b6738544620d",
       "name": "phone",
       "description": "OpenID Connect built-in scope: phone",
@@ -1873,8 +1899,8 @@
       ]
     },
     {
-      "id": "141fb6a3-a21a-43c2-ab15-a93aa0cd48dd",
-      "name": "BasketServiceTokenExchange",
+      "id": "4d21403f-ca48-4633-9a96-6c095bdb905b",
+      "name": "FileService",
       "description": "",
       "protocol": "openid-connect",
       "attributes": {
@@ -1882,7 +1908,24 @@
         "display.on.consent.screen": "true",
         "gui.order": "",
         "consent.screen.text": ""
-      }
+      },
+      "protocolMappers": [
+        {
+          "id": "b76c2721-1a09-4bf7-9955-25b513e07fd5",
+          "name": "FileService",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "false",
+            "lightweight.claim": "false",
+            "introspection.token.claim": "true",
+            "access.token.claim": "true",
+            "included.custom.audience": "FileService",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
     },
     {
       "id": "f6dbb716-1398-451e-a44d-a6b6a8fc3ca3",
@@ -1944,18 +1987,18 @@
           }
         },
         {
-          "id": "9f13c360-1c73-465a-b5c3-034a031352de",
-          "name": "website",
+          "id": "18076b5c-9046-4007-bfee-d0c1cc251f68",
+          "name": "birthdate",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usermodel-attribute-mapper",
           "consentRequired": false,
           "config": {
             "introspection.token.claim": "true",
             "userinfo.token.claim": "true",
-            "user.attribute": "website",
+            "user.attribute": "birthdate",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "website",
+            "claim.name": "birthdate",
             "jsonType.label": "String"
           }
         },
@@ -1976,18 +2019,18 @@
           }
         },
         {
-          "id": "18076b5c-9046-4007-bfee-d0c1cc251f68",
-          "name": "birthdate",
+          "id": "9f13c360-1c73-465a-b5c3-034a031352de",
+          "name": "website",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usermodel-attribute-mapper",
           "consentRequired": false,
           "config": {
             "introspection.token.claim": "true",
             "userinfo.token.claim": "true",
-            "user.attribute": "birthdate",
+            "user.attribute": "website",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "birthdate",
+            "claim.name": "website",
             "jsonType.label": "String"
           }
         },
@@ -2008,19 +2051,6 @@
           }
         },
         {
-          "id": "eae5a32f-b3b0-4feb-b5e0-8d2be4bce1e7",
-          "name": "full name",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-full-name-mapper",
-          "consentRequired": false,
-          "config": {
-            "id.token.claim": "true",
-            "introspection.token.claim": "true",
-            "access.token.claim": "true",
-            "userinfo.token.claim": "true"
-          }
-        },
-        {
           "id": "bed3aa02-35f9-408c-a391-1c3c1149e5d4",
           "name": "middle name",
           "protocol": "openid-connect",
@@ -2034,6 +2064,19 @@
             "access.token.claim": "true",
             "claim.name": "middle_name",
             "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "eae5a32f-b3b0-4feb-b5e0-8d2be4bce1e7",
+          "name": "full name",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-full-name-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "introspection.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         },
         {
@@ -2114,35 +2157,6 @@
             "access.token.claim": "true",
             "claim.name": "picture",
             "jsonType.label": "String"
-          }
-        }
-      ]
-    },
-    {
-      "id": "4d21403f-ca48-4633-9a96-6c095bdb905b",
-      "name": "FileService",
-      "description": "",
-      "protocol": "openid-connect",
-      "attributes": {
-        "include.in.token.scope": "true",
-        "display.on.consent.screen": "true",
-        "gui.order": "",
-        "consent.screen.text": ""
-      },
-      "protocolMappers": [
-        {
-          "id": "b76c2721-1a09-4bf7-9955-25b513e07fd5",
-          "name": "FileService",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-audience-mapper",
-          "consentRequired": false,
-          "config": {
-            "id.token.claim": "false",
-            "lightweight.claim": "false",
-            "introspection.token.claim": "true",
-            "access.token.claim": "true",
-            "included.custom.audience": "FileService",
-            "userinfo.token.claim": "false"
           }
         }
       ]
@@ -2253,8 +2267,8 @@
           "protocolMapper": "oidc-audience-resolve-mapper",
           "consentRequired": false,
           "config": {
-            "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
           }
         }
       ]
@@ -2277,8 +2291,8 @@
           "consentRequired": false,
           "config": {
             "id.token.claim": "true",
-            "introspection.token.claim": "true",
             "access.token.claim": "true",
+            "introspection.token.claim": "true",
             "userinfo.token.claim": "true"
           }
         }
@@ -2312,8 +2326,8 @@
           "protocolMapper": "oidc-allowed-origins-mapper",
           "consentRequired": false,
           "config": {
-            "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
           }
         }
       ]
@@ -2365,23 +2379,23 @@
     }
   ],
   "defaultDefaultClientScopes": [
-    "role_list",
-    "profile",
-    "email",
     "roles",
-    "web-origins",
+    "basic",
     "acr",
-    "basic"
+    "role_list",
+    "web-origins",
+    "email",
+    "profile"
   ],
   "defaultOptionalClientScopes": [
-    "offline_access",
-    "address",
-    "phone",
-    "microprofile-jwt",
     "CatalogService",
     "FileService",
+    "OrderingService",
+    "microprofile-jwt",
+    "address",
+    "offline_access",
     "BasketService",
-    "OrderingService"
+    "phone"
   ],
   "browserSecurityHeaders": {
     "contentSecurityPolicyReportOnly": "",
@@ -2425,14 +2439,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-usermodel-property-mapper",
-            "oidc-address-mapper",
-            "saml-user-property-mapper",
-            "oidc-full-name-mapper",
-            "saml-user-attribute-mapper",
             "saml-role-list-mapper",
+            "oidc-full-name-mapper",
+            "oidc-address-mapper",
+            "oidc-usermodel-property-mapper",
             "oidc-sha256-pairwise-sub-mapper",
-            "oidc-usermodel-attribute-mapper"
+            "saml-user-property-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "saml-user-attribute-mapper"
           ]
         }
       },
@@ -2459,14 +2473,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
+            "oidc-sha256-pairwise-sub-mapper",
             "saml-user-attribute-mapper",
             "oidc-usermodel-attribute-mapper",
-            "saml-role-list-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
             "oidc-address-mapper",
-            "oidc-full-name-mapper",
             "oidc-usermodel-property-mapper",
-            "saml-user-property-mapper"
+            "saml-user-property-mapper",
+            "saml-role-list-mapper",
+            "oidc-full-name-mapper"
           ]
         }
       },
@@ -2646,6 +2660,32 @@
       ]
     },
     {
+      "id": "d96bb796-f17f-4893-969f-43d9e10728da",
+      "alias": "Browser - Conditional Organization",
+      "description": "Flow to determine if the organization identity-first login is to be used",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": true,
+      "authenticationExecutions": [
+        {
+          "authenticator": "conditional-user-configured",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "autheticatorFlow": false,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "organization",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "autheticatorFlow": false,
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
       "id": "a1b808a7-8c29-4902-a33c-e4dbeb307f46",
       "alias": "Direct Grant - Conditional OTP",
       "description": "Flow to determine if the OTP is required for the authentication",
@@ -2673,6 +2713,32 @@
     },
     {
       "id": "280a58a3-ff20-40e6-b413-1d818551feda",
+      "alias": "First Broker Login - Conditional Organization",
+      "description": "Flow to determine if the authenticator that adds organization members is to be used",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": true,
+      "authenticationExecutions": [
+        {
+          "authenticator": "conditional-user-configured",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "autheticatorFlow": false,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "idp-add-organization-member",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 20,
+          "autheticatorFlow": false,
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "id": "a51bf0b3-fbff-444e-8ffe-aae46e4a2230",
       "alias": "First Broker Login - Conditional Organization",
       "description": "Flow to determine if the authenticator that adds organization members is to be used",
       "providerId": "basic-flow",
@@ -2751,6 +2817,23 @@
     },
     {
       "id": "05b7fffb-a94c-4f66-b6ff-cd3a73702dd7",
+      "alias": "Organization",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": true,
+      "authenticationExecutions": [
+        {
+          "authenticatorFlow": true,
+          "requirement": "CONDITIONAL",
+          "priority": 10,
+          "autheticatorFlow": true,
+          "flowAlias": "Browser - Conditional Organization",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "id": "d3f9090e-9c92-4dcc-8896-dc64ca3be049",
       "alias": "Organization",
       "providerId": "basic-flow",
       "topLevel": false,
@@ -2888,6 +2971,14 @@
         {
           "authenticatorFlow": true,
           "requirement": "ALTERNATIVE",
+          "priority": 26,
+          "autheticatorFlow": true,
+          "flowAlias": "Organization",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
           "priority": 30,
           "autheticatorFlow": true,
           "flowAlias": "forms",
@@ -3012,6 +3103,14 @@
           "priority": 20,
           "autheticatorFlow": true,
           "flowAlias": "User creation or linking",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "CONDITIONAL",
+          "priority": 50,
+          "autheticatorFlow": true,
+          "flowAlias": "First Broker Login - Conditional Organization",
           "userSetupAllowed": false
         },
         {

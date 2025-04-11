@@ -125,28 +125,56 @@ Keycloak is used to manage authentication and authorization across all services 
 
 10. Access the services via the URLs specified in their respective `launchSettings.json` files.
 
-<!-- ## How to Run on Kubernetes
+## How to Run on Kubernetes
+
 1. Ensure you have a Kubernetes cluster running and `kubectl` is configured to interact with it.
 
-2. Navigate to the `k8s` directory:
+2. Ensure you have Nginx Ingress in your kubernetes cluster.
+
+3. You should set dns records in `C:\Windows\System32\drivers\etc\hosts` file.
+    - 127.0.0.1 basketservice.onlineshop.com
+    - 127.0.0.1 catalogservice.onlineshop.com
+    - 127.0.0.1 fileservice.onlineshop.com
+    - 127.0.0.1 orderingservice.onlineshop.com
+    - 127.0.0.1 paymentservice.onlineshop.com
+    - 127.0.0.1 webgateway.onlineshop.com
+    - 127.0.0.1 keycloak.onlineshop.com
+    - 127.0.0.1 aspire.onlineshop.com
+
+4. Navigate to the `k8s` directory:
     ```sh
     cd BU.OnlineShop/k8s
     ```
 
-3. Apply the Kubernetes manifests:
+5. Apply the Kubernetes manifests:
     ```sh
     kubectl apply -f .
     ```
 
-4. Verify that all services are running:
+6. Verify that all services are running:
     ```sh
     kubectl get pods
     ```
 
-5. Access the services via the URLs specified in the ingress files, for example:
-    - Ordering Service: `http://orderingservice.com`
-    - Catalog Service: `http://catalogservice.com`
-    - File Service: `http://fileservice.com`
-    - Keycloak: `http://keycloak.com`
+7. Access the services via the URLs specified in section 2. Since there is no real certificate generated, you should trust all services in your browser.
 
-For more detailed information, refer to the documentation and comments within the respective configuration files. -->
+8. Login to keycloak with username: admin and password: admin. Import the `realm.json` file into Keycloak to set up the necessary realm, clients, and roles.
+   You should see `onlineshop` realm. 
+
+9. Create users in the Keycloak admin console, assigning them appropriate roles and permissions.
+
+10. Navigate to clients => OnlineShop_Swagger => Credentials tab => Regenerate client secret.
+
+11. You should change the Keycloak secret configuration in environment section to the following for each service and apply deployment files.
+    ```yml
+      containers:
+        - name: basketservice
+          image: btrlpuyr/basketservice:latest
+          env:
+            - name: Keycloak__Credentials__Secret
+              value: "qTQmyjpJSWQPSYXYZEQZQ0V9X0oh4p6c"
+            - name: Swagger__ClientSecret
+              value: "qTQmyjpJSWQPSYXYZEQZQ0V9X0oh4p6c"
+    ```
+
+12. You can navigate to `webgateway.onlineshop.com` in your browser to see all services or you can visit them separately.
