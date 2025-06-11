@@ -21,6 +21,26 @@ jobs:
         run: npm install
       - name: Lint commits
         uses: wagoid/commitlint-github-action@v6
+
+  release:
+    needs: commitlint
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development')
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+
   dotnet:
     runs-on: ubuntu-latest
     steps:
