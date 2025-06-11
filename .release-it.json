@@ -13,6 +13,6 @@
   },
   "npm": {
     "publish": false,
-    "skipChecks": true
+    "skipChecks": true 
   }
 }
