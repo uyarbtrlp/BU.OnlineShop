@@ -38,6 +38,6 @@ jobs:
       - name: Calculate next semantic version only
         id: semver
         run: |
-          VERSION=$(npx -y semantic-release --dry-run --plugins=@semantic-release/commit-analyzer 2>&1 | grep -oP 'The next release version is \K[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
+          VERSION=$(npx release-it --dry-run --ci --no-increment --output-version | grep -oP 'Version: \K[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
           echo "Calculated next version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
