@@ -21,23 +21,3 @@ jobs:
         run: npm install
       - name: Lint commits
         uses: wagoid/commitlint-github-action@v6
-
-  calculate-version:
-    runs-on: ubuntu-latest
-    needs: commitlint
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Needed for semantic-release to access all tags and commits
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Calculate next semantic version only
-        id: semver
-        run: |
-          VERSION=$(npx release-it --dry-run --ci --no-increment --output-version | grep -oP 'Version: \K[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
-          echo "Calculated next version: $VERSION"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
