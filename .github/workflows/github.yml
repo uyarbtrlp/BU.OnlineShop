@@ -35,12 +35,9 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm install
-      - name: Calculate next version
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Calculate next semantic version only
+        id: semver
         run: |
-          npx semantic-release --dry-run | tee result.log
-          VERSION=$(grep -oP 'The next release version is \K[0-9]+\.[0-9]+\.[0-9]+' result.log || echo "none")
+          VERSION=$(npx -y semantic-release --dry-run --plugins=@semantic-release/commit-analyzer 2>&1 | grep -oP 'The next release version is \K[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
           echo "Calculated next version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
