@@ -13,8 +13,6 @@ jobs:
       matrix:
         service:
           - catalog
-          - order
-          - file
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
