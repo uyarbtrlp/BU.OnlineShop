@@ -37,7 +37,7 @@ Log.Logger = new LoggerConfiguration()
             {
                 ["service.name"] = "CatalogService"
             }; 
-        }) 
+        })  
         .WriteTo.File(path: "Logs/logs.txt", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 31, fileSizeLimitBytes: 536870912)
         .WriteTo.Console()
         .CreateLogger();
