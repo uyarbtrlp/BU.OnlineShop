@@ -57,7 +57,7 @@ jobs:
       - name: Build and push service-a image
         uses: docker/build-push-action@v5
         with:
-          context: ./services/service-a
+          context: ./services/catalog/BU.OnlineShop.CatalogService.API
           file: ./services/catalog/BU.OnlineShop.CatalogService.API/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:latest
