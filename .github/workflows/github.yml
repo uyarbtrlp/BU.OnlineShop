@@ -1,7 +1,7 @@
 name: Github actions
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   pull_request:
     branches:
       - '**'
