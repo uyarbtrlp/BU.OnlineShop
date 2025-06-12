@@ -4,7 +4,8 @@
   "description": "BU.OnlineShop is a microservices-based online shopping platform designed to provide a comprehensive shopping experience. It includes various services such as:",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "changeset:publish": "echo 'Publishing...'"
   },
   "keywords": [],
   "author": "",
