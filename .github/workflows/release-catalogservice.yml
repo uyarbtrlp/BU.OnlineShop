@@ -2,6 +2,8 @@ name: Release CatalogService
 
 on:
   push:
+    paths:
+      - 'services/catalog/**'
     branches:
       - main
       - development
@@ -18,9 +20,9 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm install
-        working-directory: services/CatalogService
+        working-directory: services/catalog
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: services/CatalogService
+        working-directory: services/catalog
         run: npx semantic-release
