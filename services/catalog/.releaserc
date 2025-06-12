@@ -3,12 +3,6 @@
   "plugins": [
     "semantic-release-monorepo",
     "@semantic-release/changelog",
-    "@semantic-release/git",
-    [
-      "@semantic-release/exec",
-      {
-        "publishCmd": "docker build -t yourdockerhub/catalogservice:${nextRelease.version} . && docker push yourdockerhub/catalogservice:${nextRelease.version}"
-      }
-    ]
+    "@semantic-release/git"
   ]
 }
