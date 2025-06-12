@@ -3,7 +3,7 @@ name: Release CatalogService
 on:
   push:
     paths:
-      - 'services/CatalogService/**'
+      - 'services/catalog/**'
     branches:
       - main
       - development
