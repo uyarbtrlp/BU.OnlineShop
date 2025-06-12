@@ -31,7 +31,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x' # Use your required .NET version
+          dotnet-version: '8.0.x'
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
@@ -60,7 +60,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION=$(npx semantic-release | grep -oP 'Published release \K[0-9]+\.[0-9]+\.[0-9]+')
+          npx semantic-release | tee semantic-release.log
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(grep -oP 'Published release \K[0-9]+\.[0-9]+\.[0-9]+' semantic-release.log | tail -1)
+          echo "Extracted version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   docker-build:
