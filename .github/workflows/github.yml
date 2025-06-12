@@ -39,9 +39,37 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
 
-  docker-build:
+  release:
     needs: dotnet
     runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development')
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Semantic Release
+        id: semantic_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(npx semantic-release --dry-run | grep -oP 'Published release \K[0-9]+\.[0-9]+\.[0-9]+')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  docker-build:
+    needs: [dotnet, release]
+    runs-on: ubuntu-latest
+    if: needs.release.outputs.version != ''
     steps:
       - uses: actions/checkout@v4
 
@@ -54,28 +82,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push service-a image
+      - name: Build and push catalogservice image
         uses: docker/build-push-action@v5
         with:
           file: ./services/catalog/BU.OnlineShop.CatalogService.API/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:latest
-
-  release:
-    needs: dotnet
-    runs-on: ubuntu-latest
-    if: |
-      github.event_name == 'push' &&
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development')
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Semantic Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:${{ needs.release.outputs.version }}
