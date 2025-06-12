@@ -1,5 +1,8 @@
 {
   "name": "catalog",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "scripts": {
+    "release": "changeset version && npm publish"
+  }
 }
