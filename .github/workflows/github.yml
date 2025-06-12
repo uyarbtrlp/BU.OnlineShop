@@ -73,11 +73,14 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.release.outputs.version != ''
     strategy:
-      matrix:
-        service:
-          - catalog
-          - order
-          - file
+     matrix:
+      include:
+      - service: catalog
+        folder: Catalog
+      - service: order
+        folder: Ordering
+      - service: file
+        folder: File
     steps:
       - uses: actions/checkout@v4
 
@@ -93,7 +96,7 @@ jobs:
       - name: Build and push ${{ matrix.service }}service image
         uses: docker/build-push-action@v5
         with:
-          file: ./services/${{ matrix.service }}/BU.OnlineShop.${{ matrix.service | capitalize }}Service.API/Dockerfile
+          file: ./services/${{ matrix.service }}/BU.OnlineShop.${{ matrix.folder }}Service.API/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}service:latest
