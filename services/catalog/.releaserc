@@ -1,8 +1,14 @@
 {
-  "branches": ["main", "development"],
+  "branches": ["development"],
   "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/github"
+    "semantic-release-monorepo",
+    "@semantic-release/changelog",
+    "@semantic-release/git",
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "docker build -t yourdockerhub/catalogservice:${nextRelease.version} . && docker push yourdockerhub/catalogservice:${nextRelease.version}"
+      }
+    ]
   ]
 }
