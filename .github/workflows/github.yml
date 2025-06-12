@@ -72,6 +72,12 @@ jobs:
     needs: [dotnet, release]
     runs-on: ubuntu-latest
     if: needs.release.outputs.version != ''
+    strategy:
+      matrix:
+        service:
+          - catalog
+          - order
+          - file
     steps:
       - uses: actions/checkout@v4
 
@@ -84,11 +90,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push catalogservice image
+      - name: Build and push ${{ matrix.service }}service image
         uses: docker/build-push-action@v5
         with:
-          file: ./services/catalog/BU.OnlineShop.CatalogService.API/Dockerfile
+          file: ./services/${{ matrix.service }}/BU.OnlineShop.${{ matrix.service | capitalize }}Service.API/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:${{ needs.release.outputs.version }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}service:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}service:${{ needs.release.outputs.version }}
