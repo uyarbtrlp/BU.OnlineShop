@@ -58,19 +58,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./services/service-a
-          file: ./services/service-a/Dockerfile
+          file: ./services/catalog/BU.OnlineShop.CatalogService.API/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/service-a:latest
-
-      - name: Build and push service-b image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./services/service-b
-          file: ./services/service-b/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/service-b:latest
-
-      # Add more services as needed
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:latest
 
   release:
     needs: dotnet
