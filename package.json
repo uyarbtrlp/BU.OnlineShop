@@ -1,0 +1,13 @@
+{
+  "name": "bu.onlineshop",
+  "version": "1.0.0",
+  "description": "BU.OnlineShop is a microservices-based online shopping platform designed to provide a comprehensive shopping experience. It includes various services such as:",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+  }
+}
