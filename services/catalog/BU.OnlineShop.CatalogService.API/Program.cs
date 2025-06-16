@@ -156,7 +156,7 @@ builder.Services.AddCors(options =>
                 configuration["CorsOrigins"]?
                     .Split(",", StringSplitOptions.RemoveEmptyEntries)
                     .Select(o => o.Trim())
-                    .ToArray() ?? Array.Empty<string>()
+                    .ToArray() ?? Array.Empty<string>() 
             )
             .SetIsOriginAllowedToAllowWildcardSubdomains()
             .AllowAnyHeader()
