@@ -1,3 +1,4 @@
 {
-  "branches": ["development"]
+  "branches": ["development"],
+  "tagFormat": "catalog-v${version}"
 }
