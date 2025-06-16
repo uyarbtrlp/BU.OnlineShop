@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'services/catalog/**'
-      - '.github/workflows/catalog-docker.yml'
+      - '.github/workflows/github.yml'
     branches:
       - development
 
@@ -57,7 +57,7 @@ jobs:
           context: .
           file: services/catalog/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalog-service:${{ steps.get_version.outputs.version }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:${{ steps.get_version.outputs.version }}
 
       - name: Upload Changelog
         uses: actions/upload-artifact@v4
