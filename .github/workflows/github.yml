@@ -58,9 +58,3 @@ jobs:
           file: services/catalog/BU.OnlineShop.CatalogService.API/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalogservice:${{ steps.get_version.outputs.version }}
-
-      - name: Upload Changelog
-        uses: actions/upload-artifact@v4
-        with:
-          name: changelog
-          path: CHANGELOG.md
