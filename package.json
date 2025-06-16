@@ -1,34 +1,12 @@
 {
-  "name": "bu.onlineshop",
-  "version": "1.0.0",
-  "description": "BU.OnlineShop is a microservices-based online shopping platform designed to provide a comprehensive shopping experience. It includes various services such as:",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "changeset:publish": "echo 'Publishing...'"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "name": "catalog-service",
+  "version": "0.0.0",
+  "private": true,
   "devDependencies": {
-    "@changesets/cli": "^2.29.4",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/exec": "^7.1.0",
+    "semantic-release": "^23.0.0",
+    "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
-    "semantic-release": "^24.2.5",
-    "semantic-release-monorepo": "^8.0.2"
-  },
-  "release": {
-    "branches": [
-      "main",
-      "development"
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/github"
-    ]
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0"
   }
 }
