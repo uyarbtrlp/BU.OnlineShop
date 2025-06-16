@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'services/catalog/**'
-      - '.github/workflows/github.yml'
+      - '.github/workflows/catalogservice-release.yml'
     branches:
       - development
 
