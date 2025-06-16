@@ -37,7 +37,7 @@ jobs:
         # - Tag the repo (e.g., catalog-v1.2.3)
 
       - name: Extract version
-        id: get_version
+        id: get_version 
         run: |
           VERSION=$(git describe --tags --match "catalog-v*" --abbrev=0 | sed 's/catalog-v//')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
