@@ -11,6 +11,9 @@ on:
 jobs:
   commitlint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/catalog
     steps:
       - uses: actions/checkout@v4 
       - name: Set up Node.js
@@ -25,6 +28,9 @@ jobs:
   dotnet:
     needs: commitlint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/catalog
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
