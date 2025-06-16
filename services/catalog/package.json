@@ -1,6 +1,6 @@
 {
-  "name": "bu-onlineshop",
-  "version": "1.0.0",
+  "name": "catalog-service",
+  "version": "0.0.0",
   "private": true,
   "devDependencies": {
     "semantic-release": "^23.0.0",
