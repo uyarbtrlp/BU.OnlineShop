@@ -85,6 +85,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: services/catalog/BU.OnlineShop.OrderingService.API/Dockerfile
+          file: services/order/BU.OnlineShop.OrderingService.API/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/orderingService:${{ steps.get_version.outputs.version }}

@@ -85,6 +85,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: services/catalog/BU.OnlineShop.PaymentService.API/Dockerfile
+          file: services/payment/BU.OnlineShop.PaymentService.API/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/paymentservice:${{ steps.get_version.outputs.version }}
