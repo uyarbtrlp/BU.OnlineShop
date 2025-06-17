@@ -87,4 +87,4 @@ jobs:
           context: .
           file: services/order/BU.OnlineShop.OrderingService.API/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/orderingService:${{ steps.get_version.outputs.version }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/orderingservice:${{ steps.get_version.outputs.version }}
