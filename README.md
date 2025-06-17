@@ -178,3 +178,10 @@ Keycloak is used to manage authentication and authorization across all services 
     ```
 
 12. You can navigate to `webgateway.onlineshop.com` in your browser to see all services or you can visit them separately.
+
+## Next Steps
+
+- Branching strategy (Trunk based or Gitflow)
+- Github actions (versioning, pull requests etc.) according to the branching strategy
+- Automatic deployment to the cloud provider
+
