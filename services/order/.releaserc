@@ -1,0 +1,4 @@
+{
+  "branches": ["development"],
+  "tagFormat": "order-v${version}"
+}

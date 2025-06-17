@@ -1,0 +1,90 @@
+name: Build & Release BasketService
+
+on:
+  push:
+    paths:
+      - 'services/basket/**'
+      - '.github/workflows/basketservice-release.yml'
+    branches:
+      - development
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint commits
+        uses: wagoid/commitlint-github-action@v6
+
+  dotnet:
+    needs: commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal
+        
+  release:
+    needs: dotnet
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/basket
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js (for semantic-release)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install semantic-release and plugins
+        run: npm install --no-save semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/commit-analyzer @semantic-release/release-notes-generator
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+        # This will:
+        # - Analyze commits for version bump
+        # - Create a GitHub release and changelog
+        # - Tag the repo (e.g., catalog-v1.2.3)
+
+      - name: Extract version
+        id: get_version  
+        run: |
+          VERSION=$(git describe --tags --match "basket-v*" --abbrev=0 | sed 's/basket-v//')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: services/catalog/BU.OnlineShop.BasketService.API/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/basketservice:${{ steps.get_version.outputs.version }}

@@ -1,0 +1,4 @@
+{
+  "branches": ["development"],
+  "tagFormat": "basket-v${version}"
+}
